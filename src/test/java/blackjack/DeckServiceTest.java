@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.deck.Card;
+import blackjack.deck.DeckService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,9 +16,9 @@ class DeckServiceTest {
     private DeckService deckService;
 
     @Test
-    void createShuffledDeck_shouldGenerateA52CardsDeck() {
+    void createDeck_shouldGenerateA52CardsDeck() {
 
-        Flux<Card> deck = deckService.createShuffledDeck();
+        Flux<Card> deck = deckService.createDeck();
 
         StepVerifier.create(deck)
                 .expectNextCount(52)
