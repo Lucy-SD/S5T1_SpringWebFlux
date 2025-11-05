@@ -24,4 +24,12 @@ class PlayerTest {
         assertThat(player.getHand().get(0).value()).isEqualTo(7);
     }
 
+    @Test
+    void playerAddsCard_shouldUpdateScore() {
+        Gamer player = new Player("Pepe");
+        player.addCard(new Card(7));
+        player.addCard(new Card(8));
+        assertThat(player.getScore()).isEqualTo(15);
+    }
+
 }
