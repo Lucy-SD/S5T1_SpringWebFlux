@@ -1,5 +1,7 @@
 package blackjack.deck;
 
+import reactor.core.publisher.Flux;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +22,12 @@ public class DeckService {
             Collections.shuffle(deck);
         }
         return deck;
+    }
+
+    public Flux<Card> createShuffledDeck() {
+        List<Card> deck = createDeck();
+        List<Card> shuffled = shuffleDeck(deck);
+        return Flux.fromIterable(shuffled);
     }
 
 }
