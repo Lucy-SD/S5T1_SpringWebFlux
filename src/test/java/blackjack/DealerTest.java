@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.gamer.Dealer;
 import blackjack.gamer.Gamer;
 import org.junit.jupiter.api.Test;
 
