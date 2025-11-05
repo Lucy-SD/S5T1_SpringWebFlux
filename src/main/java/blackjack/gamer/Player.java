@@ -2,12 +2,14 @@ package blackjack.gamer;
 
 import blackjack.deck.Card;
 import blackjack.game.score.ScoreCalculator;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements Gamer {
 
+    @Getter
     private String name;
     private List<Card> hand;
     private int score;
@@ -18,11 +20,6 @@ public class Player implements Gamer {
         this.hand = new ArrayList<>();
         this.score = 0;
         this.scoreCalculator = new ScoreCalculator();
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
     }
 
     @Override
