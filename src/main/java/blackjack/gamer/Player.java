@@ -31,4 +31,8 @@ public class Player implements Gamer {
     public int getScore() {
         return this.score;
     }
+
+    public void addCard(Card card) {
+        this.hand.add(card);
+    }
 }
