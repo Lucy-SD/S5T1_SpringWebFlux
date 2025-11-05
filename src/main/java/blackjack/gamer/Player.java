@@ -1,0 +1,34 @@
+package blackjack.gamer;
+
+import blackjack.deck.Card;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Player implements Gamer {
+
+    private String name;
+    private List<Card> hand;
+    private int score;
+
+    public Player(String name) {
+        this.name = name;
+        this.hand = new ArrayList<>();
+        this.score = 0;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public List<Card> getHand() {
+        return this.hand;
+    }
+
+    @Override
+    public int getScore() {
+        return this.score;
+    }
+}
