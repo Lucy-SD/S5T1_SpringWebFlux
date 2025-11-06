@@ -1,4 +1,4 @@
-package blackjack.game.score;
+package blackjack.game;
 
 import blackjack.deck.DeckService;
 import org.junit.jupiter.api.Test;

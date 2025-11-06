@@ -1,4 +1,4 @@
-package blackjack.game.score;
+package blackjack.score;
 
 import blackjack.deck.Card;
 

@@ -1,7 +1,7 @@
 package blackjack.gamer;
 
 import blackjack.deck.Card;
-import blackjack.game.score.ScoreCalculator;
+import blackjack.score.ScoreCalculator;
 
 import java.util.ArrayList;
 import java.util.List;

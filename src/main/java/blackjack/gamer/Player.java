@@ -1,7 +1,7 @@
 package blackjack.gamer;
 
 import blackjack.deck.Card;
-import blackjack.game.score.ScoreCalculator;
+import blackjack.score.ScoreCalculator;
 import lombok.Getter;
 
 import java.util.ArrayList;
