@@ -1,7 +1,5 @@
-package blackjack;
+package blackjack.deck;
 
-import blackjack.deck.Card;
-import blackjack.deck.DeckService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,5 +31,4 @@ class DeckServiceTest {
 
         assertThat(shuffled1).isNotEqualTo(shuffled2);
     }
-
 }
