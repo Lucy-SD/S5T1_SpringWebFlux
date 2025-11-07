@@ -9,13 +9,15 @@ import java.util.List;
 public class Dealer implements Gamer {
 
     private List<Card> hand;
+    private List<Boolean> cardVisibility;
     private int score;
     private ScoreCalculator scoreCalculator;
 
     public Dealer() {
-        hand = new ArrayList<>();
-        score = 0;
-        scoreCalculator = new ScoreCalculator();
+        this.hand = new ArrayList<>();
+        this.cardVisibility = new ArrayList<>();
+        this.score = 0;
+        this.scoreCalculator = new ScoreCalculator();
     }
 
     @Override
@@ -28,9 +30,37 @@ public class Dealer implements Gamer {
         return this.score;
     }
 
+    private void updateScore() {
+        this.score = scoreCalculator.calculate(this.hand);
+    }
+
     @Override
     public void addCard(Card card) {
+        this.addCard(card, true);
+    }
+
+    public void addCard(Card card, boolean visible) {
         this.hand.add(card);
-        this.score = scoreCalculator.calculate(this.hand);
+        this.cardVisibility.add(visible);
+        this.updateScore();
+    }
+
+    public List<Card> getVisibleCards() {
+        List<Card> visible = new ArrayList<>();
+        for (int i = 0; i < this.hand.size(); i++) {
+            if (this.cardVisibility.get(i)) {
+                visible.add(this.hand.get(i));
+            }
+        }
+        return visible;
+    }
+
+    public Card getHiddenCard() {
+        for (int i = 0; i < this.hand.size(); i++) {
+            if (!this.cardVisibility.get(i)) {
+                return this.hand.get(i);
+            }
+        }
+        return null;
     }
 }

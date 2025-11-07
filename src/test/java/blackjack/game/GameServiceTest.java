@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import reactor.core.publisher.Mono;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,12 +22,13 @@ class GameServiceTest {
 
     @Test
     void startNewGame_setsCorrectGameState() {
-        GameState gameState = gameService.startNewGame("Pepe");
+        Mono<GameState> gameStateMono = gameService.startNewGame("Pepe");
+        GameState gameState = gameStateMono.block();
 
         assertThat(gameState.getPlayer().getHand()).hasSize(2);
         assertThat(gameState.getDealer().getHand()).hasSize(2);
         assertThat(gameState.getDealer().getVisibleCards()).hasSize(1);
-        assertThat(gameState.getDealer().getHiddenCards()).hasSize(1);
+        assertThat(gameState.getDealer().getHiddenCard()).isNotNull();
 
     }
 

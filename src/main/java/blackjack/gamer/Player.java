@@ -32,8 +32,12 @@ public class Player implements Gamer {
         return this.score;
     }
 
+    private void updateScore() {
+        this.score = scoreCalculator.calculate(this.hand);
+    }
+
     public void addCard(Card card) {
         this.hand.add(card);
-        this.score = scoreCalculator.calculate(this.hand);
+        this.updateScore();
     }
 }
