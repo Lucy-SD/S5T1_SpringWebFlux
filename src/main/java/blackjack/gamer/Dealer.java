@@ -63,4 +63,9 @@ public class Dealer implements Gamer {
         }
         return null;
     }
+
+    public void revealHiddenCard() {
+        this.cardVisibility.set(0, true);
+        this.updateScore();
+    }
 }
