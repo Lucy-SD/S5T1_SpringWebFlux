@@ -154,9 +154,9 @@ class GameServiceTest {
 
         GameResult result = gameService.findOutWinner(finalState).block();
 
-        assertThat(result.getWinner()).isEqualTo(Winner.PLAYER);
-        assertThat(result.getPlayerScore()).isEqualTo(18);
-        assertThat(result.getDealerScore()).isEqualTo(22);
+        assertThat(result.winner()).isEqualTo(Winner.PLAYER);
+        assertThat(result.playerScore()).isEqualTo(18);
+        assertThat(result.dealerScore()).isEqualTo(22);
     }
 
     @Test
@@ -174,9 +174,9 @@ class GameServiceTest {
 
         GameResult result = gameService.findOutWinner(finalState).block();
 
-        assertThat(result.getWinner()).isEqualTo(Winner.PLAYER);
-        assertThat(result.getPlayerScore()).isEqualTo(19);
-        assertThat(result.getDealerScore()).isEqualTo(17);
+        assertThat(result.winner()).isEqualTo(Winner.PLAYER);
+        assertThat(result.playerScore()).isEqualTo(19);
+        assertThat(result.dealerScore()).isEqualTo(17);
     }
 
     @Test
@@ -197,9 +197,9 @@ class GameServiceTest {
 
         GameResult result = gameService.findOutWinner(finalState).block();
 
-        assertThat(result.getWinner()).isEqualTo(Winner.PLAYER);
-        assertThat(result.getPlayerScore()).isEqualTo(17);
-        assertThat(result.getDealerScore()).isEqualTo(22);
+        assertThat(result.winner()).isEqualTo(Winner.PLAYER);
+        assertThat(result.playerScore()).isEqualTo(17);
+        assertThat(result.dealerScore()).isEqualTo(22);
     }
 
     @Test
@@ -218,9 +218,9 @@ class GameServiceTest {
 
         GameResult result = gameService.findOutWinner(finalState).block();
 
-        assertThat(result.getWinner()).isEqualTo(Winner.PLAYER);
-        assertThat(result.getPlayerScore()).isEqualTo(21);
-        assertThat(result.getDealerScore()).isEqualTo(21);
+        assertThat(result.winner()).isEqualTo(Winner.PLAYER);
+        assertThat(result.playerScore()).isEqualTo(21);
+        assertThat(result.dealerScore()).isEqualTo(21);
     }
 
     @Test
@@ -239,9 +239,9 @@ class GameServiceTest {
 
         GameResult result = gameService.findOutWinner(newState).block();
 
-        assertThat(result.getWinner()).isEqualTo(Winner.DEALER);
-        assertThat(result.getPlayerScore()).isEqualTo(22);
-        assertThat(result.getDealerScore()).isEqualTo(14);
+        assertThat(result.winner()).isEqualTo(Winner.DEALER);
+        assertThat(result.playerScore()).isEqualTo(22);
+        assertThat(result.dealerScore()).isEqualTo(14);
     }
 
     @Test
@@ -259,9 +259,9 @@ class GameServiceTest {
 
         GameResult result = gameService.findOutWinner(finalState).block();
 
-        assertThat(result.getWinner()).isEqualTo(Winner.DEALER);
-        assertThat(result.getPlayerScore()).isEqualTo(18);
-        assertThat(result.getDealerScore()).isEqualTo(19);
+        assertThat(result.winner()).isEqualTo(Winner.DEALER);
+        assertThat(result.playerScore()).isEqualTo(18);
+        assertThat(result.dealerScore()).isEqualTo(19);
     }
 
     @Test
@@ -280,9 +280,9 @@ class GameServiceTest {
 
         GameResult result = gameService.findOutWinner(finalState).block();
 
-        assertThat(result.getWinner()).isEqualTo(Winner.DEALER);
-        assertThat(result.getPlayerScore()).isEqualTo(21);
-        assertThat(result.getDealerScore()).isEqualTo(21);
+        assertThat(result.winner()).isEqualTo(Winner.DEALER);
+        assertThat(result.playerScore()).isEqualTo(21);
+        assertThat(result.dealerScore()).isEqualTo(21);
     }
 
     @Test
@@ -300,9 +300,9 @@ class GameServiceTest {
 
         GameResult result = gameService.findOutWinner(finalState).block();
 
-        assertThat(result.getWinner()).isEqualTo(Winner.PUSH);
-        assertThat(result.getPlayerScore()).isEqualTo(17);
-        assertThat(result.getDealerScore()).isEqualTo(17);
+        assertThat(result.winner()).isEqualTo(Winner.PUSH);
+        assertThat(result.playerScore()).isEqualTo(17);
+        assertThat(result.dealerScore()).isEqualTo(17);
     }
 
     @Test
@@ -320,8 +320,8 @@ class GameServiceTest {
 
         GameResult result = gameService.findOutWinner(finalState).block();
 
-        assertThat(result.getWinner()).isEqualTo(Winner.PUSH);
-        assertThat(result.getPlayerScore()).isEqualTo(21);
-        assertThat(result.getDealerScore()).isEqualTo(21);
+        assertThat(result.winner()).isEqualTo(Winner.PUSH);
+        assertThat(result.playerScore()).isEqualTo(21);
+        assertThat(result.dealerScore()).isEqualTo(21);
     }
 }
