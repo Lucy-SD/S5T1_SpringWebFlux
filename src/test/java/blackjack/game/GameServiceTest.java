@@ -229,9 +229,24 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
-        GameState  finalState = gameService.playerHit(gameState).block();
+        GameState finalState = gameService.playerHit(gameState).block();
 
         assertThat(finalState.getPlayer().hasBlackjack()).isFalse();
+    }
+
+    @Test
+    void playerNoBlackjack_whenScoreNot21() {
+        List<Card> mockCards = Arrays.asList(
+                new Card(5),
+                new Card(5),
+                new Card(5),
+                new Card(6)
+        );
+
+        when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
+        GameState gameState = gameService.startNewGame("Pepe").block();
+
+        assertThat(gameState.getPlayer().hasBlackjack()).isFalse();
     }
 
     @Test
