@@ -6,17 +6,12 @@ import blackjack.exception.GameException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -97,5 +92,26 @@ class GameServiceTest {
                 .map(Card::value)
                 .collect(Collectors.toList());
         assertThat(cardValues).containsExactly(5, 5, 3);
+    }
+
+    @Test
+    void playerStands_triggersDealerToRevealCardAndPlay() {
+        List<Card> mockCards = Arrays.asList(
+                new Card(10),
+                new Card(6),
+                new Card(8),
+                new Card(10),
+                new Card(1)
+        );
+
+        when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
+        GameState gameState = gameService.startNewGame("Pepe").block();
+
+        GameState finalState = gameService.playerStand(gameState).block();
+
+        assertThat(finalState.getDealer().getHand()).hasSize(3);
+        assertThat(finalState.getDealer().getVisibleCards()).hasSize(3);
+        assertThat(finalState.getDealer().getHiddenCard()).isNull();
+        assertThat(finalState.getDealer().getScore()).isGreaterThanOrEqualTo(17);
     }
 }
