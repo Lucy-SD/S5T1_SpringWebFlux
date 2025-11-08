@@ -14,7 +14,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -62,7 +61,10 @@ class GameServiceTest {
         GameState gameState = gameService.startNewGame("Pepe").block();
 
         assertThatExceptionOfType(GameException.class)
-                .isThrownBy(() -> gameService.playerHit(gameState).block())
+                .isThrownBy(() -> {
+                    Assertions.assertNotNull(gameState);
+                    gameService.playerHit(gameState).block();
+                })
                 .withMessageContaining("no puede pedir cartas");
     }
 
@@ -79,18 +81,20 @@ class GameServiceTest {
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
 
+        Assertions.assertNotNull(gameState);
         assertThat(gameState.getPlayer().getHand()).hasSize(2);
         assertThat(gameState.getPlayer().getScore()).isEqualTo(10);
 
         GameState newState = gameService.playerHit(gameState).block();
 
+        Assertions.assertNotNull(newState);
         assertThat(newState.getPlayer().getHand()).hasSize(3);
         assertThat(newState.getPlayer().getScore()).isEqualTo(13);
 
         List<Integer> cardValues = newState.getPlayer().getHand()
                 .stream()
                 .map(Card::value)
-                .collect(Collectors.toList());
+                .toList();
         assertThat(cardValues).containsExactly(5, 5, 3);
     }
 
@@ -107,8 +111,10 @@ class GameServiceTest {
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
 
+        Assertions.assertNotNull(gameState);
         GameState finalState = gameService.playerStand(gameState).block();
 
+        Assertions.assertNotNull(finalState);
         assertThat(finalState.getDealer().getHand()).hasSize(3);
         assertThat(finalState.getDealer().getVisibleCards()).hasSize(3);
         assertThat(finalState.getDealer().getHiddenCard()).isNull();
@@ -128,10 +134,12 @@ class GameServiceTest {
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
 
+        Assertions.assertNotNull(gameState);
         gameState.getDealer().revealHiddenCard();
 
         GameState newState = gameService.dealerHit(gameState).block();
 
+        Assertions.assertNotNull(newState);
         assertThat(newState.getDealer().getHand()).hasSize(3);
         assertThat(newState.getDealer().getVisibleCards()).hasSize(3);
         assertThat(newState.getDealer().getHiddenCard()).isNull();
@@ -150,10 +158,13 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
+        Assertions.assertNotNull(gameState);
         GameState finalState = gameService.playerStand(gameState).block();
 
+        Assertions.assertNotNull(finalState);
         GameResult result = gameService.findOutWinner(finalState).block();
 
+        Assertions.assertNotNull(result);
         assertThat(result.winner()).isEqualTo(Winner.PLAYER);
         assertThat(result.dealerScore()).isEqualTo(22);
         assertThat(result.playerScore()).isEqualTo(18);
@@ -170,10 +181,13 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
+        Assertions.assertNotNull(gameState);
         GameState finalState = gameService.playerStand(gameState).block();
 
+        Assertions.assertNotNull(finalState);
         GameResult result = gameService.findOutWinner(finalState).block();
 
+        Assertions.assertNotNull(result);
         assertThat(result.winner()).isEqualTo(Winner.PLAYER);
         assertThat(result.dealerScore()).isEqualTo(17);
         assertThat(result.playerScore()).isEqualTo(19);
@@ -193,10 +207,13 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
+        Assertions.assertNotNull(gameState);
         GameState finalState = gameService.playerStand(gameState).block();
 
+        Assertions.assertNotNull(finalState);
         GameResult result = gameService.findOutWinner(finalState).block();
 
+        Assertions.assertNotNull(result);
         assertThat(result.winner()).isEqualTo(Winner.PLAYER);
         assertThat(result.dealerScore()).isEqualTo(22);
         assertThat(result.playerScore()).isEqualTo(17);
@@ -214,6 +231,7 @@ class GameServiceTest {
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
 
+        Assertions.assertNotNull(gameState);
         assertThat(gameState.getPlayer().hasBlackjack()).isTrue();
     }
 
@@ -229,8 +247,10 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
+        Assertions.assertNotNull(gameState);
         GameState finalState = gameService.playerHit(gameState).block();
 
+        Assertions.assertNotNull(finalState);
         assertThat(finalState.getPlayer().hasBlackjack()).isFalse();
     }
 
@@ -246,6 +266,7 @@ class GameServiceTest {
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
 
+        Assertions.assertNotNull(gameState);
         assertThat(gameState.getPlayer().hasBlackjack()).isFalse();
     }
 
@@ -261,10 +282,13 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
+        Assertions.assertNotNull(gameState);
         GameState finalState = gameService.playerStand(gameState).block();
 
+        Assertions.assertNotNull(finalState);
         GameResult result = gameService.findOutWinner(finalState).block();
 
+        Assertions.assertNotNull(result);
         assertThat(result.winner()).isEqualTo(Winner.PLAYER);
         assertThat(result.dealerScore()).isEqualTo(21);
         assertThat(result.playerScore()).isEqualTo(21);
@@ -282,10 +306,13 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
+        Assertions.assertNotNull(gameState);
         GameState newState = gameService.playerHit(gameState).block();
 
+        Assertions.assertNotNull(newState);
         GameResult result = gameService.findOutWinner(newState).block();
 
+        Assertions.assertNotNull(result);
         assertThat(result.winner()).isEqualTo(Winner.DEALER);
         assertThat(result.dealerScore()).isEqualTo(14);
         assertThat(result.playerScore()).isEqualTo(22);
@@ -302,10 +329,13 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
+        Assertions.assertNotNull(gameState);
         GameState finalState = gameService.playerStand(gameState).block();
 
+        Assertions.assertNotNull(finalState);
         GameResult result = gameService.findOutWinner(finalState).block();
 
+        Assertions.assertNotNull(result);
         assertThat(result.winner()).isEqualTo(Winner.DEALER);
         assertThat(result.dealerScore()).isEqualTo(19);
         assertThat(result.playerScore()).isEqualTo(18);
@@ -323,6 +353,7 @@ class GameServiceTest {
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
 
+        Assertions.assertNotNull(gameState);
         assertThat(gameState.getDealer().hasBlackjack()).isTrue();
     }
 
@@ -338,8 +369,10 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
+        Assertions.assertNotNull(gameState);
         GameState finalState = gameService.playerStand(gameState).block();
 
+        Assertions.assertNotNull(finalState);
         assertThat(finalState.getDealer().hasBlackjack()).isFalse();
     }
 
@@ -355,6 +388,7 @@ class GameServiceTest {
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
 
+        Assertions.assertNotNull(gameState);
         assertThat(gameState.getDealer().hasBlackjack()).isFalse();
     }
 
@@ -370,10 +404,13 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
+        Assertions.assertNotNull(gameState);
         GameState finalState = gameService.playerHit(gameState).block();
 
+        Assertions.assertNotNull(finalState);
         GameResult result = gameService.findOutWinner(finalState).block();
 
+        Assertions.assertNotNull(result);
         assertThat(result.winner()).isEqualTo(Winner.DEALER);
         assertThat(result.dealerScore()).isEqualTo(21);
         assertThat(result.playerScore()).isEqualTo(21);
@@ -390,10 +427,13 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
+        Assertions.assertNotNull(gameState);
         GameState finalState = gameService.playerStand(gameState).block();
 
+        Assertions.assertNotNull(finalState);
         GameResult result = gameService.findOutWinner(finalState).block();
 
+        Assertions.assertNotNull(result);
         assertThat(result.winner()).isEqualTo(Winner.PUSH);
         assertThat(result.dealerScore()).isEqualTo(17);
         assertThat(result.playerScore()).isEqualTo(17);
@@ -410,10 +450,13 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
+        Assertions.assertNotNull(gameState);
         GameState finalState = gameService.playerStand(gameState).block();
 
+        Assertions.assertNotNull(finalState);
         GameResult result = gameService.findOutWinner(finalState).block();
 
+        Assertions.assertNotNull(result);
         assertThat(result.winner()).isEqualTo(Winner.PUSH);
         assertThat(result.dealerScore()).isEqualTo(21);
         assertThat(result.playerScore()).isEqualTo(21);
