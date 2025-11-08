@@ -107,6 +107,10 @@ public class GameService {
             return Mono.just(new GameResult(Winner.DEALER, dealer.getScore(), player.getScore()));
         }
 
+        if (dealer.getScore() > 21) {
+            return Mono.just(new GameResult(Winner.PLAYER, dealer.getScore(), player.getScore()));
+        }
+
         return Mono.just(new GameResult(Winner.PUSH, 0, 0));
     }
 }
