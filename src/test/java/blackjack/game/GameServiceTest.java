@@ -218,6 +218,23 @@ class GameServiceTest {
     }
 
     @Test
+    void playerNoBlackjack_whenThreeCardsMake21() {
+        List<Card> mockCards = Arrays.asList(
+                new Card(5),
+                new Card(7),
+                new Card(10),
+                new Card(10),
+                new Card(6)
+        );
+
+        when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
+        GameState gameState = gameService.startNewGame("Pepe").block();
+        GameState  finalState = gameService.playerHit(gameState).block();
+
+        assertThat(finalState.getPlayer().hasBlackjack()).isFalse();
+    }
+
+    @Test
     void whenPlayerHasBlackjackAndDealer21_thenPlayerWins() {
         List<Card> mockCards = Arrays.asList(
                 new Card(1),
