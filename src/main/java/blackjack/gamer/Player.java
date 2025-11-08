@@ -36,6 +36,7 @@ public class Player implements Gamer {
         this.score = scoreCalculator.calculate(this.hand);
     }
 
+    @Override
     public void addCard(Card card) {
         this.hand.add(card);
         this.updateScore();

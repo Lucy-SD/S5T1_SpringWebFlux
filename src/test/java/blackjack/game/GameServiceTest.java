@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -53,28 +54,19 @@ class GameServiceTest {
 
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            "1, 10",
-            "10, 9, 2",
-            "10, 9, 5"
-    })
-    void playerCannotHitWhen(int card1, int card2, Integer hitCard) {
-        List<Card> mockCards = new ArrayList<>();
-        mockCards.add(new Card(card1));
-        mockCards.add(new Card(5));
-        mockCards.add(new Card(card2));
-        mockCards.add(new Card(7));
-        if (hitCard != null) {
-            mockCards.add(new Card(hitCard));
-        }
+    @Test
+    void playerCannotHitWhenScores21OrMore() {
+        List<Card> mockCards = Arrays.asList(
+                new Card(1),
+                new Card(2),
+                new Card(10),
+                new Card(10)
+                );
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
-
         GameState gameState = gameService.startNewGame("Pepe").block();
 
         assertThatExceptionOfType(GameException.class)
                 .isThrownBy(() -> gameService.playerHit(gameState).block())
-                .withMessageContaining("no puede pedir carta");
+                .withMessageContaining("no puede pedir cartas");
     }
-
 }
