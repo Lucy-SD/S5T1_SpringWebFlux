@@ -41,4 +41,9 @@ public class Player implements Gamer {
         this.hand.add(card);
         this.updateScore();
     }
+
+    @Override
+    public boolean hasBlackjack() {
+        return (this.hand.size() == 2 && this.score == 21);
+    }
 }

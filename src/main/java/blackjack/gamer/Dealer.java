@@ -68,4 +68,9 @@ public class Dealer implements Gamer {
         this.cardVisibility.set(0, true);
         this.updateScore();
     }
+
+    @Override
+    public boolean hasBlackjack() {
+        return (this.hand.size() == 2 && this.score == 21);
+    }
 }
