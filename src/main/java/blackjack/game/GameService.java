@@ -103,10 +103,6 @@ public class GameService {
         Dealer dealer = gameState.getDealer();
         Player player = gameState.getPlayer();
 
-        if (player.getScore() > dealer.getScore()) {
-            return Mono.just(new GameResult(Winner.PLAYER, dealer.getScore(), player.getScore()));
-        }
-
         if (dealer.getScore() > 21) {
             return Mono.just(new GameResult(Winner.PLAYER, dealer.getScore(), player.getScore()));
         }
@@ -115,6 +111,14 @@ public class GameService {
             return Mono.just(new GameResult(Winner.DEALER, dealer.getScore(), player.getScore()));
         }
 
-        return Mono.just(new GameResult(Winner.PUSH, 0, 0));
+        if (player.getScore() > dealer.getScore()) {
+            return Mono.just(new GameResult(Winner.PLAYER, dealer.getScore(), player.getScore()));
+        }
+
+        if (dealer.getScore() > player.getScore()) {
+            return Mono.just(new GameResult(Winner.DEALER, dealer.getScore(), player.getScore()));
+        }
+
+        return Mono.just(new GameResult(Winner.PUSH, dealer.getScore(), player.getScore()));
     }
 }
