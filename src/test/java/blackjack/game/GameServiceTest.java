@@ -370,7 +370,7 @@ class GameServiceTest {
 
         when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
         GameState gameState = gameService.startNewGame("Pepe").block();
-        GameState finalState = gameService.playerStand(gameState).block();
+        GameState finalState = gameService.playerHit(gameState).block();
 
         GameResult result = gameService.findOutWinner(finalState).block();
 
