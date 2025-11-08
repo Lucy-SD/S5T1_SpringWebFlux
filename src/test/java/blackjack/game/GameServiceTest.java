@@ -304,4 +304,24 @@ class GameServiceTest {
         assertThat(result.getPlayerScore()).isEqualTo(17);
         assertThat(result.getDealerScore()).isEqualTo(17);
     }
+
+    @Test
+    void whenBothHaveBlackjack_thenPush() {
+        List<Card> mockCards = Arrays.asList(
+                new Card(10),
+                new Card(10),
+                new Card(1),
+                new Card(1)
+        );
+
+        when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
+        GameState gameState = gameService.startNewGame("Pepe").block();
+        GameState finalState = gameService.playerStand(gameState).block();
+
+        GameResult result = gameService.findOutWinner(finalState).block();
+
+        assertThat(result.getWinner()).isEqualTo(Winner.PUSH);
+        assertThat(result.getPlayerScore()).isEqualTo(21);
+        assertThat(result.getDealerScore()).isEqualTo(21);
+    }
 }
