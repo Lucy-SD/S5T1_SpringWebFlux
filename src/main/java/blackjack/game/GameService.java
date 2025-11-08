@@ -87,7 +87,7 @@ public class GameService {
         return Mono.just(gameState);
     }
 
-    private Mono<GameState> dealerHit(GameState gameState) {
+    public Mono<GameState> dealerHit(GameState gameState) {
         Dealer dealer = gameState.getDealer();
         if (dealer.getScore() >= 17) {
             return Mono.error(new GameException("El dealer no puede pedir cartas (puntuación de 17 o más)."));

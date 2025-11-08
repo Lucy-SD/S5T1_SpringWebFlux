@@ -114,4 +114,27 @@ class GameServiceTest {
         assertThat(finalState.getDealer().getHiddenCard()).isNull();
         assertThat(finalState.getDealer().getScore()).isGreaterThanOrEqualTo(17);
     }
+
+    @Test
+    void dealerHit_addsCardToHandAndUpdatesScore() {
+        List<Card> mockCards = Arrays.asList(
+                new Card(10),
+                new Card(6),
+                new Card(8),
+                new Card(10),
+                new Card(3)
+        );
+
+        when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
+        GameState gameState = gameService.startNewGame("Pepe").block();
+
+        gameState.getDealer().revealHiddenCard();
+
+        GameState newState = gameService.dealerHit(gameState).block();
+
+        assertThat(newState.getDealer().getHand()).hasSize(3);
+        assertThat(newState.getDealer().getVisibleCards()).hasSize(3);
+        assertThat(newState.getDealer().getHiddenCard()).isNull();
+        assertThat(newState.getDealer().getScore()).isEqualTo(19);
+    }
 }
