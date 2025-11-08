@@ -9,4 +9,5 @@ public interface Gamer {
     int getScore();
     void addCard(Card card);
 
+
 }
