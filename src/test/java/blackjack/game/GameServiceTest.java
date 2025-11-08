@@ -223,4 +223,25 @@ class GameServiceTest {
         assertThat(result.getDealerScore()).isEqualTo(21);
     }
 
+    @Test
+    void whenPlayerBusts_thenDealerWins() {
+        List<Card> mockCards = Arrays.asList(
+                new Card(10),
+                new Card(4),
+                new Card(2),
+                new Card(10),
+                new Card(10)
+        );
+
+        when(deckService.createShuffledDeck()).thenReturn(Flux.fromIterable(mockCards));
+        GameState gameState = gameService.startNewGame("Pepe").block();
+        GameState newState = gameService.playerHit(gameState).block();
+
+        GameResult result = gameService.findOutWinner(newState).block();
+
+        assertThat(result.getWinner()).isEqualTo(Winner.DEALER);
+        assertThat(result.getPlayerScore()).isEqualTo(22);
+        assertThat(result.getDealerScore()).isEqualTo(14);
+    }
+
 }
