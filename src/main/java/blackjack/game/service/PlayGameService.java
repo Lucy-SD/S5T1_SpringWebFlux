@@ -8,6 +8,7 @@ import blackjack.game.model.GameState;
 import blackjack.game.model.Winner;
 import blackjack.gamer.model.Dealer;
 import blackjack.gamer.model.Player;
+import lombok.val;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -73,11 +74,23 @@ public class PlayGameService {
     }
 
     public Mono<GameState> playerStand(GameState gameState) {
+        Player player = gameState.getPlayer();
         Dealer dealer = gameState.getDealer();
 
-        dealer.revealHiddenCard();
+        if (player.getScore() > 21) {
+            return Mono.just(gameState);
+        }
+        if (player.hasBlackjack() && !dealerMightHaveBlackjack(dealer)) {
+            return Mono.just(gameState);
+        }
 
+        dealer.revealHiddenCard();
         return dealerTurn(gameState);
+    }
+
+    private boolean dealerMightHaveBlackjack(Dealer dealer) {
+        Card visibleCard = dealer.getVisibleCards().getFirst();
+        return visibleCard.value() == 10 || visibleCard.value() == 1;
     }
 
     private Mono<GameState> dealerTurn(GameState gameState) {

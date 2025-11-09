@@ -19,13 +19,13 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class GameController {
     private final ReadGameService readGame;
-    private final GameManagerService managerService;
+    private final GameManagerService gameManager;
     private final GameMapper mapper;
     private final GameResponseMapper responseMapper;
 
     @PostMapping("/new")
     public Mono<ResponseEntity<GameResponse>> createGame(@Valid @RequestBody CreateGameRequest request) {
-        return managerService.createNewGame(request.playerName())
+        return gameManager.createNewGame(request.playerName())
                 .flatMap(gameEntity ->
                         mapper.toGameState(gameEntity)
                         .map(gameState -> responseMapper.toGameResponse(
@@ -41,7 +41,6 @@ public class GameController {
                         Mono.just(ResponseEntity.badRequest().build())
                 );
     }
-
 
     @GetMapping("/{gameId}")
     public Mono<ResponseEntity<GameResponse>> getGame(@PathVariable String gameId) {

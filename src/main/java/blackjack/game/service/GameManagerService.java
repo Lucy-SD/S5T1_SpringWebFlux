@@ -42,7 +42,7 @@ public class GameManagerService {
     public Mono<GameEntity> playerHit(String gameId) {
         return gameRepository.findById(gameId)
                 .switchIfEmpty(Mono.error(new GameException("No se encontró la partida con ID: "
-                        + gameId)))
+                        + gameId + ".")))
                 .flatMap(gameEntity ->
                         gameMapper.toGameState(gameEntity)
                                 .flatMap(playGameService::playerHit)
@@ -58,7 +58,7 @@ public class GameManagerService {
     public Mono<GameEntity> playerStand(String gameId) {
         return gameRepository.findById(gameId)
                 .switchIfEmpty(Mono.error(new GameException("No se encontró la partida con ID: "
-                        + gameId)))
+                        + gameId +".")))
                 .flatMap(gameEntity ->
                         gameMapper.toGameState(gameEntity)
                                 .flatMap(playGameService::playerStand)
@@ -75,7 +75,7 @@ public class GameManagerService {
     public Mono<GameEntity> finishGame(String gameId) {
         return gameRepository.findById(gameId)
                 .switchIfEmpty(Mono.error(new GameException("No se encontró la partida con ID: "
-                        + gameId)))
+                        + gameId +".")))
                 .flatMap(gameEntity ->
                         gameMapper.toGameState(gameEntity)
                                 .flatMap(playGameService::findOutWinner)
