@@ -1,10 +1,7 @@
 package blackjack.ranking.dto.response;
 
+import java.util.List;
+
 public record RankingResponse (
-        String playerName,
-        int gamesWon,
-        int gamesLost,
-        int gamesPushed,
-        int totalGames,
-        double winRate
+      List<RankingEntry> ranking
 ){}
