@@ -34,7 +34,7 @@ public class GameMapper {
         Dealer dealer = new Dealer();
         dealer.getHand().addAll(gameEntity.getDealerHand());
         dealer.updateScore();
-        if (!gameEntity.isDealerHasHiddenCard()) {
+        if (!gameEntity.isDealerFirstCardHidden()) {
             dealer.revealHiddenCard();
         }
 

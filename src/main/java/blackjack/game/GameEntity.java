@@ -21,7 +21,7 @@ public class GameEntity {
 
     private List<Card> playerHand;
     private List<Card> dealerHand;
-    private boolean dealerHasHiddenCard;
+    private boolean isDealerFirstCardHidden;
     private int playerScore;
     private int dealerScore;
 
@@ -34,7 +34,7 @@ public class GameEntity {
         this.playerId = playerId;
         this.playerHand = gameState.getPlayer().getHand();
         this.dealerHand = gameState.getDealer().getHand();
-        this.dealerHasHiddenCard = true;
+        this.isDealerFirstCardHidden = true;
         this.playerScore = gameState.getPlayer().getScore();
         this.dealerScore = gameState.getDealer().getScore();
         this.createdAt = Instant.now();

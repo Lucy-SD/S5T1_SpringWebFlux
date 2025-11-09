@@ -65,7 +65,7 @@ public class GameManagerService {
                                 .map(updatedGameState -> {
                                     GameEntity updatedEntity = gameMapper.toGameEntity(updatedGameState, gameEntity.getPlayerId());
                                     updatedEntity.setId(gameEntity.getId());
-                                    updatedEntity.setDealerHasHiddenCard(false);
+                                    updatedEntity.setDealerFirstCardHidden(false);
                                     return updatedEntity;
                                 })
                 )
@@ -86,7 +86,7 @@ public class GameManagerService {
                 )
                 .flatMap(gameEntity -> {
                     gameEntity.setStatus(GameStatus.FINISHED);
-                    gameEntity.setDealerHasHiddenCard(false);
+                    gameEntity.setDealerFirstCardHidden(false);
                     return gameRepository.save(gameEntity);
                 });
     }
