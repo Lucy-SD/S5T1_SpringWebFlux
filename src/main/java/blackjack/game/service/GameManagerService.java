@@ -2,6 +2,8 @@ package blackjack.game.service;
 
 import blackjack.exception.GameException;
 import blackjack.game.GameEntity;
+import blackjack.game.GameResult;
+import blackjack.game.GameStatus;
 import blackjack.game.mapper.GameMapper;
 import blackjack.game.repository.GameRepository;
 import blackjack.gamer.Player;
@@ -68,5 +70,37 @@ public class GameManagerService {
                                 })
                 )
                 .flatMap(gameRepository::save);
+    }
+
+    public Mono<GameEntity> finishGame(String gameId) {
+        return gameRepository.findById(gameId)
+                .switchIfEmpty(Mono.error(new GameException("No se encontró la partida con ID: "
+                        + gameId)))
+                .flatMap(gameEntity ->
+                        gameMapper.toGameState(gameEntity)
+                                .flatMap(playGameService::findOutWinner)
+                                .flatMap(gameResult ->
+                                        updatePlayerStats(gameEntity.getPlayerId(), gameResult)
+                                                .then(Mono.just(gameEntity))
+                                )
+                )
+                .flatMap(gameEntity -> {
+                    gameEntity.setStatus(GameStatus.FINISHED);
+                    gameEntity.setDealerHasHiddenCard(false);
+                    return gameRepository.save(gameEntity);
+                });
+    }
+
+    private Mono<Void> updatePlayerStats(Long playerId, GameResult gameResult) {
+        return playerRepository.findById(playerId)
+                .flatMap(playerEntity -> {
+                    switch (gameResult.winner()) {
+                        case PLAYER -> playerEntity.setGamesWon(playerEntity.getGamesWon() + 1);
+                        case DEALER -> playerEntity.setGamesLost(playerEntity.getGamesLost() + 1);
+                        case PUSH -> playerEntity.setGamesPushed(playerEntity.getGamesPushed() + 1);
+                    }
+                    return playerRepository.save(playerEntity);
+                })
+                .then();
     }
 }
