@@ -1,5 +1,6 @@
 package blackjack.game.service;
 
+import blackjack.exception.GameException;
 import blackjack.game.GameEntity;
 import blackjack.game.mapper.GameMapper;
 import blackjack.game.repository.GameRepository;
@@ -36,4 +37,19 @@ public class GameManagerService {
                 .flatMap(gameRepository::save);
     }
 
+    public Mono<GameEntity> playerHit(String gameId) {
+        return gameRepository.findById(gameId)
+                .switchIfEmpty(Mono.error(new GameException("No se encontró la partida con ID: "
+                        + gameId)))
+                .flatMap(gameEntity ->
+                        gameMapper.toGameState(gameEntity)
+                                .flatMap(playGameService::playerHit)
+                                .map(updatedGameState -> {
+                                    GameEntity updatedEntity = gameMapper.toGameEntity(updatedGameState, gameEntity.getPlayerId());
+                                    updatedEntity.setId(gameEntity.getId());
+                                    return updatedEntity;
+                                })
+                )
+                .flatMap(gameRepository::save);
+    }
 }
