@@ -13,13 +13,13 @@ import reactor.core.publisher.Mono;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class GamePlayService {
+public class PlayGameService {
 
     private DeckService deckService;
     private Flux<Card> currentDeck;
     private AtomicInteger usedCards = new AtomicInteger(0);
 
-    public GamePlayService(DeckService deckService) {
+    public PlayGameService(DeckService deckService) {
         this.deckService = deckService;
     }
 
