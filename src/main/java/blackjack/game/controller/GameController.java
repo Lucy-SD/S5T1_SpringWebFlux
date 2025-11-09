@@ -1,35 +1,53 @@
 package blackjack.game.controller;
 
 import blackjack.exception.GameException;
+import blackjack.game.dto.request.CreateGameRequest;
 import blackjack.game.dto.response.GameResponse;
 import blackjack.game.mapper.GameMapper;
 import blackjack.game.mapper.GameResponseMapper;
+import blackjack.game.service.GameManagerService;
 import blackjack.game.service.ReadGameService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/game")
+@RequiredArgsConstructor
 public class GameController {
-    private final ReadGameService readGameService;
-    private final GameMapper gameMapper;
-    private final GameResponseMapper gameResponseMapper;
+    private final ReadGameService readGame;
+    private final GameManagerService managerService;
+    private final GameMapper mapper;
+    private final GameResponseMapper responseMapper;
 
-    public GameController(ReadGameService readGameService, GameMapper gameMapper, GameResponseMapper gameResponseMapper) {
-        this.readGameService = readGameService;
-        this.gameMapper = gameMapper;
-        this.gameResponseMapper = gameResponseMapper;
+    @PostMapping("/new")
+    public Mono<ResponseEntity<GameResponse>> createGame(@Valid @RequestBody CreateGameRequest request) {
+        return managerService.createNewGame(request.playerName())
+                .flatMap(gameEntity ->
+                        mapper.toGameState(gameEntity)
+                        .map(gameState -> responseMapper.toGameResponse(
+                                gameState,
+                                gameEntity.getId(),
+                                gameEntity.getStatus()
+                        ))
+                )
+                .map(gameResponse ->
+                        ResponseEntity.status(HttpStatus.CREATED).body(gameResponse)
+                )
+                .onErrorResume(GameException.class, e ->
+                        Mono.just(ResponseEntity.badRequest().build())
+                );
     }
+
 
     @GetMapping("/{gameId}")
     public Mono<ResponseEntity<GameResponse>> getGame(@PathVariable String gameId) {
-        return readGameService.findGameById(gameId)
-                .flatMap(gameEntity -> gameMapper.toGameState(gameEntity)
-                        .map(gameState -> gameResponseMapper.toGameResponse(
+        return readGame.findGameById(gameId)
+                .flatMap(gameEntity -> mapper.toGameState(gameEntity)
+                        .map(gameState -> responseMapper.toGameResponse(
                                 gameState, gameId, gameEntity.getStatus()
                         ))
                         .map(ResponseEntity::ok)
