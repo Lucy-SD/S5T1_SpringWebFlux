@@ -1,4 +1,4 @@
-package blackjack.game;
+package blackjack.game.model;
 
 public enum GameStatus {
     ACTIVE,

@@ -1,7 +1,7 @@
-package blackjack.game;
+package blackjack.game.model;
 
-import blackjack.gamer.Dealer;
-import blackjack.gamer.Player;
+import blackjack.gamer.model.Dealer;
+import blackjack.gamer.model.Player;
 
 public class GameState {
 

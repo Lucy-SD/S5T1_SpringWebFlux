@@ -3,11 +3,11 @@ package blackjack.game.service;
 import blackjack.deck.Card;
 import blackjack.deck.DeckService;
 import blackjack.exception.GameException;
-import blackjack.game.GameResult;
-import blackjack.game.GameState;
-import blackjack.game.Winner;
-import blackjack.gamer.Dealer;
-import blackjack.gamer.Player;
+import blackjack.game.model.GameResult;
+import blackjack.game.model.GameState;
+import blackjack.game.model.Winner;
+import blackjack.gamer.model.Dealer;
+import blackjack.gamer.model.Player;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

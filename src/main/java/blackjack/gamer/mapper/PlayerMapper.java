@@ -1,6 +1,6 @@
 package blackjack.gamer.mapper;
 
-import blackjack.gamer.Player;
+import blackjack.gamer.model.Player;
 import blackjack.gamer.entity.PlayerEntity;
 
 public class PlayerMapper {

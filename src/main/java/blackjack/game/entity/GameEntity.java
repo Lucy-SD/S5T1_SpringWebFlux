@@ -1,6 +1,8 @@
-package blackjack.game;
+package blackjack.game.entity;
 
 import blackjack.deck.Card;
+import blackjack.game.model.GameState;
+import blackjack.game.model.GameStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;

@@ -1,10 +1,10 @@
 package blackjack.game.mapper;
 
 import blackjack.exception.GameException;
-import blackjack.game.GameEntity;
-import blackjack.game.GameState;
-import blackjack.gamer.Dealer;
-import blackjack.gamer.Player;
+import blackjack.game.entity.GameEntity;
+import blackjack.game.model.GameState;
+import blackjack.gamer.model.Dealer;
+import blackjack.gamer.model.Player;
 import blackjack.gamer.entity.PlayerEntity;
 import blackjack.gamer.repository.PlayerRepository;
 import org.springframework.stereotype.Component;

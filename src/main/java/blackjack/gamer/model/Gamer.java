@@ -1,4 +1,4 @@
-package blackjack.gamer;
+package blackjack.gamer.model;
 
 import blackjack.deck.Card;
 
