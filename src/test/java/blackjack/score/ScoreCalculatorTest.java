@@ -1,7 +1,6 @@
 package blackjack.score;
 
 import blackjack.deck.Card;
-import blackjack.score.ScoreCalculator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

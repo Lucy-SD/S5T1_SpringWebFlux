@@ -1,8 +1,11 @@
-package blackjack.game;
+package blackjack.game.service;
 
 import blackjack.deck.Card;
 import blackjack.deck.DeckService;
 import blackjack.exception.GameException;
+import blackjack.game.GameResult;
+import blackjack.game.GameState;
+import blackjack.game.Winner;
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
 import reactor.core.publisher.Flux;
@@ -10,13 +13,13 @@ import reactor.core.publisher.Mono;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class GameService {
+public class GamePlayService {
 
     private DeckService deckService;
     private Flux<Card> currentDeck;
     private AtomicInteger usedCards = new AtomicInteger(0);
 
-    public GameService(DeckService deckService) {
+    public GamePlayService(DeckService deckService) {
         this.deckService = deckService;
     }
 
