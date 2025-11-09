@@ -52,4 +52,21 @@ public class GameManagerService {
                 )
                 .flatMap(gameRepository::save);
     }
+
+    public Mono<GameEntity> playerStand(String gameId) {
+        return gameRepository.findById(gameId)
+                .switchIfEmpty(Mono.error(new GameException("No se encontró la partida con ID: "
+                        + gameId)))
+                .flatMap(gameEntity ->
+                        gameMapper.toGameState(gameEntity)
+                                .flatMap(playGameService::playerStand)
+                                .map(updatedGameState -> {
+                                    GameEntity updatedEntity = gameMapper.toGameEntity(updatedGameState, gameEntity.getPlayerId());
+                                    updatedEntity.setId(gameEntity.getId());
+                                    updatedEntity.setDealerHasHiddenCard(false);
+                                    return updatedEntity;
+                                })
+                )
+                .flatMap(gameRepository::save);
+    }
 }
