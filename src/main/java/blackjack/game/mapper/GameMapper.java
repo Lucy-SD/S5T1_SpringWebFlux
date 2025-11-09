@@ -22,7 +22,7 @@ public class GameMapper {
     public Mono<GameState> toGameState(GameEntity gameEntity) {
         return playerRepository.findById(gameEntity.getPlayerId())
                 .switchIfEmpty(Mono.error(new GameException("No se encontró el jugador con ID: "
-                + gameEntity.getPlayerId())))
+                + gameEntity.getPlayerId() + ".")))
                 .map(playerEntity -> mapToGameState(gameEntity, playerEntity));
     }
 
