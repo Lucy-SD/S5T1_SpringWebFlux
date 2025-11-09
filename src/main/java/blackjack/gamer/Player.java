@@ -32,7 +32,7 @@ public class Player implements Gamer {
         return this.score;
     }
 
-    private void updateScore() {
+    public void updateScore() {
         this.score = scoreCalculator.calculate(this.hand);
     }
 
