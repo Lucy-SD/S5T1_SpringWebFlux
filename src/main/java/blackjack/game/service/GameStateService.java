@@ -19,7 +19,7 @@ public class GameStateService {
         return mapper.toGameState(gameEntity)
                 .flatMap(gameState -> validateAndProcessAction(gameState, action))
                 .map(updatedGameState -> {
-                    gameEntity.updateGameState(updatedGameState);
+                    gameEntity.updateFromGameState(updatedGameState);
                     return gameEntity;
                 });
     }

@@ -44,7 +44,7 @@ public class GameEntity {
         this.status = GameStatus.ACTIVE;
     }
 
-    public void updateGameState(GameState newGameState) {
+    public void updateFromGameState(GameState newGameState) {
         this.playerHand = new ArrayList<>(newGameState.getPlayer().getHand());
         this.dealerHand = new ArrayList<>(newGameState.getDealer().getHand());
         this.playerScore = newGameState.getPlayer().getScore();
