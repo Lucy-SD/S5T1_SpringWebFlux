@@ -1,5 +1,6 @@
 package blackjack.deck;
 
+import blackjack.deck.application.service.DeckService;
 import blackjack.deck.domain.Card;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

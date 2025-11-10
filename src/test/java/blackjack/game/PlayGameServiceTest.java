@@ -1,7 +1,7 @@
 package blackjack.game;
 
 import blackjack.deck.domain.Card;
-import blackjack.deck.DeckService;
+import blackjack.deck.application.service.DeckService;
 import blackjack.exception.GameException;
 import blackjack.game.domain.GameResult;
 import blackjack.game.model.GameState;
