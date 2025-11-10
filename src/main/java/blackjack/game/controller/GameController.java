@@ -5,12 +5,13 @@ import blackjack.game.dto.request.CreateGameRequest;
 import blackjack.game.dto.request.PlayRequest;
 import blackjack.game.dto.response.GameResponse;
 import blackjack.game.dto.response.PlayResponse;
+import blackjack.game.entity.GameEntity;
 import blackjack.game.mapper.GameMapper;
 import blackjack.game.mapper.GameResponseMapper;
 import blackjack.game.model.GameResult;
 import blackjack.game.model.GameState;
 import blackjack.game.model.GameStatus;
-import blackjack.game.model.PlayerAction;
+import blackjack.game.service.GameDirectorService;
 import blackjack.game.service.GameManagerService;
 import blackjack.game.service.PlayGameService;
 import blackjack.game.service.ReadGameService;
@@ -25,6 +26,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/game")
 @RequiredArgsConstructor
 public class GameController {
+    private final GameDirectorService gameDirector;
     private final ReadGameService readGame;
     private final PlayGameService playGame;
     private final GameManagerService gameManager;
@@ -80,51 +82,34 @@ public class GameController {
                     if (gameEntity.getStatus() != GameStatus.ACTIVE) {
                         return Mono.error(new GameException("Partida finalizada."));
                     }
-                    return mapper.toGameState(gameEntity);
+                    return Mono.just(gameEntity);
                 })
-                .flatMap(gameState -> {
-                    if (gameState.getPlayer().getScore() >= 21 && request.action() == PlayerAction.HIT) {
-                        return Mono.error(new GameException("El jugador ya no puede pedir cartas."));
-                    }
-                    switch (request.action()) {
-                        case HIT -> {
-                            return gameManager.playerHit(gameId);
-                        }
-                        case STAND -> {
-                            return gameManager.playerStand(gameId);
-                        }
-                        default -> {
-                            return Mono.error(new GameException("Acción no válida."));
-                        }
-                    }
-                })
-                .flatMap(gameEntity ->
-                        mapper.toGameState(gameEntity)
-                                .flatMap(gameState ->
-                                        playGame.findOutWinner(gameState)
-                                                .flatMap(gameResult -> {
-                                                    boolean gameFinished = gameResult.winner() != null;
-                                                    GameStatus status = gameFinished ? GameStatus.FINISHED : GameStatus.ACTIVE;
-                                                    if (gameFinished) {
-                                                        return gameManager.finishGame(gameEntity.getId())
-                                                                .then(Mono.just(Tuple.of(gameState, gameResult, status)));
-                                                    } else {
-                                                        return Mono.just(Tuple.of(gameState, gameResult, status));
-                                                    }
-                                                })
-                                )
-                )
-                .map(tuple -> {
-                    GameResponse gameResponse = responseMapper.toGameResponse(
-                            tuple.gameState(), gameId, tuple.status()
-                    );
-                    return new PlayResponse(tuple.status(), gameResponse, tuple.status() == GameStatus.FINISHED ?
-                            tuple.gameResult() : null);
-                })
+                .flatMap(gameEntity -> gameDirector.processPlayerAction(gameId, request.action()))
+                .flatMap(this::processGameResult)
                 .map(ResponseEntity::ok)
                 .onErrorResume(GameException.class, e ->
                         Mono.just(ResponseEntity.badRequest().build())
                 );
+    }
+
+    private Mono<PlayResponse> processGameResult(GameEntity gameEntity) {
+        return mapper.toGameState(gameEntity)
+                .flatMap(gameState -> {
+                    if (gameEntity.getStatus() == GameStatus.FINISHED) {
+                        return playGame.findOutWinner(gameState)
+                                .map(gameResult -> new PlayResponse(
+                                        GameStatus.FINISHED,
+                                        responseMapper.toGameResponse(gameState, gameEntity.getId(), GameStatus.FINISHED),
+                                        gameResult
+                                ));
+                    } else {
+                        return Mono.just(new PlayResponse(
+                                GameStatus.ACTIVE,
+                                responseMapper.toGameResponse(gameState, gameEntity.getId(), GameStatus.ACTIVE),
+                                null
+                        ));
+                    }
+                });
     }
 
     @DeleteMapping("/{gameId}")
