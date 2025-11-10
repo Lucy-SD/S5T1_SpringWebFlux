@@ -1,4 +1,4 @@
-package blackjack.game.repository;
+package blackjack.game.infrastructure.persistence;
 
 import blackjack.game.domain.Game;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;

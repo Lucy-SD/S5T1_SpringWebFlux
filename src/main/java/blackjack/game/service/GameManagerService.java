@@ -1,7 +1,7 @@
 package blackjack.game.service;
 
 import blackjack.game.domain.Game;
-import blackjack.game.repository.GameRepository;
+import blackjack.game.infrastructure.persistence.GameRepository;
 import blackjack.player.application.service.PlayerFinder;
 import blackjack.player.infrastructure.persistence.PlayerRepository;
 import lombok.RequiredArgsConstructor;

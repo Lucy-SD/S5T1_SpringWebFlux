@@ -2,7 +2,7 @@ package blackjack.game.service;
 
 import blackjack.game.domain.Game;
 import blackjack.game.domain.GameStatus;
-import blackjack.game.repository.GameRepository;
+import blackjack.game.infrastructure.persistence.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
