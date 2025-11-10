@@ -4,9 +4,9 @@ import blackjack.exception.GameException;
 import blackjack.game.domain.GameEntity;
 import blackjack.game.model.GameState;
 import blackjack.gamer.model.Dealer;
-import blackjack.gamer.model.Player;
+import blackjack.gamer.domain.Player;
 import blackjack.gamer.entity.PlayerEntity;
-import blackjack.gamer.repository.PlayerRepository;
+import blackjack.gamer.infrastructure.persistence.PlayerRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 

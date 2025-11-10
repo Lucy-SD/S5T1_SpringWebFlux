@@ -4,7 +4,7 @@ import blackjack.exception.GameException;
 import blackjack.gamer.dto.request.UpdatePlayerRequest;
 import blackjack.gamer.dto.response.PlayerResponse;
 import blackjack.gamer.mapper.PlayerMapper;
-import blackjack.gamer.repository.PlayerRepository;
+import blackjack.gamer.infrastructure.persistence.PlayerRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

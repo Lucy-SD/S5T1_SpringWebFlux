@@ -7,7 +7,7 @@ import blackjack.game.domain.GameResult;
 import blackjack.game.model.GameState;
 import blackjack.game.domain.Winner;
 import blackjack.gamer.model.Dealer;
-import blackjack.gamer.model.Player;
+import blackjack.gamer.domain.Player;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

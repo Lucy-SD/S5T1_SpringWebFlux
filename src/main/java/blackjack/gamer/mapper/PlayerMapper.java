@@ -1,7 +1,7 @@
 package blackjack.gamer.mapper;
 
 import blackjack.gamer.dto.response.PlayerResponse;
-import blackjack.gamer.model.Player;
+import blackjack.gamer.domain.Player;
 import blackjack.gamer.entity.PlayerEntity;
 
 public class PlayerMapper {

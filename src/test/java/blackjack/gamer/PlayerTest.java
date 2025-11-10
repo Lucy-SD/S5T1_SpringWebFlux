@@ -2,7 +2,7 @@ package blackjack.gamer;
 
 import blackjack.deck.Card;
 import blackjack.gamer.model.Gamer;
-import blackjack.gamer.model.Player;
+import blackjack.gamer.domain.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
