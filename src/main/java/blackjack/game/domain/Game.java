@@ -1,9 +1,8 @@
-package blackjack.game.entity;
+package blackjack.game.domain;
 
 import blackjack.deck.Card;
 import blackjack.game.model.GameState;
-import blackjack.game.model.GameStatus;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,27 +12,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
+@Builder
 @Document(collection = "game")
-public class GameEntity {
+public class Game {
 
     @Id
     private String id;
-
     private Long playerId;
-
     private List<Card> playerHand;
     private List<Card> dealerHand;
-    private boolean isDealerFirstCardHidden;
+    @Builder.Default
+    private boolean isDealerFirstCardHidden = true;
     private int playerScore;
     private int dealerScore;
+    @Builder.Default
+    private GameStatus status = GameStatus.ACTIVE;
+    @Builder.Default
+    private Instant createdAt = Instant.now();
 
-    private GameStatus status;
-    private Instant createdAt;
+    public Game() {}
 
-    public GameEntity() {}
-
-    public GameEntity(GameState gameState, Long playerId) {
+    public Game(GameState gameState, Long playerId) {
         this.playerId = playerId;
         this.playerHand = new ArrayList<>(gameState.getPlayer().getHand());
         this.dealerHand = new ArrayList<>(gameState.getDealer().getHand());

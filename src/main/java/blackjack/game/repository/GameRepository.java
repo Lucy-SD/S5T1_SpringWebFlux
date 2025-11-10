@@ -1,6 +1,6 @@
 package blackjack.game.repository;
 
-import blackjack.game.entity.GameEntity;
+import blackjack.game.domain.GameEntity;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;
 

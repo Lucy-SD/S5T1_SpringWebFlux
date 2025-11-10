@@ -1,7 +1,7 @@
 package blackjack.game.dto.response;
 
-import blackjack.game.model.GameResult;
-import blackjack.game.model.GameStatus;
+import blackjack.game.domain.GameResult;
+import blackjack.game.domain.GameStatus;
 
 public record PlayResponse(
         GameStatus status,

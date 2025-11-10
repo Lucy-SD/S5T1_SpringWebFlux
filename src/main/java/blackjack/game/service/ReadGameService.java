@@ -1,7 +1,7 @@
 package blackjack.game.service;
 
-import blackjack.game.entity.GameEntity;
-import blackjack.game.model.GameStatus;
+import blackjack.game.domain.GameEntity;
+import blackjack.game.domain.GameStatus;
 import blackjack.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -3,12 +3,11 @@ package blackjack.game.service;
 import blackjack.deck.Card;
 import blackjack.deck.DeckService;
 import blackjack.exception.GameException;
-import blackjack.game.model.GameResult;
+import blackjack.game.domain.GameResult;
 import blackjack.game.model.GameState;
-import blackjack.game.model.Winner;
+import blackjack.game.domain.Winner;
 import blackjack.gamer.model.Dealer;
 import blackjack.gamer.model.Player;
-import lombok.val;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

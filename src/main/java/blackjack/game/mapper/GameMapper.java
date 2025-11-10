@@ -1,7 +1,7 @@
 package blackjack.game.mapper;
 
 import blackjack.exception.GameException;
-import blackjack.game.entity.GameEntity;
+import blackjack.game.domain.GameEntity;
 import blackjack.game.model.GameState;
 import blackjack.gamer.model.Dealer;
 import blackjack.gamer.model.Player;

@@ -1,6 +1,6 @@
 package blackjack.game.service;
 
-import blackjack.game.entity.GameEntity;
+import blackjack.game.domain.GameEntity;
 import blackjack.game.model.PlayerAction;
 import reactor.core.publisher.Mono;
 

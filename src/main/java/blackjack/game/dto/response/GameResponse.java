@@ -1,7 +1,7 @@
 package blackjack.game.dto.response;
 
 import blackjack.deck.Card;
-import blackjack.game.model.GameStatus;
+import blackjack.game.domain.GameStatus;
 
 import java.util.List;
 

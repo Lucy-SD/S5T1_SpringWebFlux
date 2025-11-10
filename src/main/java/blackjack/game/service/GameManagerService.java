@@ -1,9 +1,9 @@
 package blackjack.game.service;
 
 import blackjack.exception.GameException;
-import blackjack.game.entity.GameEntity;
-import blackjack.game.model.GameResult;
-import blackjack.game.model.GameStatus;
+import blackjack.game.domain.GameEntity;
+import blackjack.game.domain.GameResult;
+import blackjack.game.domain.GameStatus;
 import blackjack.game.mapper.GameMapper;
 import blackjack.game.repository.GameRepository;
 import blackjack.gamer.model.Player;

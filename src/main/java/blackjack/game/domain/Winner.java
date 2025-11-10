@@ -1,4 +1,4 @@
-package blackjack.game.model;
+package blackjack.game.domain;
 
 public enum Winner {
     DEALER,
