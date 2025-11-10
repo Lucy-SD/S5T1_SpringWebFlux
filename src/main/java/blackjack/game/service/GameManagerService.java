@@ -103,4 +103,8 @@ public class GameManagerService {
                 })
                 .then();
     }
+
+    public Mono<Void> deleteGame(String gameId) {
+        return gameRepository.deleteById(gameId);
+    }
 }

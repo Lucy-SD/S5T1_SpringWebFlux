@@ -126,4 +126,13 @@ public class GameController {
                         Mono.just(ResponseEntity.badRequest().build())
                 );
     }
+
+    @DeleteMapping("/{gameId}")
+    public Mono<ResponseEntity<Void>> deleteGame(@PathVariable String gameId) {
+        return gameManager.deleteGame(gameId)
+                .then(Mono.just(ResponseEntity.noContent().<Void>build()))
+                .onErrorResume(e ->
+                        Mono.just(ResponseEntity.notFound().build())
+                );
+    }
 }
