@@ -4,5 +4,5 @@ import blackjack.game.domain.Game;
 import reactor.core.publisher.Mono;
 
 public interface Stand {
-    Mono<Game> execute (String gameId);
+    Mono<Game> stand(String gameId);
 }
