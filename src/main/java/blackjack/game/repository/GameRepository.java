@@ -1,10 +1,10 @@
 package blackjack.game.repository;
 
-import blackjack.game.domain.GameEntity;
+import blackjack.game.domain.Game;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;
 
-public interface GameRepository extends ReactiveMongoRepository<GameEntity, String> {
+public interface GameRepository extends ReactiveMongoRepository<Game, String> {
 
-    Flux<GameEntity> findByPlayerId(Long playerId);
+    Flux<Game> findByPlayerId(Long playerId);
 }

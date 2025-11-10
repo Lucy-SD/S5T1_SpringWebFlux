@@ -1,6 +1,6 @@
 package blackjack.game.service;
 
-import blackjack.game.domain.GameEntity;
+import blackjack.game.domain.Game;
 import blackjack.game.domain.GameStatus;
 import blackjack.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 public class ReadGameService {
     private final GameRepository gameRepository;
 
-    public Mono<GameEntity> findGameById(String gameId) {
+    public Mono<Game> findGameById(String gameId) {
         return gameRepository.findById(gameId);
     }
 
@@ -29,7 +29,7 @@ public class ReadGameService {
                 .count();
     }
 
-    public Flux<GameEntity> getPlayerGameHistory(Long playerId) {
+    public Flux<Game> getPlayerGameHistory(Long playerId) {
         return gameRepository.findByPlayerId(playerId)
                 .filter(game -> game.getStatus() == GameStatus.FINISHED);
     }

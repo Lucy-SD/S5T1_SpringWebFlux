@@ -1,13 +1,12 @@
 package blackjack.game.service;
 
 import blackjack.exception.GameException;
-import blackjack.game.domain.GameEntity;
+import blackjack.game.domain.Game;
 import blackjack.game.domain.GameResult;
 import blackjack.game.domain.GameStatus;
 import blackjack.game.mapper.GameMapper;
 import blackjack.game.repository.GameRepository;
 import blackjack.gamer.domain.Player;
-import blackjack.gamer.entity.PlayerEntity;
 import blackjack.gamer.mapper.PlayerMapper;
 import blackjack.gamer.infrastructure.persistence.PlayerRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,48 +22,48 @@ public class GameManagerService {
     private final PlayerMapper playerMapper;
     private final PlayGameService playGameService;
 
-    public Mono<GameEntity> createNewGame(String playerName) {
+    public Mono<Game> createNewGame(String playerName) {
         return playerRepository.findByName(playerName)
                 .switchIfEmpty(
                         Mono.defer(() -> {
                             Player player = new Player(playerName);
-                            PlayerEntity playerEntity = playerMapper.toEntity(player);
-                            return playerRepository.save(playerEntity);
+                            Player Player = playerMapper.toEntity(player);
+                            return playerRepository.save(Player);
                         })
                 )
-                .flatMap(playerEntity -> {
+                .flatMap(Player -> {
                     return playGameService.startNewGame(playerName)
-                            .map(gameState -> gameMapper.toGameEntity(gameState, playerEntity.getId()));
+                            .map(gameState -> gameMapper.toGame(gameState, Player.getId()));
                 })
                 .flatMap(gameRepository::save);
     }
 
-    public Mono<GameEntity> playerHit(String gameId) {
+    public Mono<Game> playerHit(String gameId) {
         return gameRepository.findById(gameId)
                 .switchIfEmpty(Mono.error(new GameException("No se encontró la partida con ID: "
                         + gameId + ".")))
-                .flatMap(gameEntity ->
-                        gameMapper.toGameState(gameEntity)
+                .flatMap(Game ->
+                        gameMapper.toGameState(Game)
                                 .flatMap(playGameService::playerHit)
                                 .map(updatedGameState -> {
-                                    GameEntity updatedEntity = gameMapper.toGameEntity(updatedGameState, gameEntity.getPlayerId());
-                                    updatedEntity.setId(gameEntity.getId());
+                                    Game updatedEntity = gameMapper.toGame(updatedGameState, Game.getPlayerId());
+                                    updatedEntity.setId(Game.getId());
                                     return updatedEntity;
                                 })
                 )
                 .flatMap(gameRepository::save);
     }
 
-    public Mono<GameEntity> playerStand(String gameId) {
+    public Mono<Game> playerStand(String gameId) {
         return gameRepository.findById(gameId)
                 .switchIfEmpty(Mono.error(new GameException("No se encontró la partida con ID: "
                         + gameId +".")))
-                .flatMap(gameEntity ->
-                        gameMapper.toGameState(gameEntity)
+                .flatMap(Game ->
+                        gameMapper.toGameState(Game)
                                 .flatMap(playGameService::playerStand)
                                 .map(updatedGameState -> {
-                                    GameEntity updatedEntity = gameMapper.toGameEntity(updatedGameState, gameEntity.getPlayerId());
-                                    updatedEntity.setId(gameEntity.getId());
+                                    Game updatedEntity = gameMapper.toGame(updatedGameState, Game.getPlayerId());
+                                    updatedEntity.setId(Game.getId());
                                     updatedEntity.setDealerFirstCardHidden(false);
                                     return updatedEntity;
                                 })
@@ -72,34 +71,34 @@ public class GameManagerService {
                 .flatMap(gameRepository::save);
     }
 
-    public Mono<GameEntity> finishGame(String gameId) {
+    public Mono<Game> finishGame(String gameId) {
         return gameRepository.findById(gameId)
                 .switchIfEmpty(Mono.error(new GameException("No se encontró la partida con ID: "
                         + gameId +".")))
-                .flatMap(gameEntity ->
-                        gameMapper.toGameState(gameEntity)
+                .flatMap(Game ->
+                        gameMapper.toGameState(Game)
                                 .flatMap(playGameService::findOutWinner)
                                 .flatMap(gameResult ->
-                                        updatePlayerStats(gameEntity.getPlayerId(), gameResult)
-                                                .then(Mono.just(gameEntity))
+                                        updatePlayerStats(Game.getPlayerId(), gameResult)
+                                                .then(Mono.just(Game))
                                 )
                 )
-                .flatMap(gameEntity -> {
-                    gameEntity.setStatus(GameStatus.FINISHED);
-                    gameEntity.setDealerFirstCardHidden(false);
-                    return gameRepository.save(gameEntity);
+                .flatMap(Game -> {
+                    Game.setStatus(GameStatus.FINISHED);
+                    Game.setDealerFirstCardHidden(false);
+                    return gameRepository.save(Game);
                 });
     }
 
     private Mono<Void> updatePlayerStats(Long playerId, GameResult gameResult) {
         return playerRepository.findById(playerId)
-                .flatMap(playerEntity -> {
+                .flatMap(Player -> {
                     switch (gameResult.winner()) {
-                        case PLAYER -> playerEntity.setGamesWon(playerEntity.getGamesWon() + 1);
-                        case DEALER -> playerEntity.setGamesLost(playerEntity.getGamesLost() + 1);
-                        case PUSH -> playerEntity.setGamesPushed(playerEntity.getGamesPushed() + 1);
+                        case PLAYER -> Player.setGamesWon(Player.getGamesWon() + 1);
+                        case DEALER -> Player.setGamesLost(Player.getGamesLost() + 1);
+                        case PUSH -> Player.setGamesPushed(Player.getGamesPushed() + 1);
                     }
-                    return playerRepository.save(playerEntity);
+                    return playerRepository.save(Player);
                 })
                 .then();
     }

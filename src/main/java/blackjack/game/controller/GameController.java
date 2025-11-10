@@ -1,11 +1,11 @@
 package blackjack.game.controller;
 
 import blackjack.exception.GameException;
+import blackjack.game.domain.Game;
 import blackjack.game.dto.request.CreateGameRequest;
 import blackjack.game.dto.request.PlayRequest;
 import blackjack.game.dto.response.GameResponse;
 import blackjack.game.dto.response.PlayResponse;
-import blackjack.game.domain.GameEntity;
 import blackjack.game.mapper.GameMapper;
 import blackjack.game.mapper.GameResponseMapper;
 import blackjack.game.domain.GameResult;
@@ -42,12 +42,12 @@ public class GameController {
     @PostMapping("/new")
     public Mono<ResponseEntity<GameResponse>> createGame(@Valid @RequestBody CreateGameRequest request) {
         return gameManager.createNewGame(request.playerName())
-                .flatMap(gameEntity ->
-                        mapper.toGameState(gameEntity)
+                .flatMap(Game ->
+                        mapper.toGameState(Game)
                                 .map(gameState -> responseMapper.toGameResponse(
                                         gameState,
-                                        gameEntity.getId(),
-                                        gameEntity.getStatus()
+                                        Game.getId(),
+                                        Game.getStatus()
                                 ))
                 )
                 .map(gameResponse ->
@@ -61,9 +61,9 @@ public class GameController {
     @GetMapping("/{gameId}")
     public Mono<ResponseEntity<GameResponse>> getGame(@PathVariable String gameId) {
         return readGame.findGameById(gameId)
-                .flatMap(gameEntity -> mapper.toGameState(gameEntity)
+                .flatMap(Game -> mapper.toGameState(Game)
                         .map(gameState -> responseMapper.toGameResponse(
-                                gameState, gameId, gameEntity.getStatus()
+                                gameState, gameId, Game.getStatus()
                         ))
                         .map(ResponseEntity::ok)
                 )
@@ -78,13 +78,13 @@ public class GameController {
             @Valid @RequestBody PlayRequest request) {
         return readGame.findGameById(gameId)
                 .switchIfEmpty(Mono.error(new GameException("No se encontró la partida.")))
-                .flatMap(gameEntity -> {
-                    if (gameEntity.getStatus() != GameStatus.ACTIVE) {
+                .flatMap(Game -> {
+                    if (Game.getStatus() != GameStatus.ACTIVE) {
                         return Mono.error(new GameException("Partida finalizada."));
                     }
-                    return Mono.just(gameEntity);
+                    return Mono.just(Game);
                 })
-                .flatMap(gameEntity -> gameDirector.processPlayerAction(gameId, request.action()))
+                .flatMap(Game -> gameDirector.processPlayerAction(gameId, request.action()))
                 .flatMap(this::processGameResult)
                 .map(ResponseEntity::ok)
                 .onErrorResume(GameException.class, e ->
@@ -92,20 +92,20 @@ public class GameController {
                 );
     }
 
-    private Mono<PlayResponse> processGameResult(GameEntity gameEntity) {
-        return mapper.toGameState(gameEntity)
+    private Mono<PlayResponse> processGameResult(Game Game) {
+        return mapper.toGameState(Game)
                 .flatMap(gameState -> {
-                    if (gameEntity.getStatus() == GameStatus.FINISHED) {
+                    if (Game.getStatus() == GameStatus.FINISHED) {
                         return playGame.findOutWinner(gameState)
                                 .map(gameResult -> new PlayResponse(
                                         GameStatus.FINISHED,
-                                        responseMapper.toGameResponse(gameState, gameEntity.getId(), GameStatus.FINISHED),
+                                        responseMapper.toGameResponse(gameState, Game.getId(), GameStatus.FINISHED),
                                         gameResult
                                 ));
                     } else {
                         return Mono.just(new PlayResponse(
                                 GameStatus.ACTIVE,
-                                responseMapper.toGameResponse(gameState, gameEntity.getId(), GameStatus.ACTIVE),
+                                responseMapper.toGameResponse(gameState, Game.getId(), GameStatus.ACTIVE),
                                 null
                         ));
                     }

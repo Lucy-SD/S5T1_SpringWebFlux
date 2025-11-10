@@ -25,9 +25,9 @@ public class PlayerController {
         return playerRepository.findById(playerId)
                 .switchIfEmpty(Mono.error(new GameException("No se encontró el jugador con ID: "
                 + playerId + ".")))
-                .flatMap(playerEntity -> {
-                    playerEntity.setName(request.newName());
-                    return playerRepository.save(playerEntity);
+                .flatMap(Player -> {
+                    Player.setName(request.newName());
+                    return playerRepository.save(Player);
                 })
                 .map(playerMapper::toResponse)
                 .map(ResponseEntity::ok)

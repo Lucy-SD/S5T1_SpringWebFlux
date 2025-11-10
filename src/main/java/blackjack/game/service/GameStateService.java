@@ -1,7 +1,7 @@
 package blackjack.game.service;
 
 import blackjack.exception.GameException;
-import blackjack.game.domain.GameEntity;
+import blackjack.game.domain.Game;
 import blackjack.game.mapper.GameMapper;
 import blackjack.game.model.GameState;
 import blackjack.game.model.PlayerAction;
@@ -15,12 +15,12 @@ public class GameStateService {
     private final PlayGameService playGameService;
     private final GameMapper mapper;
 
-    public Mono<GameEntity> processAction(GameEntity gameEntity, PlayerAction action) {
-        return mapper.toGameState(gameEntity)
+    public Mono<Game> processAction(Game Game, PlayerAction action) {
+        return mapper.toGameState(Game)
                 .flatMap(gameState -> validateAndProcessAction(gameState, action))
                 .map(updatedGameState -> {
-                    gameEntity.updateFromGameState(updatedGameState);
-                    return gameEntity;
+                    Game.updateFromGameState(updatedGameState);
+                    return Game;
                 });
     }
 

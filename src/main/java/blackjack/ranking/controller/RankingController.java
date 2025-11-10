@@ -1,6 +1,6 @@
 package blackjack.ranking.controller;
 
-import blackjack.gamer.entity.PlayerEntity;
+import blackjack.gamer.domain.Player;
 import blackjack.gamer.infrastructure.persistence.PlayerRepository;
 import blackjack.ranking.dto.response.RankingEntry;
 import blackjack.ranking.dto.response.RankingResponse;
@@ -27,7 +27,7 @@ public class RankingController {
                 + player.getGamesPushed() > 0)
                 .sort(Comparator
                         .comparingDouble(this::calculateWinRate)
-                        .thenComparingInt(PlayerEntity::getGamesWon)
+                        .thenComparingInt(Player::getGamesWon)
                         .reversed()
                 )
                 .collectList()
@@ -47,7 +47,7 @@ public class RankingController {
                 .map(ResponseEntity::ok);
     }
 
-    private double calculateWinRate(PlayerEntity player) {
+    private double calculateWinRate(Player player) {
         int totalGames = player.getGamesWon() + player.getGamesLost() + player.getGamesPushed();
         return totalGames > 0 ? (double) player.getGamesWon() / totalGames : 0.0;
     }

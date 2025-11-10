@@ -1,4 +1,4 @@
-package blackjack.game.application.service;
+package blackjack.gamer.application.service;
 
 import blackjack.exception.GameException;
 import blackjack.gamer.domain.Player;
@@ -25,9 +25,6 @@ public class PlayerFinder {
     private Mono<Player> createPlayer(String name) {
         Player player = Player.builder()
                 .name(name)
-                .gamesWon(0)
-                .gamesLost(0)
-                .gamesPushed(0)
                 .build();
         return playerRepository.save(player);
     }
