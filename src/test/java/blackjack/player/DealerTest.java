@@ -1,7 +1,7 @@
-package blackjack.gamer;
+package blackjack.player;
 
-import blackjack.gamer.model.Dealer;
-import blackjack.gamer.model.Gamer;
+import blackjack.player.model.Dealer;
+import blackjack.player.model.Gamer;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

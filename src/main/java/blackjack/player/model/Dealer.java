@@ -1,4 +1,4 @@
-package blackjack.gamer.model;
+package blackjack.player.model;
 
 import blackjack.deck.Card;
 import blackjack.score.ScoreCalculator;

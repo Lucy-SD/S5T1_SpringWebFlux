@@ -2,7 +2,6 @@ package blackjack.game.service;
 
 import blackjack.exception.GameException;
 import blackjack.game.domain.Game;
-import blackjack.game.mapper.GameMapper;
 import blackjack.game.model.GameState;
 import blackjack.game.model.PlayerAction;
 import lombok.RequiredArgsConstructor;

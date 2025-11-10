@@ -1,4 +1,4 @@
-package blackjack.gamer.domain;
+package blackjack.player.domain;
 
 import lombok.Builder;
 import lombok.Data;

@@ -6,7 +6,6 @@ import blackjack.game.dto.request.CreateGameRequest;
 import blackjack.game.dto.request.PlayRequest;
 import blackjack.game.dto.response.GameResponse;
 import blackjack.game.dto.response.PlayResponse;
-import blackjack.game.mapper.GameMapper;
 import blackjack.game.mapper.GameResponseMapper;
 import blackjack.game.domain.GameResult;
 import blackjack.game.model.GameState;

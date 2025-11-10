@@ -1,10 +1,10 @@
-package blackjack.gamer.controller;
+package blackjack.player.controller;
 
 import blackjack.exception.GameException;
-import blackjack.gamer.dto.request.UpdatePlayerRequest;
-import blackjack.gamer.dto.response.PlayerResponse;
-import blackjack.gamer.mapper.PlayerMapper;
-import blackjack.gamer.infrastructure.persistence.PlayerRepository;
+import blackjack.player.dto.request.UpdatePlayerRequest;
+import blackjack.player.dto.response.PlayerResponse;
+import blackjack.player.mapper.PlayerMapper;
+import blackjack.player.infrastructure.persistence.PlayerRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

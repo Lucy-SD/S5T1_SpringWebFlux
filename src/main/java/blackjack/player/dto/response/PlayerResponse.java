@@ -1,4 +1,4 @@
-package blackjack.gamer.dto.response;
+package blackjack.player.dto.response;
 
 public record PlayerResponse (
         String id,

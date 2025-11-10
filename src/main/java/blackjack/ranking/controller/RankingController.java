@@ -1,7 +1,7 @@
 package blackjack.ranking.controller;
 
-import blackjack.gamer.domain.Player;
-import blackjack.gamer.infrastructure.persistence.PlayerRepository;
+import blackjack.player.domain.Player;
+import blackjack.player.infrastructure.persistence.PlayerRepository;
 import blackjack.ranking.dto.response.RankingEntry;
 import blackjack.ranking.dto.response.RankingResponse;
 import lombok.RequiredArgsConstructor;

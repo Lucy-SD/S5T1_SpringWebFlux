@@ -1,8 +1,8 @@
-package blackjack.gamer.application.service;
+package blackjack.player.application.service;
 
 import blackjack.exception.GameException;
-import blackjack.gamer.domain.Player;
-import blackjack.gamer.infrastructure.persistence.PlayerRepository;
+import blackjack.player.domain.Player;
+import blackjack.player.infrastructure.persistence.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
