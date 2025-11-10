@@ -3,7 +3,7 @@ package blackjack.game.mapper;
 import blackjack.game.dto.response.GameResponse;
 import blackjack.game.model.GameState;
 import blackjack.game.domain.GameStatus;
-import blackjack.score.ScoreCalculator;
+import blackjack.shared.ScoreCalculator;
 
 public class GameResponseMapper {
 

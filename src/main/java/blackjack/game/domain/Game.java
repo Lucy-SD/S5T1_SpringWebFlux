@@ -1,6 +1,6 @@
 package blackjack.game.domain;
 
-import blackjack.deck.Card;
+import blackjack.deck.domain.Card;
 import blackjack.game.model.GameState;
 import lombok.Builder;
 import lombok.Data;

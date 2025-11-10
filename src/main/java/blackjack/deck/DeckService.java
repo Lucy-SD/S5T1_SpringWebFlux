@@ -1,5 +1,6 @@
 package blackjack.deck;
 
+import blackjack.deck.domain.Card;
 import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;

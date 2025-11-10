@@ -1,9 +1,11 @@
-package blackjack.score;
+package blackjack.shared;
 
-import blackjack.deck.Card;
+import blackjack.deck.domain.Card;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class ScoreCalculator {
 
     public int calculate(List<Card> hand) {

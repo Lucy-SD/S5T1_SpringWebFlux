@@ -1,6 +1,5 @@
 package blackjack.player;
 
-import blackjack.deck.Card;
 import blackjack.player.domain.Player;
 import org.junit.jupiter.api.Test;
 
