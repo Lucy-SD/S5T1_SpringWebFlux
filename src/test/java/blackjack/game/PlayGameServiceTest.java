@@ -278,9 +278,9 @@ class PlayGameServiceTest {
     void whenPlayerHasBlackjackAndDealer21_thenPlayerWins() {
         List<Card> mockCards = Arrays.asList(
                 new Card(1),
-                new Card(10),
-                new Card(10),
                 new Card(6),
+                new Card(10),
+                new Card(10),
                 new Card(5)
         );
 
