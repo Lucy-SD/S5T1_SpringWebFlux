@@ -23,6 +23,7 @@ public class FinishGameService implements FinishGame {
         if (game.getPlayerScore() >= 21) {
             return finish(game.getId());
         }
+
         boolean playerHasBlackjack = game.getPlayerHand().size() == 2 && game.getPlayerScore() == 21;
         boolean dealerHasBlackjack = game.getDealerHand().size() == 2 &&
                 scoreCalculator.calculate(game.getDealerHand()) == 21;

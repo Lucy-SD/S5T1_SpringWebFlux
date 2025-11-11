@@ -32,7 +32,6 @@ public class DealInitialCardsService implements DealInitialCards {
                 })
                 .map(card4 -> {
                     game.getDealerHand().add(card4);
-
                     game.setPlayerScore(scoreCalculator.calculate(game.getPlayerHand()));
                     return game;
                 });

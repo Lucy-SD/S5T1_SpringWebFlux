@@ -1,4 +1,4 @@
-package blackjack.player.controller;
+package blackjack.player.infrastructure.web;
 
 import blackjack.exception.GameException;
 import blackjack.player.dto.request.UpdatePlayerRequest;
@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/player")
 @RequiredArgsConstructor
 public class PlayerController {
+
     private final PlayerRepository playerRepository;
     private final PlayerMapper playerMapper;
 
@@ -23,11 +24,10 @@ public class PlayerController {
             @PathVariable Long playerId,
             @Valid @RequestBody UpdatePlayerRequest request) {
         return playerRepository.findById(playerId)
-                .switchIfEmpty(Mono.error(new GameException("No se encontró el jugador con ID: "
-                + playerId + ".")))
-                .flatMap(Player -> {
-                    Player.setName(request.newName());
-                    return playerRepository.save(Player);
+                .switchIfEmpty(Mono.error(new GameException("No se encontró el jugador con ID: " + playerId)))
+                .flatMap(player -> {
+                    player.setName(request.newName());
+                    return playerRepository.save(player);
                 })
                 .map(playerMapper::toResponse)
                 .map(ResponseEntity::ok)
@@ -36,4 +36,3 @@ public class PlayerController {
                 );
     }
 }
-

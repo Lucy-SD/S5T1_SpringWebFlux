@@ -6,7 +6,6 @@ import blackjack.exception.GameException;
 import blackjack.game.domain.GameResult;
 import blackjack.game.model.GameState;
 import blackjack.game.domain.Winner;
-import blackjack.game.service.PlayGameService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
