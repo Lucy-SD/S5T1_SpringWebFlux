@@ -33,7 +33,7 @@ public class PlayerActionService implements Hit, Stand {
                             return game;
                         }))
                 .flatMap(gameRepository::save)
-                        .flatMap(this::checkGameCompletion);
+                .flatMap(this::handlePossibleCompletion);
     }
 
     @Override
@@ -49,10 +49,7 @@ public class PlayerActionService implements Hit, Stand {
         return Mono.just(game);
     }
 
-    private Mono<Game> checkGameCompletion(Game game) {
-        if (game.getPlayerScore() >= 21) {
-            return finishGame.finish(game.getId());
-        }
-        return Mono.just(game);
+    private Mono<Game> handlePossibleCompletion(Game game) {
+        return finishGame.shouldFinish(game);
     }
 }
