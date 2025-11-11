@@ -1,6 +1,6 @@
 package blackjack.game.model;
 
-import blackjack.player.model.Dealer;
+import blackjack.game.domain.Dealer;
 import blackjack.player.domain.Player;
 
 public class GameState {

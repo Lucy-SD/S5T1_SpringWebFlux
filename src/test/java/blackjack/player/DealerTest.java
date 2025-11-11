@@ -1,6 +1,6 @@
 package blackjack.player;
 
-import blackjack.player.model.Dealer;
+import blackjack.game.domain.Dealer;
 import blackjack.player.model.Gamer;
 import org.junit.jupiter.api.Test;
 
