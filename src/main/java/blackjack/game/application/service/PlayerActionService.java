@@ -20,7 +20,6 @@ public class PlayerActionService implements Hit, Stand {
     private final CardDrawer cardDrawer;
     private final ScoreCalculator scoreCalculator;
     private final DealersTurn dealersTurn;
-    private final FinishGame finishGame;
 
     @Override
     public Mono<Game> hit(String gameId) {
@@ -32,8 +31,7 @@ public class PlayerActionService implements Hit, Stand {
                             game.setPlayerScore(scoreCalculator.calculate(game.getPlayerHand()));
                             return game;
                         }))
-                .flatMap(gameRepository::save)
-                .flatMap(this::handlePossibleCompletion);
+                .flatMap(gameRepository::save);
     }
 
     @Override
@@ -47,9 +45,5 @@ public class PlayerActionService implements Hit, Stand {
             return Mono.error(new GameException("No puedes pedir más cartas - ya tienes 21 o más."));
         }
         return Mono.just(game);
-    }
-
-    private Mono<Game> handlePossibleCompletion(Game game) {
-        return finishGame.shouldFinish(game);
     }
 }
