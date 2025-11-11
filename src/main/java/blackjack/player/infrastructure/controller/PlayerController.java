@@ -1,7 +1,7 @@
 package blackjack.player.infrastructure.controller;
 
 import blackjack.exception.GameException;
-import blackjack.player.application.dto.request.UpdatePlayerRequest;
+import blackjack.aahhrefact.module.player.application.dto.request.UpdatePlayerRequest;
 import blackjack.aahhrefact.module.player.application.dto.response.PlayerResponse;
 import blackjack.player.infrastructure.persistence.PlayerRepository;
 import blackjack.aahhrefact.module.player.application.adapter.mapper.PlayerMapper;
