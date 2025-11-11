@@ -1,6 +1,7 @@
 package blackjack.deck.application.service;
 
 import blackjack.deck.domain.Card;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -9,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Service
 public class DeckService implements CardDrawer {
     private Flux<Card> currentDeck;
     private AtomicInteger usedCards = new AtomicInteger(0);
