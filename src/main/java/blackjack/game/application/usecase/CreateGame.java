@@ -1,6 +1,6 @@
 package blackjack.game.application.usecase;
 
-import blackjack.game.domain.Game;
+import blackjack.aahhrefact.module.game.domain.entity.Game;
 import reactor.core.publisher.Mono;
 
 public interface CreateGame {

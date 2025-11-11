@@ -1,6 +1,6 @@
 package blackjack.player.infrastructure.persistence;
 
-import blackjack.player.domain.Player;
+import blackjack.aahhrefact.module.player.domain.entity.Player;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;
 

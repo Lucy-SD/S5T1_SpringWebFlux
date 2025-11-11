@@ -1,8 +1,8 @@
 package blackjack.game.application.service;
 
 import blackjack.game.application.usecase.FinishGame;
-import blackjack.game.domain.Game;
-import blackjack.game.domain.GameStatus;
+import blackjack.aahhrefact.module.game.domain.entity.Game;
+import blackjack.aahhrefact.module.game.domain.valueObject.GameStatus;
 import blackjack.game.domain.Winner;
 import blackjack.game.infrastructure.persistence.GameRepository;
 import blackjack.player.infrastructure.persistence.PlayerRepository;

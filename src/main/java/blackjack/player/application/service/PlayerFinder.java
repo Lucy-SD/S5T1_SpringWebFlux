@@ -1,7 +1,7 @@
 package blackjack.player.application.service;
 
 import blackjack.exception.GameException;
-import blackjack.player.domain.Player;
+import blackjack.aahhrefact.module.player.domain.entity.Player;
 import blackjack.player.infrastructure.persistence.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

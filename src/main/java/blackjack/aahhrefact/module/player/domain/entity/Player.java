@@ -1,16 +1,12 @@
-package blackjack.player.domain;
+package blackjack.aahhrefact.module.player.domain.entity;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @Builder
-@Table(name = "player")
 public class Player {
 
-    @Id
     private Long id;
     private String name;
     @Builder.Default

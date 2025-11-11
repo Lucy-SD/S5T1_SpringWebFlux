@@ -1,10 +1,9 @@
-package blackjack.game.domain;
+package blackjack.aahhrefact.module.game.domain.entity;
 
 import blackjack.aahhrefact.module.deck.domain.entity.Card;
+import blackjack.aahhrefact.module.game.domain.valueObject.GameStatus;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,10 +11,8 @@ import java.util.List;
 
 @Data
 @Builder
-@Document(collection = "game")
 public class Game {
 
-    @Id
     private String id;
     private Long playerId;
 
@@ -37,7 +34,17 @@ public class Game {
     @Builder.Default
     private Instant createdAt = Instant.now();
 
-    public void revealDealerCard() {
-        this.isDealerFirstCardHidden = false;
+    public List<Card> getDealerVisibleCards() {
+        if (this.isDealerFirstCardHidden && !dealerHand.isEmpty()) {
+            return this.dealerHand.subList(0, 1);
+        }
+        return this.dealerHand;
     }
-}
+
+    public int getDealerVisibleScore() {
+        if (this.isDealerFirstCardHidden && this.dealerHand.size() > 1) {
+            return this.dealerHand.getFirst().value();
+        }
+        return this.dealerScore;
+    }
+ }

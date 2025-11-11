@@ -1,6 +1,6 @@
 package blackjack.player;
 
-import blackjack.player.domain.Player;
+import blackjack.aahhrefact.module.player.domain.entity.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

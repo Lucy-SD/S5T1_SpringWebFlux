@@ -3,7 +3,7 @@ package blackjack.game;
 import blackjack.aahhrefact.module.deck.domain.entity.Card;
 import blackjack.deck.application.service.DeckService;
 import blackjack.exception.GameException;
-import blackjack.game.domain.GameResult;
+import blackjack.aahhrefact.module.game.domain.valueObject.GameResult;
 import blackjack.game.model.GameState;
 import blackjack.game.domain.Winner;
 import org.junit.jupiter.api.Assertions;

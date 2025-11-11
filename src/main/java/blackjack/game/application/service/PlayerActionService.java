@@ -6,7 +6,7 @@ import blackjack.game.application.usecase.DealersTurn;
 import blackjack.game.application.usecase.FinishGame;
 import blackjack.game.application.usecase.Hit;
 import blackjack.game.application.usecase.Stand;
-import blackjack.game.domain.Game;
+import blackjack.aahhrefact.module.game.domain.entity.Game;
 import blackjack.game.infrastructure.persistence.GameRepository;
 import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;
 import lombok.RequiredArgsConstructor;

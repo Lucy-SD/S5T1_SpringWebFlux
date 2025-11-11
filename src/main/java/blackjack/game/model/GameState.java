@@ -1,7 +1,7 @@
 package blackjack.game.model;
 
 import blackjack.game.domain.Dealer;
-import blackjack.player.domain.Player;
+import blackjack.aahhrefact.module.player.domain.entity.Player;
 
 public class GameState {
 

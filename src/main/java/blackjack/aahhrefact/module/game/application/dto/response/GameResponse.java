@@ -1,7 +1,7 @@
-package blackjack.game.dto.response;
+package blackjack.aahhrefact.module.game.application.dto.response;
 
 import blackjack.aahhrefact.module.deck.domain.entity.Card;
-import blackjack.game.domain.GameStatus;
+import blackjack.aahhrefact.module.game.domain.valueObject.GameStatus;
 
 import java.util.List;
 

@@ -2,9 +2,9 @@ package blackjack.player.infrastructure.controller;
 
 import blackjack.exception.GameException;
 import blackjack.player.application.dto.request.UpdatePlayerRequest;
-import blackjack.player.application.dto.response.PlayerResponse;
+import blackjack.aahhrefact.module.player.application.dto.response.PlayerResponse;
 import blackjack.player.infrastructure.persistence.PlayerRepository;
-import blackjack.player.infrastructure.web.mapper.PlayerMapper;
+import blackjack.aahhrefact.module.player.application.adapter.mapper.PlayerMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

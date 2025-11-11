@@ -1,6 +1,6 @@
 package blackjack.game.infrastructure.persistence;
 
-import blackjack.game.domain.Game;
+import blackjack.aahhrefact.module.game.domain.entity.Game;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;
 
