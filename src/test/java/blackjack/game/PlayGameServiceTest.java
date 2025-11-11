@@ -1,6 +1,6 @@
 package blackjack.game;
 
-import blackjack.deck.domain.Card;
+import blackjack.aahhrefact.module.deck.domain.entity.Card;
 import blackjack.deck.application.service.DeckService;
 import blackjack.exception.GameException;
 import blackjack.game.domain.GameResult;

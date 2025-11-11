@@ -1,9 +1,9 @@
 package blackjack.game.application.service;
 
-import blackjack.deck.application.service.CardDrawer;
+import blackjack.aahhrefact.module.deck.application.usecase.CardDrawer;
 import blackjack.game.application.usecase.DealInitialCards;
 import blackjack.game.domain.Game;
-import blackjack.shared.ScoreCalculator;
+import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

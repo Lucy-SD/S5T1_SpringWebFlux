@@ -2,9 +2,7 @@ package blackjack.game.infrastructure.web.mapper;
 
 import blackjack.game.domain.Game;
 import blackjack.game.dto.response.GameResponse;
-import blackjack.game.model.GameState;
-import blackjack.game.domain.GameStatus;
-import blackjack.shared.ScoreCalculator;
+import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;
 import org.springframework.stereotype.Component;
 
 @Component

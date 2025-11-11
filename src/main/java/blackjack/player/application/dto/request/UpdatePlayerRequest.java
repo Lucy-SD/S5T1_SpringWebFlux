@@ -1,4 +1,4 @@
-package blackjack.player.dto.request;
+package blackjack.player.application.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 

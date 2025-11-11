@@ -6,7 +6,7 @@ import blackjack.game.domain.GameStatus;
 import blackjack.game.domain.Winner;
 import blackjack.game.infrastructure.persistence.GameRepository;
 import blackjack.player.infrastructure.persistence.PlayerRepository;
-import blackjack.shared.ScoreCalculator;
+import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

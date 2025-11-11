@@ -1,4 +1,4 @@
-package blackjack.deck.domain;
+package blackjack.aahhrefact.module.deck.domain.entity;
 
 public record Card(int value) {
     public Card {

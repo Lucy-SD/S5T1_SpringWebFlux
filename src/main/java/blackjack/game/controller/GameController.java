@@ -14,7 +14,7 @@ import blackjack.game.domain.GameResult;
 import blackjack.game.infrastructure.persistence.GameRepository;
 import blackjack.game.infrastructure.web.mapper.GameResponseMapper;
 import blackjack.game.domain.GameStatus;
-import blackjack.shared.ScoreCalculator;
+import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

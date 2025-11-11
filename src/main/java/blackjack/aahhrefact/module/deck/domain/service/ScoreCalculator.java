@@ -1,11 +1,9 @@
-package blackjack.shared;
+package blackjack.aahhrefact.module.deck.domain.service;
 
-import blackjack.deck.domain.Card;
-import org.springframework.stereotype.Component;
+import blackjack.aahhrefact.module.deck.domain.entity.Card;
 
 import java.util.List;
 
-@Component
 public class ScoreCalculator {
 
     public int calculate(List<Card> hand) {

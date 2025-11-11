@@ -1,8 +1,8 @@
 package blackjack.player.infrastructure.web;
 
 import blackjack.exception.GameException;
-import blackjack.player.dto.request.UpdatePlayerRequest;
-import blackjack.player.dto.response.PlayerResponse;
+import blackjack.player.application.dto.request.UpdatePlayerRequest;
+import blackjack.player.application.dto.response.PlayerResponse;
 import blackjack.player.infrastructure.persistence.PlayerRepository;
 import blackjack.player.infrastructure.web.mapper.PlayerMapper;
 import jakarta.validation.Valid;

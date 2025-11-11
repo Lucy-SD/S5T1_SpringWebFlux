@@ -1,7 +1,7 @@
 package blackjack.player.infrastructure.web.mapper;
 
 import blackjack.player.domain.Player;
-import blackjack.player.dto.response.PlayerResponse;
+import blackjack.player.application.dto.response.PlayerResponse;
 import org.springframework.stereotype.Component;
 
 @Component

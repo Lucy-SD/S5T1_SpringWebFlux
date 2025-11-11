@@ -1,6 +1,6 @@
 package blackjack.game.domain;
 
-import blackjack.deck.domain.Card;
+import blackjack.aahhrefact.module.deck.domain.entity.Card;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -37,7 +37,6 @@ public class Game {
     @Builder.Default
     private Instant createdAt = Instant.now();
 
-    // Eliminar constructores que dependen de GameState
     public void revealDealerCard() {
         this.isDealerFirstCardHidden = false;
     }

@@ -1,7 +1,7 @@
 package blackjack.deck;
 
 import blackjack.deck.application.service.DeckService;
-import blackjack.deck.domain.Card;
+import blackjack.aahhrefact.module.deck.domain.entity.Card;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
