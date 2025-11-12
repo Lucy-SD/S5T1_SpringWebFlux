@@ -5,7 +5,7 @@ import blackjack.aahhrefact.module.game.domain.entity.Game;
 import blackjack.aahhrefact.module.game.domain.valueObject.GameStatus;
 import blackjack.game.domain.Winner;
 import blackjack.game.infrastructure.persistence.GameRepository;
-import blackjack.player.infrastructure.persistence.PlayerRepository;
+import blackjack.aahhrefact.module.player.domain.port.PlayerRepository;
 import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

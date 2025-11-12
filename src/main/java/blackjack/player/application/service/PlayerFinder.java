@@ -2,7 +2,7 @@ package blackjack.player.application.service;
 
 import blackjack.exception.GameException;
 import blackjack.aahhrefact.module.player.domain.entity.Player;
-import blackjack.player.infrastructure.persistence.PlayerRepository;
+import blackjack.aahhrefact.module.player.domain.port.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

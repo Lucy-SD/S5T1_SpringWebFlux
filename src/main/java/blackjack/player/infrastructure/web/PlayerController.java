@@ -3,7 +3,7 @@ package blackjack.player.infrastructure.web;
 import blackjack.exception.GameException;
 import blackjack.aahhrefact.module.player.application.dto.request.UpdatePlayerRequest;
 import blackjack.aahhrefact.module.player.application.dto.response.PlayerResponse;
-import blackjack.player.infrastructure.persistence.PlayerRepository;
+import blackjack.aahhrefact.module.player.domain.port.PlayerRepository;
 import blackjack.aahhrefact.module.player.application.adapter.mapper.PlayerMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
