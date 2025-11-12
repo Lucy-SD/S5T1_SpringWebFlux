@@ -2,6 +2,7 @@ package blackjack.aahhrefact.module.player.application.service;
 
 import blackjack.aahhrefact.module.player.application.usecase.FindOrCreatePlayer;
 import blackjack.aahhrefact.module.player.application.usecase.GetPlayer;
+import blackjack.aahhrefact.module.player.application.usecase.UpdatePlayerStats;
 import blackjack.aahhrefact.module.player.domain.entity.Player;
 import blackjack.aahhrefact.module.player.domain.port.PlayerRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
-public class PlayerFinderService implements FindOrCreatePlayer, GetPlayer {
+public class PlayerFinderService implements FindOrCreatePlayer, GetPlayer, UpdatePlayerStats {
     private final PlayerRepository playerRepository;
 
     @Override
@@ -34,5 +35,32 @@ public class PlayerFinderService implements FindOrCreatePlayer, GetPlayer {
                 .gamesPushed(0)
                 .build();
         return playerRepository.save(newPlayer);
+    }
+
+    @Override
+    public Mono<Player> incrementWins(Long playerId) {
+        return playerRepository.findById(playerId)
+                .flatMap(player -> {
+                    player.setGamesWon(player.getGamesWon() + 1);
+                    return playerRepository.save(player);
+                });
+    }
+
+    @Override
+    public Mono<Player> incrementLosses(Long playerId) {
+        return playerRepository.findById(playerId)
+                .flatMap(player -> {
+                    player.setGamesLost(player.getGamesLost() + 1);
+                    return playerRepository.save(player);
+                });
+    }
+
+    @Override
+    public Mono<Player> incrementPushes(Long playerId) {
+        return playerRepository.findById(playerId)
+                .flatMap(player -> {
+                    player.setGamesPushed(player.getGamesPushed() + 1);
+                    return playerRepository.save(player);
+                });
     }
 }
