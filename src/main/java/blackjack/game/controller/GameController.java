@@ -1,9 +1,9 @@
 package blackjack.game.controller;
 
 import blackjack.exception.GameException;
-import blackjack.game.application.usecase.CreateGame;
-import blackjack.game.application.usecase.Hit;
-import blackjack.game.application.usecase.Stand;
+import blackjack.aahhrefact.module.game.application.usecase.CreateGame;
+import blackjack.aahhrefact.module.game.application.usecase.Hit;
+import blackjack.aahhrefact.module.game.application.usecase.Stand;
 import blackjack.aahhrefact.module.game.domain.entity.Game;
 import blackjack.aahhrefact.module.game.domain.valueObject.Winner;
 import blackjack.aahhrefact.module.game.application.dto.request.CreateGameRequest;

@@ -1,6 +1,6 @@
 package blackjack.game.application.service;
 
-import blackjack.game.application.usecase.DealersTurn;
+import blackjack.aahhrefact.module.game.application.usecase.DealersTurn;
 import blackjack.aahhrefact.module.game.domain.entity.Game;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

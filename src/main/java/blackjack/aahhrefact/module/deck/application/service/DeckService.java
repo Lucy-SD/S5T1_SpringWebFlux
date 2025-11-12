@@ -18,7 +18,7 @@ public class DeckService implements CardDrawer {
 
     @Override
     public void initializeDeck(String playerId) {
-        this.currentDeck = DeckBuilder.createShuffledDeck():
+        this.currentDeck = DeckBuilder.createShuffledDeck();
         this.deckPointer = 0;
     }
 

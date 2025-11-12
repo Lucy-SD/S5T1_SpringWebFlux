@@ -2,10 +2,10 @@ package blackjack.game.application.service;
 
 import blackjack.aahhrefact.module.deck.application.usecase.CardDrawer;
 import blackjack.exception.GameException;
-import blackjack.game.application.usecase.DealersTurn;
-import blackjack.game.application.usecase.FinishGame;
-import blackjack.game.application.usecase.Hit;
-import blackjack.game.application.usecase.Stand;
+import blackjack.aahhrefact.module.game.application.usecase.DealersTurn;
+import blackjack.aahhrefact.module.game.application.usecase.FinishGame;
+import blackjack.aahhrefact.module.game.application.usecase.Hit;
+import blackjack.aahhrefact.module.game.application.usecase.Stand;
 import blackjack.aahhrefact.module.game.domain.entity.Game;
 import blackjack.game.infrastructure.persistence.GameRepository;
 import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;

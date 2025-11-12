@@ -1,7 +1,7 @@
 package blackjack.game.application.service;
 
 import blackjack.aahhrefact.module.deck.application.usecase.CardDrawer;
-import blackjack.game.application.usecase.DealInitialCards;
+import blackjack.aahhrefact.module.game.application.usecase.DealInitialCards;
 import blackjack.aahhrefact.module.game.domain.entity.Game;
 import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;
 import lombok.RequiredArgsConstructor;

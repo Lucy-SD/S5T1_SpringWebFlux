@@ -1,4 +1,4 @@
-package blackjack.game.application.usecase;
+package blackjack.aahhrefact.module.game.application.usecase;
 
 import blackjack.aahhrefact.module.game.domain.entity.Game;
 import reactor.core.publisher.Mono;

@@ -1,6 +1,6 @@
 package blackjack.game.application.service;
 
-import blackjack.game.application.usecase.FinishGame;
+import blackjack.aahhrefact.module.game.application.usecase.FinishGame;
 import blackjack.aahhrefact.module.game.domain.entity.Game;
 import blackjack.aahhrefact.module.game.domain.valueObject.GameStatus;
 import blackjack.aahhrefact.module.game.domain.valueObject.Winner;

@@ -1,7 +1,7 @@
 package blackjack.game.application.service;
 
-import blackjack.game.application.usecase.CreateGame;
-import blackjack.game.application.usecase.DealInitialCards;
+import blackjack.aahhrefact.module.game.application.usecase.CreateGame;
+import blackjack.aahhrefact.module.game.application.usecase.DealInitialCards;
 import blackjack.aahhrefact.module.game.domain.entity.Game;
 import blackjack.game.infrastructure.persistence.GameRepository;
 import blackjack.player.application.service.PlayerFinder;
