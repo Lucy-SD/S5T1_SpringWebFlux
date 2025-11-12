@@ -1,8 +1,8 @@
 package blackjack.game.service;
 
 import blackjack.aahhrefact.module.game.domain.entity.Game;
+import blackjack.aahhrefact.module.game.domain.port.GameRepository;
 import blackjack.aahhrefact.module.game.domain.valueObject.GameStatus;
-import blackjack.game.infrastructure.persistence.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

@@ -3,6 +3,7 @@ package blackjack.aahhrefact.module.game.domain.entity;
 import blackjack.aahhrefact.module.deck.domain.entity.Card;
 import blackjack.aahhrefact.module.game.domain.valueObject.GameResult;
 import blackjack.aahhrefact.module.game.domain.valueObject.GameStatus;
+import blackjack.aahhrefact.module.game.domain.valueObject.Winner;
 import lombok.Builder;
 import lombok.Data;
 
@@ -72,5 +73,13 @@ public class Game {
 
     public boolean canPlayerHit() {
         return this.status == GameStatus.ACTIVE && this.playerScore < 21;
+    }
+
+    public Winner determineWinner() {
+        if (this.playerScore > 21) return Winner.DEALER;
+        if (this.dealerScore > 21) return Winner.PLAYER;
+        if (this.playerScore > this.dealerScore) return Winner.PLAYER;
+        if (this.dealerScore > this.playerScore) return Winner.DEALER;
+        return Winner.PUSH;
     }
 }
