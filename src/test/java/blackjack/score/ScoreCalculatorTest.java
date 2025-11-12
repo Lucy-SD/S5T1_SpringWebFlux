@@ -1,7 +1,7 @@
 package blackjack.score;
 
 import blackjack.aahhrefact.module.deck.domain.entity.Card;
-import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;
+import blackjack.aahhrefact.module.game.domain.service.ScoreCalculator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

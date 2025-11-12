@@ -1,7 +1,7 @@
 package blackjack.game.domain;
 
 import blackjack.aahhrefact.module.deck.domain.entity.Card;
-import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;
+import blackjack.aahhrefact.module.game.domain.service.ScoreCalculator;
 import lombok.Getter;
 
 import java.util.ArrayList;

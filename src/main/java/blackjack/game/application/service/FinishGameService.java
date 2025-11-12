@@ -2,11 +2,11 @@ package blackjack.game.application.service;
 
 import blackjack.aahhrefact.module.game.application.usecase.FinishGame;
 import blackjack.aahhrefact.module.game.domain.entity.Game;
+import blackjack.aahhrefact.module.game.domain.port.GameRepository;
 import blackjack.aahhrefact.module.game.domain.valueObject.GameStatus;
 import blackjack.aahhrefact.module.game.domain.valueObject.Winner;
-import blackjack.game.infrastructure.persistence.GameRepository;
 import blackjack.aahhrefact.module.player.domain.port.PlayerRepository;
-import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;
+import blackjack.aahhrefact.module.game.domain.service.ScoreCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -26,7 +26,7 @@ public class FinishGameService implements FinishGame {
 
         boolean playerHasBlackjack = game.getPlayerHand().size() == 2 && game.getPlayerScore() == 21;
         boolean dealerHasBlackjack = game.getDealerHand().size() == 2 &&
-                scoreCalculator.calculate(game.getDealerHand()) == 21;
+                game.calculateVisibleScore() == 21;
 
         if (playerHasBlackjack || dealerHasBlackjack) {
             return finish(game.getId());

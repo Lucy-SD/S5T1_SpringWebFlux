@@ -4,6 +4,6 @@ import blackjack.aahhrefact.module.game.domain.entity.Game;
 import reactor.core.publisher.Mono;
 
 public interface FinishGame {
-    Mono<Game> shouldFinish(Game game);
+    Mono<Boolean> shouldFinish(Game game);
     Mono<Game> finish(String gameId);
 }

@@ -31,11 +31,30 @@ public class Game {
 
     @Builder.Default
     private GameStatus status = GameStatus.ACTIVE;
-    
+
     private GameResult result;
 
     @Builder.Default
     private Instant createdAt = Instant.now();
+
+    public int scoreCalculator(List<Card> hand) {
+        int score = 0;
+        int aceCount = 0;
+
+        for (Card card : hand) {
+            if (card.value() == 1) {
+                aceCount++;
+                score += 11;
+            } else {
+                score += card.value();
+            }
+        }
+        while (score > 21 && aceCount > 0) {
+            score -= 10;
+            aceCount--;
+        }
+        return score;
+    }
 
     public List<Card> getVisibleCards() {
         if (this.firstCardHidden && !this.dealerHand.isEmpty()) {
@@ -44,14 +63,14 @@ public class Game {
         return this.dealerHand;
     }
 
-    public int getVisibleScore() {
-        if (this.firstCardHidden && this.dealerHand.size() > 1) {
-            int visibleScore = 0;
-            for (int i = 1; i < this.dealerHand.size(); i++) {
-                visibleScore += dealerHand.get(i).value();
-            }
-            return visibleScore;
+    public int calculateVisibleScore() {
+        if (this.firstCardHidden) {
+            return this.dealerHand.getFirst().value();
         }
-        return this.dealerScore;
+        return this.scoreCalculator(this.dealerHand);
     }
- }
+
+    public boolean canPlayerHit() {
+        return this.status == GameStatus.ACTIVE && this.playerScore < 21;
+    }
+}
