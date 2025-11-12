@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PlayerMapper {
 
-    public PlayerResponse toResponse(Player player) {
+    public static PlayerResponse toResponse(Player player) {
 
         return new PlayerResponse(
                 player.getId().toString(),
