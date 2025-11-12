@@ -5,7 +5,7 @@ import blackjack.deck.application.service.DeckService;
 import blackjack.exception.GameException;
 import blackjack.aahhrefact.module.game.domain.valueObject.GameResult;
 import blackjack.game.model.GameState;
-import blackjack.game.domain.Winner;
+import blackjack.aahhrefact.module.game.domain.valueObject.Winner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

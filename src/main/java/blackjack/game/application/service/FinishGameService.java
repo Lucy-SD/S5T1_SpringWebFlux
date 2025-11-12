@@ -3,7 +3,7 @@ package blackjack.game.application.service;
 import blackjack.game.application.usecase.FinishGame;
 import blackjack.aahhrefact.module.game.domain.entity.Game;
 import blackjack.aahhrefact.module.game.domain.valueObject.GameStatus;
-import blackjack.game.domain.Winner;
+import blackjack.aahhrefact.module.game.domain.valueObject.Winner;
 import blackjack.game.infrastructure.persistence.GameRepository;
 import blackjack.aahhrefact.module.player.domain.port.PlayerRepository;
 import blackjack.aahhrefact.module.deck.domain.service.ScoreCalculator;
@@ -32,7 +32,7 @@ public class FinishGameService implements FinishGame {
             return finish(game.getId());
         }
 
-        if (!game.isDealerFirstCardHidden() && game.getDealerScore() >= 17) {
+        if (!game.isFirstCardHidden() && game.getDealerScore() >= 17) {
             return finish(game.getId());
         }
         return Mono.just(game);
@@ -48,7 +48,7 @@ public class FinishGameService implements FinishGame {
                 })
                 .flatMap(game -> {
                     game.setStatus(GameStatus.FINISHED);
-                    game.setDealerFirstCardHidden(false);
+                    game.setFirstCardHidden(false);
                     return gameRepository.save(game);
                 });
     }

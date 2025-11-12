@@ -13,9 +13,9 @@ public class GameResponseMapper {
                 playerName,
                 game.getPlayerHand(),
                 game.getPlayerScore(),
-                game.getDealerVisibleCards(),
-                game.getDealerVisibleScore(),
-                game.isDealerFirstCardHidden(),
+                game.getVisibleCards(),
+                game.getVisibleScore(),
+                game.isFirstCardHidden(),
                 game.getStatus()
         );
     }

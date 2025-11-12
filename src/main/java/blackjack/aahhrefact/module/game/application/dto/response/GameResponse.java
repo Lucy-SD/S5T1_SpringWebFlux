@@ -10,9 +10,9 @@ public record GameResponse(
         String playerName,
         List<Card> playerHand,
         int playerScore,
-        List<Card> dealerVisibleCards,
-        int dealerVisibleScore,
-        boolean dealerHasHiddenCard,
+        List<Card> visibleCards,
+        int visibleScore,
+        boolean hasHiddenCard,
         GameStatus status
 ) {
 }

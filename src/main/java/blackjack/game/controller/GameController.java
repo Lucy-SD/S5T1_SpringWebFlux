@@ -5,7 +5,7 @@ import blackjack.game.application.usecase.CreateGame;
 import blackjack.game.application.usecase.Hit;
 import blackjack.game.application.usecase.Stand;
 import blackjack.aahhrefact.module.game.domain.entity.Game;
-import blackjack.game.domain.Winner;
+import blackjack.aahhrefact.module.game.domain.valueObject.Winner;
 import blackjack.aahhrefact.module.game.application.dto.request.CreateGameRequest;
 import blackjack.aahhrefact.module.game.application.dto.request.PlayRequest;
 import blackjack.aahhrefact.module.game.application.dto.response.GameResponse;
