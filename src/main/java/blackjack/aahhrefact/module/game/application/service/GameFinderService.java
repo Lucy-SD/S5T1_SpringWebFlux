@@ -1,4 +1,20 @@
 package blackjack.aahhrefact.module.game.application.service;
 
-public class GameFinderService {
+import blackjack.aahhrefact.module.game.application.usecase.GetGameById;
+import blackjack.aahhrefact.module.game.domain.entity.Game;
+import blackjack.aahhrefact.module.game.domain.port.GameRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
+
+@Service
+@RequiredArgsConstructor
+public class GameFinderService implements GetGameById {
+
+    private final GameRepository gameRepository;
+
+    @Override
+    public Mono<Game> getGameById(String id) {
+        return gameRepository.findById(id);
+    }
 }
