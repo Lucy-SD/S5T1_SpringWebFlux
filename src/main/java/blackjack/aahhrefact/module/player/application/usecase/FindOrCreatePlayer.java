@@ -4,5 +4,6 @@ import blackjack.aahhrefact.module.player.domain.entity.Player;
 import reactor.core.publisher.Mono;
 
 public interface FindOrCreatePlayer {
-    Mono<Player> findOrCreatePlayer(String name);
+    Mono<Player> findPlayerById(Long id);
+    Mono<Player> findOrCreatePlayerByName(String name);
 }

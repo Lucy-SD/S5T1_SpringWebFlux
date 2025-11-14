@@ -25,10 +25,10 @@ public class Player {
     public void increaseGamesPushed() {
         this.gamesPushed++;
     }
-    public int getTotalGames() {
+    public int calculateTotalGames() {
         return this.gamesWon + this.gamesLost + this.gamesPushed;
     }
-    public double getWinRate() {
-        return getTotalGames() > 0 ? (double) this.gamesWon / getTotalGames() : 0.0;
+    public double calculateWinRate() {
+        return calculateTotalGames() > 0 ? (double) this.gamesWon / calculateTotalGames() : 0.0;
     }
 }

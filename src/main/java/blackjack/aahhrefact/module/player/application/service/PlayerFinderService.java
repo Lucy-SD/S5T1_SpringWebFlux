@@ -5,6 +5,7 @@ import blackjack.aahhrefact.module.player.application.usecase.GetPlayer;
 import blackjack.aahhrefact.module.player.application.usecase.UpdatePlayerStats;
 import blackjack.aahhrefact.module.player.domain.entity.Player;
 import blackjack.aahhrefact.module.player.domain.port.PlayerRepository;
+import blackjack.exception.GameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -15,7 +16,13 @@ public class PlayerFinderService implements FindOrCreatePlayer, GetPlayer, Updat
     private final PlayerRepository playerRepository;
 
     @Override
-    public Mono<Player> findOrCreatePlayer(String name) {
+    public Mono<Player> findPlayerById(Long id) {
+        return playerRepository.findById(id)
+                .switchIfEmpty(Mono.error(new GameException(("No se encotró el jugador con ID: " + id + "."))));
+    }
+
+    @Override
+    public Mono<Player> findOrCreatePlayerByName(String name) {
         return playerRepository.existsByName(name)
                 .flatMap(exists -> exists
                 ? playerRepository.findByName(name)
@@ -41,7 +48,7 @@ public class PlayerFinderService implements FindOrCreatePlayer, GetPlayer, Updat
     public Mono<Player> incrementWins(Long playerId) {
         return playerRepository.findById(playerId)
                 .flatMap(player -> {
-                    player.setGamesWon(player.getGamesWon() + 1);
+                    player.increaseGamesWon();
                     return playerRepository.save(player);
                 });
     }
@@ -50,7 +57,7 @@ public class PlayerFinderService implements FindOrCreatePlayer, GetPlayer, Updat
     public Mono<Player> incrementLosses(Long playerId) {
         return playerRepository.findById(playerId)
                 .flatMap(player -> {
-                    player.setGamesLost(player.getGamesLost() + 1);
+                    player.increaseGamesLost();
                     return playerRepository.save(player);
                 });
     }
@@ -59,7 +66,7 @@ public class PlayerFinderService implements FindOrCreatePlayer, GetPlayer, Updat
     public Mono<Player> incrementPushes(Long playerId) {
         return playerRepository.findById(playerId)
                 .flatMap(player -> {
-                    player.setGamesPushed(player.getGamesPushed() + 1);
+                    player.increaseGamesPushed();
                     return playerRepository.save(player);
                 });
     }

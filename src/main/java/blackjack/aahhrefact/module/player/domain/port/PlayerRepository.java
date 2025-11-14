@@ -1,6 +1,7 @@
 package blackjack.aahhrefact.module.player.domain.port;
 
 import blackjack.aahhrefact.module.player.domain.entity.Player;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface PlayerRepository {
@@ -9,4 +10,5 @@ public interface PlayerRepository {
     Mono<Player> findById(Long id);
     Mono<Player> save(Player player);
     Mono<Void> delete(Player player);
+    Flux<Player> findAll();
 }

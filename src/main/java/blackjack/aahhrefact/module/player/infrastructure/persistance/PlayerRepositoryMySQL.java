@@ -1,6 +1,5 @@
 package blackjack.aahhrefact.module.player.infrastructure.persistance;
 
-import blackjack.aahhrefact.module.player.domain.port.PlayerRepository;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import org.springframework.data.repository.query.Param;

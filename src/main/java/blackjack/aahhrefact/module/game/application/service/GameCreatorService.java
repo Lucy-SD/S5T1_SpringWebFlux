@@ -19,7 +19,7 @@ public class GameCreatorService implements CreateGame {
 
     @Override
     public Mono<Game> create(String playerName) {
-        return playerFinder.findOrCreatePlayer(playerName)
+        return playerFinder.findOrCreatePlayerByName(playerName)
                 .map(player -> Game.builder()
                         .playerId(player.getId())
                         .status(GameStatus.ACTIVE)

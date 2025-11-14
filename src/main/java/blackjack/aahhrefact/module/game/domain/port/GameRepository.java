@@ -8,4 +8,5 @@ public interface GameRepository {
     Mono<Game> findById(String id);
     Mono<Game> save(Game game);
     Flux<Game> findByPlayerId(Long playerId);
+    Mono<Void> deleteById(String id);
 }

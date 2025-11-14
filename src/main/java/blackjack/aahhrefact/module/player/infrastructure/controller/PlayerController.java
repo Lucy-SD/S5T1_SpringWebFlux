@@ -15,28 +15,29 @@ public class PlayerController {
 
     private final GetPlayer getPlayer;
     private final UpdatePlayerStats updatePlayerStats;
+    private final PlayerMapper mapper;
 
     @GetMapping("/{id}")
     public Mono<PlayerResponse> getPlayer(@PathVariable Long id){
         return getPlayer.getPlayer(id)
-                .map(PlayerMapper::toResponse);
+                .map(mapper::toResponse);
     }
 
     @PutMapping("/{id}/wins")
     public Mono<PlayerResponse> incrementWins(@PathVariable Long id){
         return updatePlayerStats.incrementWins(id)
-                .map(PlayerMapper::toResponse);
+                .map(mapper::toResponse);
     }
 
     @PutMapping("/{id}/losses")
     public Mono<PlayerResponse> incrementLosses(@PathVariable Long id){
         return updatePlayerStats.incrementLosses(id)
-                .map(PlayerMapper::toResponse);
+                .map(mapper::toResponse);
     }
 
     @PutMapping("/{id}/pushes")
     public Mono<PlayerResponse> incrementPushes(@PathVariable Long id){
         return updatePlayerStats.incrementPushes(id)
-                .map(PlayerMapper::toResponse);
+                .map(mapper::toResponse);
     }
 }

@@ -42,7 +42,7 @@ public class PlayerActionService implements Hit, Stand {
     public Mono<Game> stand(String gameId) {
         return gameRepository.findById(gameId)
                 .flatMap(dealersTurn::play)
-                .flatMap(game -> finishGame.finish(game.getId()));
+                .flatMap(gameRepository::save);
     }
 
 }

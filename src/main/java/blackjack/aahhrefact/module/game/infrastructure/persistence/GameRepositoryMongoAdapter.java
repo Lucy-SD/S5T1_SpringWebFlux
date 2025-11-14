@@ -34,6 +34,11 @@ public class GameRepositoryMongoAdapter implements GameRepository {
                 .map(this::mapToDomain);
     }
 
+    @Override
+    public Mono<Void> deleteById(String id) {
+        return mongo.deleteById(id).then();
+    }
+
     private Game mapToDomain(GameMongoEntity entity) {
         return Game.builder()
                 .id(entity.getId())

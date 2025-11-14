@@ -3,6 +3,7 @@ package blackjack.aahhrefact.module.player.infrastructure.persistance;
 import blackjack.aahhrefact.module.player.domain.entity.Player;
 import blackjack.aahhrefact.module.player.domain.port.PlayerRepository;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
@@ -41,6 +42,12 @@ public class PlayerRepositoryAdapter implements PlayerRepository {
     @Override
     public Mono<Void> delete(Player player) {
         return mysql.delete(mapToJpa(player));
+    }
+
+    @Override
+    public Flux<Player> findAll() {
+        return mysql.findAll()
+                .map(this::mapToDomain);
     }
 
     private Player mapToDomain(PlayerJpaEntity entity) {
