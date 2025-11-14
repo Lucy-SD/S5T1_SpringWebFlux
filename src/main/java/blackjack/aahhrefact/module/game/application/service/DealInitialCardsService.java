@@ -15,7 +15,7 @@ public class DealInitialCardsService implements DealInitialCards {
 
     @Override
     public Mono<Game> deal(Game game) {
-        cardDrawer.initializeDeck(game.getPlayerId().toString());
+        cardDrawer.initializeDeck();
         return cardDrawer.drawCard()
                 .doOnNext(card -> game.getPlayerHand().add(card))
                 .then(cardDrawer.drawCard())

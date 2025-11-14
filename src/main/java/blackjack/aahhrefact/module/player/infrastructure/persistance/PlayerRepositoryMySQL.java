@@ -12,6 +12,6 @@ public interface PlayerRepositoryMySQL extends R2dbcRepository<PlayerJpaEntity, 
     @Query("SELECT * FROM player WHERE name = :name")
     Mono<PlayerJpaEntity> findByNameEntity(@Param("name") String name);
 
-    @Query("SELECT EXISTS(SELECT 1 FROM player WHERE name = :name)")
+    @Query("SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM player WHERE name = :name")
     Mono<Boolean> existsByNameEntity(@Param("name") String name);
 }
