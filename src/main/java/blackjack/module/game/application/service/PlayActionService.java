@@ -3,7 +3,7 @@ package blackjack.module.game.application.service;
 import blackjack.module.deck.domain.entity.Card;
 import blackjack.module.game.application.usecase.DealersTurn;
 import blackjack.module.game.domain.port.GameRepository;
-import blackjack.module.player.application.service.PlayerFinderService;
+import blackjack.module.player.application.service.PlayerService;
 import blackjack.shared.exception.GameException;
 import blackjack.module.game.application.usecase.FinishGame;
 import blackjack.module.game.application.usecase.Hit;
@@ -21,7 +21,7 @@ public class PlayActionService implements Hit, Stand {
     private final GameRepository gameRepository;
     private final DealersTurn dealersTurn;
     private final FinishGame finishGame;
-    private Logger log = LoggerFactory.getLogger(PlayerFinderService.class);
+    private Logger log = LoggerFactory.getLogger(PlayerService.class);
 
     @Override
 

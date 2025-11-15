@@ -1,32 +1,24 @@
 package blackjack.module.player.application.service;
 
 import blackjack.module.player.application.usecase.FindOrCreatePlayer;
-import blackjack.module.player.application.usecase.GetPlayer;
 import blackjack.module.player.domain.entity.Player;
 import blackjack.module.player.domain.port.PlayerRepository;
 import blackjack.shared.exception.GameException;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
-public class PlayerFinderService implements FindOrCreatePlayer, GetPlayer {
+public class PlayerService implements FindOrCreatePlayer {
     private final PlayerRepository playerRepository;
-    private static final Logger log = LoggerFactory.getLogger(PlayerFinderService.class);
 
     @Override
     public Mono<Player> findPlayerById(Long id) {
         return playerRepository.findById(id)
                 .switchIfEmpty(Mono.error(new GameException(("No se encotró el jugador con ID: " + id + "."))));
-    }
-
-    @Override
-    public Mono<Player> getPlayerByName(String name) {
-        return playerRepository.findByName(name)
-                .switchIfEmpty(Mono.error(new GameException("No se encontró el jugador con nombre: " + name + ".")));
     }
 
     @Override
@@ -49,11 +41,6 @@ public class PlayerFinderService implements FindOrCreatePlayer, GetPlayer {
                                 .doOnError(error -> log.error("❌ Error creando player '{}': {}", name, error.getMessage(), error));
                     }
                 });
-    }
-
-    @Override
-    public Mono<Player> getPlayerById(Long id) {
-        return playerRepository.findById(id);
     }
 
     private Mono<Player> createNewPlayer(String name) {

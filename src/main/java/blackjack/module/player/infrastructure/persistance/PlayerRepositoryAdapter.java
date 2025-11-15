@@ -2,17 +2,16 @@ package blackjack.module.player.infrastructure.persistance;
 
 import blackjack.module.player.domain.entity.Player;
 import blackjack.module.player.domain.port.PlayerRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Repository
 public class PlayerRepositoryAdapter implements PlayerRepository {
 
     private final PlayerRepositoryMySQL mysql;
-    private static final Logger log = LoggerFactory.getLogger(PlayerRepositoryAdapter.class);
 
     public PlayerRepositoryAdapter(PlayerRepositoryMySQL mysql) {
         this.mysql = mysql;
