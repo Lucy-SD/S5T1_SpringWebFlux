@@ -15,7 +15,7 @@ public class GameResponseMapper {
                 game.getPlayerScore(),
                 game.getVisibleCards(),
                 game.calculateVisibleScore(),
-                game.isFirstCardHidden(),
+                game.isHasHiddenCard(),
                 game.getStatus()
         );
     }

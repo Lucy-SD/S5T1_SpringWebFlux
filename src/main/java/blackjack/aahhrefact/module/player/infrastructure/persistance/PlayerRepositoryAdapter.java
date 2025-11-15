@@ -2,6 +2,8 @@ package blackjack.aahhrefact.module.player.infrastructure.persistance;
 
 import blackjack.aahhrefact.module.player.domain.entity.Player;
 import blackjack.aahhrefact.module.player.domain.port.PlayerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -10,6 +12,7 @@ import reactor.core.publisher.Mono;
 public class PlayerRepositoryAdapter implements PlayerRepository {
 
     private final PlayerRepositoryMySQL mysql;
+    private static final Logger log = LoggerFactory.getLogger(PlayerRepositoryAdapter.class);
 
     public PlayerRepositoryAdapter(PlayerRepositoryMySQL mysql) {
         this.mysql = mysql;
@@ -17,13 +20,19 @@ public class PlayerRepositoryAdapter implements PlayerRepository {
 
     @Override
     public Mono<Player> findByName(String name) {
+        log.info("🔎 Buscando player por nombre en MySQL: {}", name);
         return mysql.findByNameEntity(name)
-                .map(this::mapToDomain);
+                .map(this::mapToDomain)
+                .doOnSuccess(player -> log.info("✅ Player encontrado en MySQL: {}", player))
+                .doOnError(error -> log.error("❌ Error en MySQL buscando '{}': {}", name, error.getMessage(), error));
     }
 
     @Override
     public Mono<Boolean> existsByName(String name) {
-        return mysql.existsByNameEntity(name);
+        log.info("🔍 Verificando existencia de player: {}", name);
+        return mysql.existsByNameEntity(name)
+                .doOnSuccess(exists -> log.info("📊 Resultado existencia '{}': {}", name, exists))
+                .doOnError(error -> log.error("❌ Error verificando existencia '{}': {}", name, error.getMessage(), error));
     }
 
     @Override
@@ -34,9 +43,12 @@ public class PlayerRepositoryAdapter implements PlayerRepository {
 
     @Override
     public Mono<Player> save(Player player) {
+        log.info("💾 Guardando player: {}", player);
         PlayerJpaEntity entity = mapToJpa(player);
         return mysql.save(entity)
-                .map(this::mapToDomain);
+                .map(this::mapToDomain)
+                .doOnSuccess(saved -> log.info("✅ Player guardado: {}", saved))
+                .doOnError(error -> log.error("❌ Error guardando player: {}", error.getMessage(), error));
     }
 
     @Override

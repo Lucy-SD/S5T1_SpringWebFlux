@@ -1,6 +1,7 @@
 package blackjack.aahhrefact.module.deck.domain.service;
 
 import blackjack.aahhrefact.module.deck.domain.entity.Card;
+import blackjack.aahhrefact.module.deck.domain.entity.Deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,8 +26,9 @@ public class DeckBuilder {
         return shuffledDeck;
     }
 
-    public static List<Card> createShuffledDeck() {
+    public static Deck createShuffledDeck() {
         List<Card> deck = buildDeck();
-        return shuffle(deck);
+        List<Card> shuffledDeck = shuffle(deck);
+        return new Deck(shuffledDeck);
     }
 }

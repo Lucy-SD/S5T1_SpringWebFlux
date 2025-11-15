@@ -10,7 +10,7 @@ public class PlayerMapper {
     public PlayerResponse toResponse(Player player) {
 
         return new PlayerResponse(
-                player.getId().toString(),
+                player.getId(),
                 player.getName(),
                 player.getGamesWon(),
                 player.getGamesLost(),

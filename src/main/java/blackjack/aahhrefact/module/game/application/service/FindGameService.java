@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
-public class GameFinderService implements GetGameById {
+public class FindGameService implements GetGameById {
 
     private final GameRepository gameRepository;
 

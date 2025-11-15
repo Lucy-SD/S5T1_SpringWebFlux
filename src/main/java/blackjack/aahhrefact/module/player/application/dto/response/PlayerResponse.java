@@ -1,7 +1,7 @@
 package blackjack.aahhrefact.module.player.application.dto.response;
 
 public record PlayerResponse (
-        String id,
+        Long id,
         String name,
         int gamesWon,
         int gamesLost,

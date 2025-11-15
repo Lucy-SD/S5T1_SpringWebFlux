@@ -66,6 +66,26 @@ public class GameController {
                 );
     }
 
+    @PostMapping("/{id}/hit")
+    public Mono<ResponseEntity<PlayResponse>> hit(@PathVariable String id) {
+        return hit.hit(id)
+                .flatMap(this::mapGameToPlayResponse)
+                .map(ResponseEntity::ok)
+                .onErrorResume(GameException.class, e ->
+                        Mono.just(ResponseEntity.badRequest().build())
+                );
+    }
+
+    @PostMapping("/{id}/stand")
+    public Mono<ResponseEntity<PlayResponse>> stand(@PathVariable String id) {
+        return stand.stand(id)
+                .flatMap(this::mapGameToPlayResponse)
+                .map(ResponseEntity::ok)
+                .onErrorResume(GameException.class, e ->
+                        Mono.just(ResponseEntity.badRequest().build())
+                );
+    }
+
     @DeleteMapping("/{id}/delete")
     public Mono<ResponseEntity<Void>> deleteGame(@PathVariable String id) {
         return deleteGame.delete(id)

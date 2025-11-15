@@ -1,6 +1,6 @@
 package blackjack.aahhrefact.module.game.application.service;
 
-import blackjack.aahhrefact.module.deck.application.usecase.CardDrawer;
+import blackjack.aahhrefact.module.deck.domain.entity.Card;
 import blackjack.aahhrefact.module.game.application.usecase.DealersTurn;
 import blackjack.aahhrefact.module.game.domain.entity.Game;
 import lombok.RequiredArgsConstructor;
@@ -11,11 +11,9 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class DealerTurnService implements DealersTurn {
 
-    private final CardDrawer cardDrawer;
-
     @Override
     public Mono<Game> play(Game game) {
-        game.setFirstCardHidden(false);
+        game.setHasHiddenCard(false);
         game.setDealerScore(game.calculateVisibleScore());
         return drawUntil17(game);
     }
@@ -24,11 +22,10 @@ public class DealerTurnService implements DealersTurn {
         if (game.getDealerScore() >= 17) {
             return Mono.just(game);
         }
+        Card card = game.drawCardFromDeck();
+        game.getDealerHand().add(card);
+        game.setDealerScore(game.calculateVisibleScore());
 
-        return cardDrawer.drawCard()
-                .doOnNext(card -> game.getDealerHand().add(card))
-                .doOnNext(card -> game.setDealerScore(game.calculateVisibleScore()))
-                .thenReturn(game)
-                .flatMap(this::drawUntil17);
+        return drawUntil17(game);
     }
 }

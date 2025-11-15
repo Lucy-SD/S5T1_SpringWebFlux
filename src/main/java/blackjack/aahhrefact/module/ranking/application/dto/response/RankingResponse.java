@@ -1,4 +1,4 @@
-package blackjack.ranking.dto.response;
+package blackjack.aahhrefact.module.ranking.application.dto.response;
 
 import java.util.List;
 

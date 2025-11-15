@@ -1,8 +1,8 @@
 package blackjack.aahhrefact.module.game.application.service;
 
-import blackjack.aahhrefact.module.deck.application.usecase.CardDrawer;
 import blackjack.aahhrefact.module.game.application.usecase.DealInitialCards;
 import blackjack.aahhrefact.module.game.domain.entity.Game;
+import blackjack.exception.GameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -11,23 +11,20 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class DealInitialCardsService implements DealInitialCards {
 
-    private final CardDrawer cardDrawer;
-
     @Override
     public Mono<Game> deal(Game game) {
-        cardDrawer.initializeDeck();
-        return cardDrawer.drawCard()
-                .doOnNext(card -> game.getPlayerHand().add(card))
-                .then(cardDrawer.drawCard())
-                .doOnNext(card -> game.getDealerHand().add(card))
-                .then(cardDrawer.drawCard())
-                .doOnNext(card -> game.getPlayerHand().add(card))
-                .then(cardDrawer.drawCard())
-                .doOnNext(card -> game.getDealerHand().add(card))
-                .doOnNext(card -> {
-                    game.setPlayerScore(game.scoreCalculator(game.getPlayerHand()));
-                    game.setDealerScore(game.calculateVisibleScore());
-                })
-                .thenReturn(game);
+        try {
+            game.getPlayerHand().add(game.drawCardFromDeck());
+            game.getDealerHand().add(game.drawCardFromDeck());
+            game.getPlayerHand().add(game.drawCardFromDeck());
+            game.getDealerHand().add(game.drawCardFromDeck());
+
+            game.setPlayerScore(game.scoreCalculator(game.getPlayerHand()));
+            game.setDealerScore(game.calculateVisibleScore());
+
+            return Mono.just(game);
+        } catch (Exception e) {
+            return Mono.error(new GameException("Error al repartir las cartas iniciales."));
+        }
     }
 }

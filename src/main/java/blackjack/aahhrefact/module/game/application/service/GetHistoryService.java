@@ -9,7 +9,7 @@ import reactor.core.publisher.Flux;
 
 @Service
 @RequiredArgsConstructor
-public class GameHistoryService implements GetGameHistory {
+public class GetHistoryService implements GetGameHistory {
 
     private final GameRepository gameRepository;
 
