@@ -20,8 +20,10 @@ public class GameOrchestrationService {
         return finisher.finish(game)
                 .flatMap(finishedGame ->
                         stats.updateStatsWhenGameFinished(finishedGame)
+                                .doOnSuccess(v -> log.info("Juego finalizado exitosamente." +
+                                        "Estadiísticas actualizadas."))
                                 .thenReturn(finishedGame)
-                );
-
+                )
+                .doOnError(error -> log.error("Error al finalizar el juego: {}", error.getMessage()));
     }
 }

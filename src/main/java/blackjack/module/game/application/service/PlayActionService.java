@@ -29,7 +29,7 @@ public class PlayActionService implements Hit, Stand {
 
      return gameRepository.findById(gameId)
                 .switchIfEmpty(Mono.defer(() -> {
-                    log.error("❌ Game no encontrado: {}", gameId);
+                    log.error("No se encontró el juego con ID: '{}'", gameId);
                     return Mono.error(new GameException("Juego no encontrado"));
                 }))
                 .flatMap(game -> {
@@ -57,11 +57,10 @@ public class PlayActionService implements Hit, Stand {
                                         )
                                 );
                     } catch (Exception e) {
-                        log.error("Error al intentar realizar el hit: {}", e.getMessage(), e);
+                        log.error("Error al intentar realizar el hit: {}", e.getMessage());
                         return Mono.error(new GameException("Error durante el hit: " + e.getMessage()));
                     }
-                })
-                .doOnError(error -> log.error("💥 Error general en HIT: {}", error.getMessage()));
+                });
     }
 
     @Override
@@ -69,6 +68,7 @@ public class PlayActionService implements Hit, Stand {
         return gameRepository.findById(gameId)
                 .flatMap(dealersTurn::play)
                 .flatMap(gameRepository::save)
-                .flatMap(gameService::finishGameAndHandleStats);
+                .flatMap(gameService::finishGameAndHandleStats)
+                .doOnError(error -> log.error("Error al intentar realizar el stand: {}", error.getMessage()));
     }
 }

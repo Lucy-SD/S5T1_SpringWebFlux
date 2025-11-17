@@ -6,7 +6,6 @@ import reactor.core.publisher.Mono;
 
 public interface PlayerRepository {
     Mono<Player> findByName(String name);
-    Mono<Boolean> existsByName(String name);
     Mono<Player> findById(Long id);
     Mono<Player> save(Player player);
     Mono<Void> delete(Player player);

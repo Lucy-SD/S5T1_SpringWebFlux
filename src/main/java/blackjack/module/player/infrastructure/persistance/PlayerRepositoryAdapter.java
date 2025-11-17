@@ -17,19 +17,10 @@ public class PlayerRepositoryAdapter implements PlayerRepository {
 
     @Override
     public Mono<Player> findByName(String name) {
-        log.info("🔎 Buscando player por nombre en MySQL: {}", name);
         return mysql.findByNameEntity(name)
                 .map(this::mapToDomain)
-                .doOnSuccess(player -> log.info("✅ Player encontrado en MySQL: {}", player))
-                .doOnError(error -> log.error("❌ Error en MySQL buscando '{}': {}", name, error.getMessage(), error));
-    }
-
-    @Override
-    public Mono<Boolean> existsByName(String name) {
-        log.info("🔍 Verificando existencia de player: {}", name);
-        return mysql.existsByNameEntity(name)
-                .doOnSuccess(exists -> log.info("📊 Resultado existencia '{}': {}", name, exists))
-                .doOnError(error -> log.error("❌ Error verificando existencia '{}': {}", name, error.getMessage(), error));
+                .doOnSuccess(player -> log.info("Jugador '{}' encontrado correctamente.", player))
+                .doOnError(error -> log.error("Error al buscar al jugador '{}': {}.", name, error.getMessage()));
     }
 
     @Override
@@ -40,12 +31,11 @@ public class PlayerRepositoryAdapter implements PlayerRepository {
 
     @Override
     public Mono<Player> save(Player player) {
-        log.info("💾 Guardando player: {}", player);
         PlayerJpaEntity entity = mapToJpa(player);
         return mysql.save(entity)
                 .map(this::mapToDomain)
-                .doOnSuccess(saved -> log.info("✅ Player guardado: {}", saved))
-                .doOnError(error -> log.error("❌ Error guardando player: {}", error.getMessage(), error));
+                .doOnSuccess(saved -> log.info("Jugador: '{}' guardado correctamente.", saved))
+                .doOnError(error -> log.error("Error al guardar el jugador: {}", error.getMessage()));
     }
 
     @Override
