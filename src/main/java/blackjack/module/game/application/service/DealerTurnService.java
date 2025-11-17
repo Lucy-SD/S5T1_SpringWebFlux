@@ -22,10 +22,11 @@ public class DealerTurnService implements DealersTurn {
         if (game.getDealerScore() >= 17) {
             return Mono.just(game);
         }
-        Card card = game.drawCardFromDeck();
-        game.getDealerHand().add(card);
-        game.setDealerScore(game.calculateVisibleScore());
-
-        return drawUntil17(game);
+        return Mono.fromCallable(() -> {
+            Card card = game.drawCardFromDeck();
+            game.getDealerHand().add(card);
+            game.setDealerScore(game.calculateVisibleScore());
+            return game;
+        }).flatMap(this::drawUntil17);
     }
 }
