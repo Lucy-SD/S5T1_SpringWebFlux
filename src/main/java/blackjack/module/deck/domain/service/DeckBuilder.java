@@ -2,6 +2,7 @@ package blackjack.module.deck.domain.service;
 
 import blackjack.module.deck.domain.entity.Card;
 import blackjack.module.deck.domain.entity.Deck;
+import blackjack.shared.exception.GameException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,11 @@ public class DeckBuilder {
     public static Deck createShuffledDeck() {
         List<Card> deck = buildDeck();
         List<Card> shuffledDeck = shuffle(deck);
+
+        if(shuffledDeck.size() != 52) {
+            throw new IllegalStateException("El mazo generado no tiene 52 cartas, sino "
+            + shuffledDeck.size() + ".");
+        }
         return new Deck(shuffledDeck);
     }
 }
