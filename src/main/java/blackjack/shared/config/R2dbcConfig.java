@@ -5,7 +5,7 @@ import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 @Configuration
 @EnableR2dbcRepositories (
-        basePackages = "blackjack.aahhrefact.module.player.infraestructure.persistance"
+        basePackages = "blackjack.module.player.infrastructure.persistence"
 )
 public class R2dbcConfig {
 }

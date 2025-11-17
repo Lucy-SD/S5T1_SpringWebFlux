@@ -7,6 +7,7 @@ import blackjack.shared.exception.GameException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 @Log4j2
@@ -22,6 +23,7 @@ public class FindOrCreatePlayerService implements FindOrCreatePlayer {
     }
 
     @Override
+    @Transactional
     public Mono<Player> findOrCreatePlayerByName(String name) {
         log.info("🔍 Buscando o creando player: {}", name);
 
