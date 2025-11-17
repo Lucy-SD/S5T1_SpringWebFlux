@@ -3,61 +3,60 @@ package blackjack.module.game.application.service;
 import blackjack.module.deck.domain.entity.Card;
 import blackjack.module.game.application.usecase.DealersTurn;
 import blackjack.module.game.domain.port.GameRepository;
-import blackjack.module.player.application.service.PlayerService;
+
 import blackjack.shared.exception.GameException;
 import blackjack.module.game.application.usecase.FinishGame;
 import blackjack.module.game.application.usecase.Hit;
 import blackjack.module.game.application.usecase.Stand;
 import blackjack.module.game.domain.entity.Game;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PlayActionService implements Hit, Stand {
     private final GameRepository gameRepository;
     private final DealersTurn dealersTurn;
     private final FinishGame finishGame;
-    private Logger log = LoggerFactory.getLogger(PlayerService.class);
 
     @Override
 
     public Mono<Game> hit(String gameId) {
 
-        log.info("🎯 Iniciando HIT para gameId: {}", gameId);
-
-        return gameRepository.findById(gameId)
+     return gameRepository.findById(gameId)
                 .switchIfEmpty(Mono.defer(() -> {
                     log.error("❌ Game no encontrado: {}", gameId);
                     return Mono.error(new GameException("Juego no encontrado"));
                 }))
                 .flatMap(game -> {
-                    log.info("🃏 Game encontrado - Estado: {}, PlayerScore: {}",
+                    log.info("Estado del juego: {}, Puntuación del jugador: {}",
                             game.getStatus(), game.getPlayerScore());
 
                     if (!game.canPlayerHit()) {
-                        log.warn("⚠️ No se puede HIT - Estado inválido");
+                        log.warn("No se puede realizar un Hit.");
                         return Mono.error(new GameException("No puedes pedir más cartas"));
                     }
 
                     try {
                         Card card = game.drawCardFromDeck();
-                        log.info("🎴 Carta dibujada: {}", card);
+                        log.info("Nueva carta: {}", card);
 
                         game.getPlayerHand().add(card);
                         game.setPlayerScore(game.scoreCalculator(game.getPlayerHand()));
-                        log.info("📊 Nuevo ranking: {}", game.getPlayerScore());
+                        log.info("Nuevo puntaje: {}", game.getPlayerScore());
 
-                        return finishGame.shouldFinish(game)
-                                .flatMap(should -> should ?
-                                        finishGame.finish(game.getId()) :
-                                        gameRepository.save(game)
+                        return gameRepository.save(game)
+                                .flatMap(updatedGame -> finishGame.shouldFinish(updatedGame)
+                                        .flatMap(should -> should ?
+                                                finishGame.finish(updatedGame.getId()) :
+                                                Mono.just(updatedGame)
+                                        )
                                 );
                     } catch (Exception e) {
-                        log.error("💥 Error en HIT: {}", e.getMessage(), e);
+                        log.error("Error al intentar realizar el hit: {}", e.getMessage(), e);
                         return Mono.error(new GameException("Error durante el hit: " + e.getMessage()));
                     }
                 })
@@ -68,6 +67,7 @@ public class PlayActionService implements Hit, Stand {
     public Mono<Game> stand(String gameId) {
         return gameRepository.findById(gameId)
                 .flatMap(dealersTurn::play)
-                .flatMap(gameRepository::save);
+                .flatMap(gameRepository::save)
+                .flatMap(savedGame -> finishGame.finish(savedGame.getId()));
     }
 }

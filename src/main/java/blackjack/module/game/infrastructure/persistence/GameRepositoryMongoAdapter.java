@@ -1,5 +1,6 @@
 package blackjack.module.game.infrastructure.persistence;
 
+import blackjack.module.deck.domain.entity.Deck;
 import blackjack.module.game.domain.entity.Game;
 import blackjack.module.game.domain.port.GameRepository;
 import org.springframework.stereotype.Repository;
@@ -48,6 +49,7 @@ public class GameRepositoryMongoAdapter implements GameRepository {
                 .playerScore(entity.getPlayerScore())
                 .dealerScore(entity.getDealerScore())
                 .hasHiddenCard(entity.getFirstCardHidden())
+                .deck(new Deck(entity.getRemainingCards()))
                 .status(entity.getStatus())
                 .result(entity.getResult())
                 .createdAt(entity.getCreatedAt())
@@ -63,6 +65,7 @@ public class GameRepositoryMongoAdapter implements GameRepository {
                 .playerScore(game.getPlayerScore())
                 .dealerScore(game.getDealerScore())
                 .firstCardHidden(game.isHasHiddenCard())
+                .remainingCards(game.getDeck().getCards())
                 .status(game.getStatus())
                 .result(game.getResult())
                 .createdAt(game.getCreatedAt())

@@ -23,9 +23,6 @@ public class Game {
     private Deck deck = new Deck(new ArrayList<>());
 
     @Builder.Default
-    private int deckPointer = 0;
-
-    @Builder.Default
     private List<Card> playerHand = new ArrayList<>();
 
     @Builder.Default
@@ -54,7 +51,7 @@ public class Game {
     }
 
     public Card drawCardFromDeck() {
-      return deck.drawCard();
+        return deck.drawCard();
     }
 
     public int scoreCalculator(List<Card> hand) {
@@ -78,14 +75,14 @@ public class Game {
 
     public List<Card> getVisibleCards() {
         if (this.hasHiddenCard && !this.dealerHand.isEmpty()) {
-            return new ArrayList<>(dealerHand.subList(1, this.dealerHand.size()));
+            return new ArrayList<>(dealerHand.subList(0, 1));
         }
         return new ArrayList<>(this.dealerHand);
     }
 
     public int calculateVisibleScore() {
         if (this.hasHiddenCard && !this.dealerHand.isEmpty()) {
-            return this.dealerHand.getFirst().value();
+            return this.scoreCalculator(this.getVisibleCards());
         }
         return this.scoreCalculator(this.dealerHand);
     }

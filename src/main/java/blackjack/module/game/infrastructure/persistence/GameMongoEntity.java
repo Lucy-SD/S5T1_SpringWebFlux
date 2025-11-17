@@ -20,7 +20,7 @@ public class GameMongoEntity {
 
     @Id
     private String id;
-
+    private List<Card> remainingCards;
     private Long playerId;
     private List<Card> playerHand;
     private List<Card> dealerHand;

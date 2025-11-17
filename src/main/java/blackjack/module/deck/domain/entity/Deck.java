@@ -9,6 +9,10 @@ public class Deck {
         this.cards = cards;
     }
 
+    public List<Card> getCards() {
+        return this.cards;
+    }
+
     public Card drawCard() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("El mazo está vacio.");
