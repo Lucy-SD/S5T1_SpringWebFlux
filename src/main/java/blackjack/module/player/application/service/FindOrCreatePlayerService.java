@@ -25,24 +25,19 @@ public class FindOrCreatePlayerService implements FindOrCreatePlayer {
     @Override
     @Transactional
     public Mono<Player> findOrCreatePlayerByName(String name) {
-        log.info("🔍 Buscando o creando player: {}", name);
+        log.info("Buscando o creando jugador: {}", name);
 
         return playerRepository.existsByName(name)
-                .doOnSuccess(exists -> log.info("📊 Player '{}' existe en BD: {}", name, exists))
-                .doOnError(error -> log.error("❌ Error verificando existencia de player '{}': {}", name, error.getMessage(), error))
                 .flatMap(exists -> {
                     if (exists) {
-                        log.info("✅ Player '{}' existe, buscando...", name);
-                        return playerRepository.findByName(name)
-                                .doOnSuccess(player -> log.info("🎯 Player encontrado: {}", player))
-                                .doOnError(error -> log.error("❌ Error buscando player '{}': {}", name, error.getMessage(), error));
+                        log.info("Jugador encontrado: '{}'.", name);
+                        return playerRepository.findByName(name);
                     } else {
-                        log.info("🆕 Player '{}' no existe, creando nuevo...", name);
-                        return createNewPlayer(name)
-                                .doOnSuccess(player -> log.info("✨ Nuevo player creado: {}", player))
-                                .doOnError(error -> log.error("❌ Error creando player '{}': {}", name, error.getMessage(), error));
+                        log.info("Creando nuevo jugador: '{}'.", name);
+                        return createNewPlayer(name);
                     }
-                });
+                })
+                .doOnError(error -> log.error("No se pudo crear el nuevo jugador '{}': {}", name, error.getMessage()));
     }
 
     private Mono<Player> createNewPlayer(String name) {
@@ -55,7 +50,7 @@ public class FindOrCreatePlayerService implements FindOrCreatePlayer {
         log.info("Se ha creado el jugador: {}", name);
 
         return playerRepository.save(newPlayer)
-                .doOnSuccess(savedPlayer -> log.info("💾 Player guardado en BD: {}", savedPlayer))
-                .doOnError(error -> log.error("💥 Error guardando player en BD: {}", error.getMessage(), error));
+                .doOnSuccess(savedPlayer -> log.info("Se guardó correctamente al jugador: '{}'.", savedPlayer))
+                .doOnError(error -> log.error("Error al guardar al jugador: {}", error.getMessage()));
     }
 }
