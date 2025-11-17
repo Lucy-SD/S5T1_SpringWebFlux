@@ -2,7 +2,6 @@ package blackjack.module.game.infrastructure.controller;
 
 import blackjack.module.game.application.adapter.mapper.GameResponseMapper;
 import blackjack.module.game.application.dto.request.CreateGameRequest;
-import blackjack.module.game.application.dto.request.PlayRequest;
 import blackjack.module.game.application.dto.response.GameResponse;
 import blackjack.module.game.application.dto.response.PlayResponse;
 import blackjack.module.game.application.usecase.*;
@@ -46,24 +45,6 @@ public class GameController {
                 .flatMap(this::mapGameToResponse)
                 .map(ResponseEntity::ok)
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
-    }
-
-    @PostMapping("/{id}/play")
-    public Mono<ResponseEntity<PlayResponse>> playGame(
-            @PathVariable String id,
-            @Valid @RequestBody PlayRequest request) {
-
-        Mono<Game> actionResult = switch (request.action()) {
-            case HIT -> hit.hit(id);
-            case STAND -> stand.stand(id);
-        };
-
-        return actionResult
-                .flatMap(this::mapGameToPlayResponse)
-                .map(ResponseEntity::ok)
-                .onErrorResume(GameException.class, e ->
-                        Mono.just(ResponseEntity.badRequest().build())
-                );
     }
 
     @PostMapping("/{id}/hit")

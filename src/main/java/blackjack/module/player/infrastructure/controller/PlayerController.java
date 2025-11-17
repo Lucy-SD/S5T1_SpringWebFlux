@@ -1,6 +1,7 @@
 package blackjack.module.player.infrastructure.controller;
 
 import blackjack.module.player.application.adapter.mapper.PlayerMapper;
+import blackjack.module.player.application.dto.request.UpdatePlayerRequest;
 import blackjack.module.player.application.dto.response.PlayerResponse;
 import blackjack.module.player.application.usecase.DeletePlayer;
 import blackjack.module.player.application.usecase.FindOrCreatePlayer;
@@ -22,7 +23,6 @@ public class PlayerController {
 
     @GetMapping("/{id}")
     public Mono<PlayerResponse> getPlayerById(@PathVariable Long id) {
-     //   Long id = Long.parseLong(playerId);
         return getPlayer.findPlayerById(id)
                 .map(mapper::toResponse);
     }
@@ -36,8 +36,8 @@ public class PlayerController {
     @PutMapping("/{id}")
     public Mono<PlayerResponse> updatePlayersName(
             @PathVariable Long id,
-            @RequestBody String newName) {
-        return updateName.updateName(id, newName)
+            @RequestBody UpdatePlayerRequest request) {
+        return updateName.updateName(id, request.newName())
                 .map(mapper::toResponse);
 
     }
