@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+
 @Repository
 public class GameRepositoryMongoAdapter implements GameRepository {
 
@@ -44,12 +46,15 @@ public class GameRepositoryMongoAdapter implements GameRepository {
         return Game.builder()
                 .id(entity.getId())
                 .playerId(entity.getPlayerId())
-                .playerHand(entity.getPlayerHand())
-                .dealerHand(entity.getDealerHand())
+                .playerHand(entity.getPlayerHand() != null
+                        ? entity.getPlayerHand() : new ArrayList<>())
+                .dealerHand(entity.getDealerHand() != null
+                ? entity.getDealerHand() : new ArrayList<>())
                 .playerScore(entity.getPlayerScore())
                 .dealerScore(entity.getDealerScore())
-                .hasHiddenCard(entity.getFirstCardHidden())
-                .deck(new Deck(entity.getRemainingCards()))
+                .hasHiddenCard(entity.getHasHiddenCard())
+                .deck(new Deck(entity.getRemainingCards() != null
+                ? entity.getRemainingCards() : new ArrayList<>()))
                 .status(entity.getStatus())
                 .result(entity.getResult())
                 .createdAt(entity.getCreatedAt())
@@ -64,7 +69,7 @@ public class GameRepositoryMongoAdapter implements GameRepository {
                 .dealerHand(game.getDealerHand())
                 .playerScore(game.getPlayerScore())
                 .dealerScore(game.getDealerScore())
-                .firstCardHidden(game.isHasHiddenCard())
+                .hasHiddenCard(game.isHasHiddenCard())
                 .remainingCards(game.getDeck().getCards())
                 .status(game.getStatus())
                 .result(game.getResult())

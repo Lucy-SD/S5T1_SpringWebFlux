@@ -26,7 +26,7 @@ public class GameMongoEntity {
     private List<Card> dealerHand;
     private Integer playerScore;
     private Integer dealerScore;
-    private Boolean firstCardHidden;
+    private Boolean hasHiddenCard;
     private GameStatus status;
     private GameResult result;
     private Instant createdAt;
