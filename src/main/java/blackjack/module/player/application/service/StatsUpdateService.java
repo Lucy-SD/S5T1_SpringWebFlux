@@ -1,7 +1,6 @@
-package blackjack.module.game.application.service;
+package blackjack.module.player.application.service;
 
 import blackjack.module.game.domain.entity.Game;
-import blackjack.module.player.application.service.StatsService;
 import blackjack.module.player.domain.entity.Player;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,13 +14,14 @@ public class StatsUpdateService {
 
     private final StatsService statsService;
 
-    private Mono<Void> updateStatsWhenGameFinished(Game game) {
+    public Mono<Void> updateStatsWhenGameFinished(Game game) {
         if (!game.getStatus().isFinished()) {
             log.debug("El juego con ID: {} no está finalizado.", game.getId());
             return Mono.empty();
         }
         if (game.getResult() == null) {
             log.warn("El juego con ID: {} está finalizado sin resultado.", game.getId());
+            return Mono.empty();
         }
         Mono<Player> statsUpdate = switch (game.getResult().winner()) {
             case PLAYER -> {

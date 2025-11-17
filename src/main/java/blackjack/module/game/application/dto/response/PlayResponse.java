@@ -6,5 +6,5 @@ import blackjack.module.game.domain.valueObject.GameStatus;
 public record PlayResponse(
         GameStatus status,
         GameResponse gameState,
-        GameResult finalResult
+        GameResult result
 ) {}

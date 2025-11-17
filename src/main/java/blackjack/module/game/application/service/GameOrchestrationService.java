@@ -3,6 +3,7 @@ package blackjack.module.game.application.service;
 import blackjack.module.game.application.usecase.FinishGame;
 import blackjack.module.game.application.usecase.SaveGame;
 import blackjack.module.game.domain.entity.Game;
+import blackjack.module.player.application.service.StatsUpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,11 @@ public class GameOrchestrationService {
     private final FinishGame finisher;
 
     public Mono<Game> finishGameAndHandleStats(String gameId) {
-        return finisher.finish(gameId);
+        return finisher.finish(gameId)
+                .flatMap(finishedGame ->
+                        stats.updateStatsWhenGameFinished(finishedGame)
+                                .thenReturn(finishedGame)
+                );
 
     }
 }
