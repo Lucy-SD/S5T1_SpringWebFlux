@@ -1,6 +1,6 @@
 package blackjack.module.game.application.dto.response;
 
-import blackjack.module.deck.domain.entity.Card;
+import blackjack.module.deck.application.dto.response.CardResponse;
 import blackjack.module.game.domain.valueObject.GameStatus;
 
 import java.util.List;
@@ -8,9 +8,9 @@ import java.util.List;
 public record GameResponse(
         String gameId,
         String playerName,
-        List<Card> playerHand,
+        List<CardResponse> playerHand,
         int playerScore,
-        List<Card> visibleCards,
+        List<CardResponse> visibleCards,
         int visibleScore,
         boolean hasHiddenCard,
         GameStatus status
