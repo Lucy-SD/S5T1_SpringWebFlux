@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 @Log4j2
 @Service
 @RequiredArgsConstructor
-public class PlayerService implements FindOrCreatePlayer {
+public class FindOrCreatePlayerService implements FindOrCreatePlayer {
     private final PlayerRepository playerRepository;
 
     @Override

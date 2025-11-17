@@ -2,8 +2,11 @@ package blackjack.module.player.infrastructure.controller;
 
 import blackjack.module.player.application.adapter.mapper.PlayerMapper;
 import blackjack.module.player.application.dto.response.PlayerResponse;
+import blackjack.module.player.application.usecase.DeletePlayer;
 import blackjack.module.player.application.usecase.FindOrCreatePlayer;
+import blackjack.module.player.application.usecase.UpdatePlayerName;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -13,6 +16,8 @@ import reactor.core.publisher.Mono;
 public class PlayerController {
 
     private final FindOrCreatePlayer getPlayer;
+    private final UpdatePlayerName updateName;
+    private final DeletePlayer deletePlayer;
     private final PlayerMapper mapper;
 
     @GetMapping("/{id}")
@@ -29,8 +34,17 @@ public class PlayerController {
     }
 
     @PutMapping("/{id}")
-    public Mono<PlayerResponse> updatePlayersName(@PathVariable Long id) {
-        return getPlayer.findPlayerById(id)
-                .
+    public Mono<PlayerResponse> updatePlayersName(
+            @PathVariable Long id,
+            @RequestBody String newName) {
+        return updateName.updateName(id, newName)
+                .map(mapper::toResponse);
+
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<ResponseEntity<Void>> deletePlayer(@PathVariable Long id) {
+        return deletePlayer.delete(id)
+                .then(Mono.just(ResponseEntity.noContent().build()));
     }
 }
