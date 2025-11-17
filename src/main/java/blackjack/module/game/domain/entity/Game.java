@@ -5,8 +5,10 @@ import blackjack.module.deck.domain.entity.Deck;
 import blackjack.module.game.domain.valueObject.GameResult;
 import blackjack.module.game.domain.valueObject.GameStatus;
 import blackjack.module.game.domain.valueObject.Winner;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Game {
 
     private String id;

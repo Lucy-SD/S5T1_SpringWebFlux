@@ -2,6 +2,7 @@ package blackjack.module.player.infrastructure.persistance;
 
 import blackjack.module.player.domain.entity.Player;
 import blackjack.module.player.domain.port.PlayerRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -9,13 +10,10 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Repository
+@RequiredArgsConstructor
 public class PlayerRepositoryAdapter implements PlayerRepository {
 
     private final PlayerRepositoryMySQL mysql;
-
-    public PlayerRepositoryAdapter(PlayerRepositoryMySQL mysql) {
-        this.mysql = mysql;
-    }
 
     @Override
     public Mono<Player> findByName(String name) {

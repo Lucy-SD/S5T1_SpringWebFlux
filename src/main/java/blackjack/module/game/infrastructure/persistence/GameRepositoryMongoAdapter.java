@@ -3,6 +3,7 @@ package blackjack.module.game.infrastructure.persistence;
 import blackjack.module.deck.domain.entity.Deck;
 import blackjack.module.game.domain.entity.Game;
 import blackjack.module.game.domain.port.GameRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -10,13 +11,10 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 
 @Repository
+@RequiredArgsConstructor
 public class GameRepositoryMongoAdapter implements GameRepository {
 
     private final GameRepositoryMongo mongo;
-
-    public GameRepositoryMongoAdapter(GameRepositoryMongo mongo) {
-        this.mongo = mongo;
-    }
 
     @Override
     public Mono<Game> findById(String id) {
