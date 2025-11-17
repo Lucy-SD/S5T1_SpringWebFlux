@@ -16,8 +16,8 @@ public class PlayerController {
     private final PlayerMapper mapper;
 
     @GetMapping("/{id}")
-    public Mono<PlayerResponse> getPlayerById(@PathVariable String playerId) {
-        Long id = Long.parseLong(playerId);
+    public Mono<PlayerResponse> getPlayerById(@PathVariable Long id) {
+     //   Long id = Long.parseLong(playerId);
         return getPlayer.findPlayerById(id)
                 .map(mapper::toResponse);
     }
@@ -26,5 +26,11 @@ public class PlayerController {
     public Mono<PlayerResponse> getPlayerByName(@PathVariable String name){
         return getPlayer.findOrCreatePlayerByName(name)
                 .map(mapper::toResponse);
+    }
+
+    @PutMapping("/{id}")
+    public Mono<PlayerResponse> updatePlayersName(@PathVariable Long id) {
+        return getPlayer.findPlayerById(id)
+                .
     }
 }

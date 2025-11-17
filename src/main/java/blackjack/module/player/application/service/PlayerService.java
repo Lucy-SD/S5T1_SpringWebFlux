@@ -44,14 +44,13 @@ public class PlayerService implements FindOrCreatePlayer {
     }
 
     private Mono<Player> createNewPlayer(String name) {
-        log.info("🏗️ Creando nuevo player: {}", name);
-
         Player newPlayer = Player.builder()
                 .name(name)
                 .gamesWon(0)
                 .gamesLost(0)
                 .gamesPushed(0)
                 .build();
+        log.info("Se ha creado el jugador: {}", name);
 
         return playerRepository.save(newPlayer)
                 .doOnSuccess(savedPlayer -> log.info("💾 Player guardado en BD: {}", savedPlayer))

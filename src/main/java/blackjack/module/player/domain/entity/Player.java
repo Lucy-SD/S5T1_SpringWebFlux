@@ -1,5 +1,6 @@
 package blackjack.module.player.domain.entity;
 
+
 import lombok.Builder;
 import lombok.Data;
 

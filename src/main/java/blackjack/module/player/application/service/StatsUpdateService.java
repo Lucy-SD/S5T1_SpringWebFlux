@@ -1,6 +1,7 @@
 package blackjack.module.player.application.service;
 
 import blackjack.module.game.domain.entity.Game;
+import blackjack.module.player.application.usecase.UpdatePlayerStats;
 import blackjack.module.player.domain.entity.Player;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class StatsUpdateService {
 
-    private final StatsService statsService;
+    private final UpdatePlayerStats stats;
 
     public Mono<Void> updateStatsWhenGameFinished(Game game) {
         if (!game.getStatus().isFinished()) {
@@ -26,15 +27,15 @@ public class StatsUpdateService {
         Mono<Player> statsUpdate = switch (game.getResult().winner()) {
             case PLAYER -> {
                 log.info("Se ha sumando una victoria al jugador con ID: {}", game.getPlayerId());
-                yield  statsService.incrementWins(game.getPlayerId());
+                yield  stats.incrementWins(game.getPlayerId());
             }
             case DEALER -> {
                 log.info("Se ha sumando una derrota al jugador con ID: {}", game.getPlayerId());
-                yield statsService.incrementLosses(game.getPlayerId());
+                yield stats.incrementLosses(game.getPlayerId());
             }
             case PUSH -> {
                 log.info("Se ha sumando un empate al jugador con ID: {}", game.getPlayerId());
-                yield statsService.incrementPushes(game.getPlayerId());
+                yield stats.incrementPushes(game.getPlayerId());
             }
         };
         return statsUpdate.then();
