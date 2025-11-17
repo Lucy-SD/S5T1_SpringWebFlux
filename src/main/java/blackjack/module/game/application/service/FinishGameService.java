@@ -26,17 +26,13 @@ public class FinishGameService implements FinishGame {
     }
 
     @Override
-    public Mono<Game> finish(String gameId) {
-        return gameRepository.findById(gameId)
-                .map(game -> {
-                    game.setStatus(GameStatus.FINISHED);
-                    game.setResult(new GameResult(
-                            game.determineWinner(),
-                            game.getDealerScore(),
-                            game.getPlayerScore()
-                    ));
-                    return game;
-                })
-                .flatMap(gameRepository::save);
+    public Mono<Game> finish(Game game) {
+        game.setStatus(GameStatus.FINISHED);
+        game.setResult(new GameResult(
+                game.determineWinner(),
+                game.getDealerScore(),
+                game.getPlayerScore()
+        ));
+        return gameRepository.save(game);
     }
 }

@@ -52,7 +52,7 @@ public class PlayActionService implements Hit, Stand {
                         return gameRepository.save(game)
                                 .flatMap(updatedGame -> finishGame.shouldFinish(updatedGame)
                                         .flatMap(should -> should ?
-                                                gameService.finishGameAndHandleStats(updatedGame.getId()) :
+                                                gameService.finishGameAndHandleStats(updatedGame) :
                                                 Mono.just(updatedGame)
                                         )
                                 );
@@ -69,6 +69,6 @@ public class PlayActionService implements Hit, Stand {
         return gameRepository.findById(gameId)
                 .flatMap(dealersTurn::play)
                 .flatMap(gameRepository::save)
-                .flatMap(savedGame -> gameService.finishGameAndHandleStats(savedGame.getId()));
+                .flatMap(gameService::finishGameAndHandleStats);
     }
 }

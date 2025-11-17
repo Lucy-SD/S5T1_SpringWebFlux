@@ -5,5 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface FinishGame {
     Mono<Boolean> shouldFinish(Game game);
-    Mono<Game> finish(String gameId);
+    Mono<Game> finish(Game game);
 }

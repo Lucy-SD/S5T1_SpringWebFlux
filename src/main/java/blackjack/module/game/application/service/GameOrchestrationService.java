@@ -1,7 +1,6 @@
 package blackjack.module.game.application.service;
 
 import blackjack.module.game.application.usecase.FinishGame;
-import blackjack.module.game.application.usecase.SaveGame;
 import blackjack.module.game.domain.entity.Game;
 import blackjack.module.player.application.service.StatsUpdateService;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +13,11 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class GameOrchestrationService {
 
-    private final SaveGame saver;
     private final StatsUpdateService stats;
     private final FinishGame finisher;
 
-    public Mono<Game> finishGameAndHandleStats(String gameId) {
-        return finisher.finish(gameId)
+    public Mono<Game> finishGameAndHandleStats(Game game) {
+        return finisher.finish(game)
                 .flatMap(finishedGame ->
                         stats.updateStatsWhenGameFinished(finishedGame)
                                 .thenReturn(finishedGame)
