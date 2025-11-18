@@ -34,7 +34,6 @@ public class DatabaseInitializer {
     @Bean
     public CommandLineRunner initDadabase(R2dbcEntityTemplate template) {
         return args -> {
-            log.info("Verificanco e inicializando base de dados . . . ");
 
             template.getDatabaseClient().sql("SELECT 1 FROM player LIMIT 1")
                     .fetch()
@@ -44,16 +43,10 @@ public class DatabaseInitializer {
                         return Mono.empty();
                     })
                     .subscribe(
-                            result -> log.info("Base de datos verificada correrctamente."),
+                            result -> log.info("Base de datos verificada correctamente."),
                             error -> log.error("Error verificando base de datos: {}", error.getMessage()),
-                            () -> log.info("Inicializando base de datos completa = )")
+                            () -> log.info("Inicialización de base de datos completa = )")
                     );
         };
-    }
-
-
-    @Bean
-    public CommandLineRunner logInitialization() {
-        return args -> log.info("Base de datos inicializada correctamente = )");
     }
 }
