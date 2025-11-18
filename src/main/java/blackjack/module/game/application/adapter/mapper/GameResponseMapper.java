@@ -2,7 +2,9 @@ package blackjack.module.game.application.adapter.mapper;
 
 import blackjack.module.deck.application.adapter.mapper.CardMapper;
 import blackjack.module.game.application.dto.response.GameResponse;
+import blackjack.module.game.application.dto.response.PlayResponse;
 import blackjack.module.game.domain.entity.Game;
+import blackjack.module.game.domain.valueObject.GameStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +28,22 @@ public class GameResponseMapper {
                 game.calculateVisibleScore(),
                 game.isHasHiddenCard(),
                 game.getStatus()
+        );
+    }
+
+    public PlayResponse toPlayResponse(Game game, String playerName) {
+        GameResponse gameResponse = toResponse(game, playerName);
+        if (game.getStatus() == GameStatus.FINISHED && game.getResult() != null) {
+            return new PlayResponse(
+                    GameStatus.FINISHED,
+                    gameResponse,
+                    game.getResult()
+            );
+        }
+        return new PlayResponse(
+                game.getStatus(),
+                gameResponse,
+                null
         );
     }
 }

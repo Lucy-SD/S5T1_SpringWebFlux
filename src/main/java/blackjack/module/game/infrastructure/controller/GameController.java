@@ -5,8 +5,6 @@ import blackjack.module.game.application.dto.request.CreateGameRequest;
 import blackjack.module.game.application.dto.response.GameResponse;
 import blackjack.module.game.application.dto.response.PlayResponse;
 import blackjack.module.game.application.usecase.*;
-import blackjack.module.game.domain.entity.Game;
-import blackjack.module.game.domain.valueObject.GameStatus;
 import blackjack.module.player.application.usecase.FindOrCreatePlayer;
 import blackjack.shared.exception.GameException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,7 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -45,8 +42,8 @@ public class GameController {
     @PostMapping("/new")
     public Mono<ResponseEntity<GameResponse>> newGame(@Valid @RequestBody CreateGameRequest request) {
         return createGame.create(request.playerName())
-                .flatMap(this::mapGameToResponse)
-                .map(response -> ResponseEntity.status(HttpStatus.CREATED).body(response))
+                .map(game -> mapper.toResponse(game, request.playerName()))
+                .map(ResponseEntity::ok)
                 .onErrorResume(GameException.class, e ->
                         Mono.just(ResponseEntity.badRequest().build())
                 );
@@ -63,7 +60,8 @@ public class GameController {
             @Parameter(description = "ID de la partida.", required = true, example = "691b5d0c6738ea08096c1e2a")
             @PathVariable @NotBlank String id) {
         return getGameById.getGameById(id)
-                .flatMap(this::mapGameToResponse)
+                .flatMap(game -> playerFinder.findPlayerById(game.getPlayerId())
+                        .map(player -> mapper.toResponse(game, player.getName())))
                 .map(ResponseEntity::ok)
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
@@ -78,7 +76,8 @@ public class GameController {
             @Parameter(description = "ID de la partida.", required = true, example = "691b5d0c6738ea08096c1e2a")
             @PathVariable @NotBlank String id) {
         return hit.hit(id)
-                .flatMap(this::mapGameToPlayResponse)
+                .flatMap(game -> playerFinder.findPlayerById(game.getPlayerId())
+                        .map(player -> mapper.toPlayResponse(game, player.getName())))
                 .map(ResponseEntity::ok)
                 .onErrorResume(GameException.class, e ->
                         Mono.just(ResponseEntity.badRequest().build())
@@ -95,7 +94,8 @@ public class GameController {
             @Parameter(description = "ID de la partida.", required = true, example = "691b5d0c6738ea08096c1e2a")
             @PathVariable @NotBlank String id) {
         return stand.stand(id)
-                .flatMap(this::mapGameToPlayResponse)
+                .flatMap(game -> playerFinder.findPlayerById(game.getPlayerId())
+                        .map(player -> mapper.toPlayResponse(game, player.getName())))
                 .map(ResponseEntity::ok)
                 .onErrorResume(GameException.class, e ->
                         Mono.just(ResponseEntity.badRequest().build())
@@ -115,30 +115,6 @@ public class GameController {
                 .thenReturn(ResponseEntity.noContent().<Void>build())
                 .onErrorResume(GameException.class, e ->
                         Mono.just(ResponseEntity.notFound().build()));
-    }
-
-    private Mono<GameResponse> mapGameToResponse(Game game) {
-        return playerFinder.findPlayerById(game.getPlayerId())
-                .map(player -> mapper.toResponse(game, player.getName()));
-    }
-
-    private Mono<PlayResponse> mapGameToPlayResponse(Game game) {
-        return mapGameToResponse(game)
-                .map(gameResponse -> {
-                    if (game.getStatus() == GameStatus.FINISHED && game.getResult() != null) {
-                        return new PlayResponse(
-                                GameStatus.FINISHED,
-                                gameResponse,
-                                game.getResult()
-                        );
-                    } else {
-                        return new PlayResponse(
-                                game.getStatus(),
-                                gameResponse,
-                                null
-                        );
-                    }
-                });
     }
 }
 
