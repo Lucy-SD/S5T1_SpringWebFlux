@@ -36,8 +36,8 @@ public class FinishGameService implements FinishGame {
                     foundGame.setStatus(GameStatus.FINISHED);
                     foundGame.setResult(new GameResult(
                             foundGame.determineWinner(),
-                            foundGame.getDealerScore(),
-                            foundGame.getPlayerScore()
+                            foundGame.getPlayerScore(),
+                            foundGame.getDealerScore()
                     ));
                     return foundGame;
                 })
