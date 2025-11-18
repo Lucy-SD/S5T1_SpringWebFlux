@@ -11,8 +11,8 @@ public class RankingMapper {
         return new RankingEntry(
                 player.getName(),
                 position,
-                player.calculateTotalGames(),
                 player.getGamesWon(),
+                player.calculateTotalGames(),
                 player.calculateWinPercentage()
         );
     }

@@ -2,6 +2,7 @@ package blackjack.module.game.domain.entity;
 
 import blackjack.module.deck.domain.entity.Card;
 import blackjack.module.deck.domain.entity.Deck;
+import blackjack.module.game.domain.valueObject.GameResult;
 import blackjack.module.game.domain.valueObject.GameStatus;
 import blackjack.module.game.domain.valueObject.Winner;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,8 @@ public class Game {
 
     @Builder.Default
     private GameStatus status = GameStatus.ACTIVE;
+
+    private GameResult result;
 
     @Builder.Default
     private Instant createdAt = Instant.now();
