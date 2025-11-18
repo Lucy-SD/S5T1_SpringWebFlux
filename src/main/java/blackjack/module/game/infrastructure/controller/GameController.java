@@ -10,6 +10,7 @@ import blackjack.module.game.domain.valueObject.GameStatus;
 import blackjack.module.player.application.usecase.FindOrCreatePlayer;
 import blackjack.shared.exception.GameException;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class GameController {
     }
 
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<GameResponse>> getGame(@PathVariable String id) {
+    public Mono<ResponseEntity<GameResponse>> getGame(@PathVariable @NotBlank String id) {
         return getGameById.getGameById(id)
                 .flatMap(this::mapGameToResponse)
                 .map(ResponseEntity::ok)
@@ -48,7 +49,7 @@ public class GameController {
     }
 
     @PostMapping("/{id}/hit")
-    public Mono<ResponseEntity<PlayResponse>> hit(@PathVariable String id) {
+    public Mono<ResponseEntity<PlayResponse>> hit(@PathVariable @NotBlank String id) {
         return hit.hit(id)
                 .flatMap(this::mapGameToPlayResponse)
                 .map(ResponseEntity::ok)
@@ -58,7 +59,7 @@ public class GameController {
     }
 
     @PostMapping("/{id}/stand")
-    public Mono<ResponseEntity<PlayResponse>> stand(@PathVariable String id) {
+    public Mono<ResponseEntity<PlayResponse>> stand(@PathVariable @NotBlank String id) {
         return stand.stand(id)
                 .flatMap(this::mapGameToPlayResponse)
                 .map(ResponseEntity::ok)
@@ -68,7 +69,7 @@ public class GameController {
     }
 
     @DeleteMapping("/{id}")
-    public Mono<ResponseEntity<Void>> deleteGame(@PathVariable String id) {
+    public Mono<ResponseEntity<Void>> deleteGame(@PathVariable @NotBlank String id) {
         return deleteGame.delete(id)
                 .thenReturn(ResponseEntity.noContent().<Void>build())
                 .onErrorResume(GameException.class, e ->

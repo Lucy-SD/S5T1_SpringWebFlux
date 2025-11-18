@@ -6,6 +6,9 @@ import blackjack.module.player.application.dto.response.PlayerResponse;
 import blackjack.module.player.application.usecase.DeletePlayer;
 import blackjack.module.player.application.usecase.FindOrCreatePlayer;
 import blackjack.module.player.application.usecase.UpdatePlayerName;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,28 +25,28 @@ public class PlayerController {
     private final PlayerMapper mapper;
 
     @GetMapping("/{id}")
-    public Mono<PlayerResponse> getPlayerById(@PathVariable Long id) {
+    public Mono<PlayerResponse> getPlayerById(@PathVariable @Positive Long id) {
         return getPlayer.findPlayerById(id)
                 .map(mapper::toResponse);
     }
 
     @GetMapping("/name/{name}")
-    public Mono<PlayerResponse> getPlayerByName(@PathVariable String name){
+    public Mono<PlayerResponse> getPlayerByName(@PathVariable @NotBlank String name){
         return getPlayer.findOrCreatePlayerByName(name)
                 .map(mapper::toResponse);
     }
 
     @PutMapping("/{id}")
     public Mono<PlayerResponse> updatePlayersName(
-            @PathVariable Long id,
-            @RequestBody UpdatePlayerRequest request) {
+            @PathVariable @Positive Long id,
+            @Valid @RequestBody UpdatePlayerRequest request) {
         return updateName.updateName(id, request.newName())
                 .map(mapper::toResponse);
 
     }
 
     @DeleteMapping("/{id}")
-    public Mono<ResponseEntity<Void>> deletePlayer(@PathVariable Long id) {
+    public Mono<ResponseEntity<Void>> deletePlayer(@PathVariable @Positive Long id) {
         return deletePlayer.delete(id)
                 .then(Mono.just(ResponseEntity.noContent().build()));
     }

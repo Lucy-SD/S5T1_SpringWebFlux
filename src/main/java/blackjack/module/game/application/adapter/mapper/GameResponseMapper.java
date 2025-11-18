@@ -6,8 +6,6 @@ import blackjack.module.game.domain.entity.Game;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.stream.Collectors;
-
 @Component
 @RequiredArgsConstructor
 public class GameResponseMapper {
@@ -19,12 +17,12 @@ public class GameResponseMapper {
                 game.getId(),
                 playerName,
                 game.getPlayerHand().stream()
-                        .map(CardMapper::toResponse)
-                        .collect(Collectors.toList()),
+                        .map(cardMapper::toResponse)
+                        .toList(),
                 game.getPlayerScore(),
                 game.getVisibleCards().stream()
-                        .map(CardMapper::toResponse)
-                        .collect(Collectors.toList()),
+                        .map(cardMapper::toResponse)
+                        .toList(),
                 game.calculateVisibleScore(),
                 game.isHasHiddenCard(),
                 game.getStatus()
