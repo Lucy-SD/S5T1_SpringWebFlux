@@ -6,6 +6,7 @@ import blackjack.module.player.application.dto.response.PlayerResponse;
 import blackjack.module.player.application.usecase.DeletePlayer;
 import blackjack.module.player.application.usecase.FindOrCreatePlayer;
 import blackjack.module.player.application.usecase.UpdatePlayerName;
+import blackjack.shared.exception.GameException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,11 +37,14 @@ public class PlayerController {
             @ApiResponse(responseCode = "404", description = "Jugador no encontrado.")
     })
     @GetMapping("/{id}")
-    public Mono<PlayerResponse> getPlayerById(
+    public Mono<ResponseEntity<PlayerResponse>> getPlayerById(
             @Parameter(description = "ID del jugador.", required = true, example = "7")
             @PathVariable @Positive Long id) {
         return getPlayer.findPlayerById(id)
-                .map(mapper::toResponse);
+                .map(mapper::toResponse)
+                .map(ResponseEntity::ok)
+                .onErrorResume(GameException.class, e ->
+                        Mono.just(ResponseEntity.notFound().build()));
     }
 
     @Operation(summary = "Obtener o crear jugador por nombre.", description = "Busca un jugador por su nombre, y si no" +
@@ -49,11 +53,12 @@ public class PlayerController {
             @ApiResponse(responseCode = "200", description = "Jugador encontrado o creado."),
     })
     @GetMapping("/name/{name}")
-    public Mono<PlayerResponse> getPlayerByName(
+    public Mono<ResponseEntity<PlayerResponse>> getPlayerByName(
             @Parameter(description = "Nombre del jugador.", required = true, example = "Pepito")
             @PathVariable @NotBlank String name){
         return getPlayer.findOrCreatePlayerByName(name)
-                .map(mapper::toResponse);
+                .map(mapper::toResponse)
+                .map(ResponseEntity::ok);
     }
 
     @Operation(summary = "Actualizar nombre de un jugador.", description = "Busca un jugador por su ID, y actualiza su nombre.")
@@ -62,12 +67,15 @@ public class PlayerController {
             @ApiResponse(responseCode = "404", description = "Jugador no encontrado.")
     })
     @PutMapping("/{id}")
-    public Mono<PlayerResponse> updatePlayersName(
+    public Mono<ResponseEntity<PlayerResponse>> updatePlayersName(
             @Parameter(description = "ID del jugador.", required = true, example = "7")
             @PathVariable @Positive Long id,
             @Valid @RequestBody UpdatePlayerRequest request) {
         return updateName.updateName(id, request.newName())
-                .map(mapper::toResponse);
+                .map(mapper::toResponse)
+                .map(ResponseEntity::ok)
+                .onErrorResume(GameException.class, e ->
+                        Mono.just(ResponseEntity.notFound().build()));
 
     }
 
@@ -81,6 +89,8 @@ public class PlayerController {
             @Parameter(description = "ID del jugador.", required = true, example = "7")
             @PathVariable @Positive Long id) {
         return deletePlayer.delete(id)
-                .then(Mono.just(ResponseEntity.noContent().build()));
+                .thenReturn(ResponseEntity.noContent().<Void>build())
+                .onErrorResume(GameException.class, e ->
+                        Mono.just(ResponseEntity.notFound().build()));
     }
 }
