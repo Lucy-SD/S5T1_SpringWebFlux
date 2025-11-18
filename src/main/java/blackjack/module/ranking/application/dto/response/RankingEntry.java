@@ -5,5 +5,5 @@ public record RankingEntry(
         int position,
         int totalGames,
         int gamesWon,
-        double winRate
+        double winPercentage
 ) {}

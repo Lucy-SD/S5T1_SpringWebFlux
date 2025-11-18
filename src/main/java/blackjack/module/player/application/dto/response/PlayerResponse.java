@@ -7,6 +7,6 @@ public record PlayerResponse (
         int gamesLost,
         int gamesPushed,
         int totalGames,
-        double winRate
+        double winPercentage
 ){
 }

@@ -16,7 +16,7 @@ public class PlayerMapper {
                 player.getGamesLost(),
                 player.getGamesPushed(),
                 player.calculateTotalGames(),
-                player.calculateWinRate()
+                player.calculateWinPercentage()
         );
     }
 }

@@ -13,7 +13,7 @@ public class RankingMapper {
                 position,
                 player.calculateTotalGames(),
                 player.getGamesWon(),
-                player.calculateWinRate()
+                player.calculateWinPercentage()
         );
     }
 }

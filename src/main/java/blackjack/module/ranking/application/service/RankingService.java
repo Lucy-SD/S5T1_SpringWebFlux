@@ -29,7 +29,7 @@ public class RankingService implements GetPlayersRanking {
                     AtomicInteger position = new AtomicInteger(1);
                     return players.stream()
                             .filter(player -> player.calculateTotalGames() > 0)
-                            .sorted(Comparator.comparingDouble(Player::calculateWinRate).reversed())
+                            .sorted(Comparator.comparingDouble(Player::calculateWinPercentage).reversed())
                             .limit(limit)
                             .map(player -> mapper.toRankingEntry(player, position.getAndIncrement()))
                             .collect(Collectors.toList());

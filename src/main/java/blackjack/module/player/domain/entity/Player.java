@@ -33,7 +33,8 @@ public class Player {
     public int calculateTotalGames() {
         return this.gamesWon + this.gamesLost + this.gamesPushed;
     }
-    public double calculateWinRate() {
-        return calculateTotalGames() > 0 ? (double) this.gamesWon / calculateTotalGames() : 0.0;
+    public double calculateWinPercentage() {
+        return calculateTotalGames() > 0 ?
+                Math.round((double)  this.gamesWon * 100 / calculateTotalGames()): 0.0;
     }
 }
