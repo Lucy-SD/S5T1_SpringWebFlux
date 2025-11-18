@@ -46,7 +46,7 @@ public class PlayActionService implements Hit, Stand {
                         log.info("Nueva carta: {}", card);
 
                         game.getPlayerHand().add(card);
-                        game.setPlayerScore(game.scoreCalculator(game.getPlayerHand()));
+                        game.setPlayerScore(game.calculateScore(game.getPlayerHand()));
                         log.info("Nuevo puntaje: {}", game.getPlayerScore());
 
                         return gameRepository.save(game)

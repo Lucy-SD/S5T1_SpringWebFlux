@@ -21,7 +21,7 @@ public class DealInitialCardsService implements DealInitialCards {
             game.getPlayerHand().add(game.drawCardFromDeck());
             game.getDealerHand().add(game.drawCardFromDeck());
 
-            game.setPlayerScore(game.scoreCalculator(game.getPlayerHand()));
+            game.setPlayerScore(game.calculateScore(game.getPlayerHand()));
             game.setDealerScore(game.calculateVisibleScore());
 
             return Mono.just(game);
@@ -32,5 +32,5 @@ public class DealInitialCardsService implements DealInitialCards {
             log.error("Error inesperado al repartir las cartas.");
             return Mono.error(new GameException("Error al repartir las cartas iniciales."));
         }
-        }
+    }
 }

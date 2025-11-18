@@ -2,6 +2,7 @@ package blackjack.module.game.domain.entity;
 
 import blackjack.module.deck.domain.entity.Card;
 import blackjack.module.deck.domain.entity.Deck;
+import blackjack.module.game.domain.service.ScoreCalculator;
 import blackjack.module.game.domain.valueObject.GameResult;
 import blackjack.module.game.domain.valueObject.GameStatus;
 import blackjack.module.game.domain.valueObject.Winner;
@@ -58,23 +59,8 @@ public class Game {
         return deck.drawCard();
     }
 
-    public int scoreCalculator(List<Card> hand) {
-        int score = 0;
-        int aceCount = 0;
-
-        for (Card card : hand) {
-            if (card.value() == 1) {
-                aceCount++;
-                score += 11;
-            } else {
-                score += card.value();
-            }
-        }
-        while (score > 21 && aceCount > 0) {
-            score -= 10;
-            aceCount--;
-        }
-        return score;
+    public int calculateScore(List<Card> hand) {
+        return ScoreCalculator.calculateHandScore(hand);
     }
 
     public List<Card> getVisibleCards() {
@@ -86,9 +72,9 @@ public class Game {
 
     public int calculateVisibleScore() {
         if (this.hasHiddenCard && !this.dealerHand.isEmpty()) {
-            return this.scoreCalculator(this.getVisibleCards());
+            return this.calculateScore(this.getVisibleCards());
         }
-        return this.scoreCalculator(this.dealerHand);
+        return this.calculateScore(this.dealerHand);
     }
 
     public boolean canPlayerHit() {
