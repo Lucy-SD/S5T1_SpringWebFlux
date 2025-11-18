@@ -3,6 +3,7 @@ package blackjack.module.game.domain.entity;
 import blackjack.module.deck.domain.entity.Card;
 import blackjack.module.deck.domain.entity.Deck;
 import blackjack.module.game.domain.service.ScoreCalculator;
+import blackjack.module.game.domain.service.WinnerDeterminer;
 import blackjack.module.game.domain.valueObject.GameResult;
 import blackjack.module.game.domain.valueObject.GameStatus;
 import blackjack.module.game.domain.valueObject.Winner;
@@ -81,11 +82,7 @@ public class Game {
         return this.status == GameStatus.ACTIVE && this.playerScore < 21;
     }
 
-    public Winner determineWinner() {
-        if (this.playerScore > 21) return Winner.DEALER;
-        if (this.dealerScore > 21) return Winner.PLAYER;
-        if (this.playerScore > this.dealerScore) return Winner.PLAYER;
-        if (this.dealerScore > this.playerScore) return Winner.DEALER;
-        return Winner.PUSH;
+    public Winner findOutWinner() {
+        return WinnerDeterminer.determine(this);
     }
 }

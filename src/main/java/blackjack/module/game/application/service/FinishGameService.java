@@ -35,7 +35,7 @@ public class FinishGameService implements FinishGame {
                 .map(foundGame -> {
                     foundGame.setStatus(GameStatus.FINISHED);
                     foundGame.setResult(new GameResult(
-                            foundGame.determineWinner(),
+                            foundGame.findOutWinner(),
                             foundGame.getPlayerScore(),
                             foundGame.getDealerScore()
                     ));
