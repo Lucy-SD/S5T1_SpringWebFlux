@@ -43,7 +43,7 @@ public class GameController {
     public Mono<ResponseEntity<GameResponse>> newGame(@Valid @RequestBody CreateGameRequest request) {
         return createGame.create(request.playerName())
                 .map(game -> mapper.toResponse(game, request.playerName()))
-                .map(ResponseEntity::ok)
+                .map(response -> ResponseEntity.status(201).body(response))
                 .onErrorResume(GameException.class, e ->
                         Mono.just(ResponseEntity.badRequest().build())
                 );
@@ -52,7 +52,7 @@ public class GameController {
     @Operation(summary = "Buscar partida.", description = "Busca una partida de BlackJack por ID de la partida" +
             " y devuelve el estado de la misma.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Partida encontrada."),
+            @ApiResponse(responseCode = "200", description = "Partida encontrada."),
             @ApiResponse(responseCode = "404", description = "Partida no encontrada.")
     })
     @GetMapping("/{id}")
@@ -68,7 +68,7 @@ public class GameController {
 
     @Operation(summary = "Pedir carta ('hit').", description = "El jugador pide una carta adicional.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Acción exitosa."),
+            @ApiResponse(responseCode = "200", description = "Acción exitosa."),
             @ApiResponse(responseCode = "400", description = "Acción no permitida o juego no encontrado.")
     })
     @PostMapping("/{id}/hit")
@@ -86,7 +86,7 @@ public class GameController {
 
     @Operation(summary = "Plantarse ('stand').", description = "El jugador se planta y se pasa el turno al dealer.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Partida encontrada."),
+            @ApiResponse(responseCode = "200", description = "Partida encontrada."),
             @ApiResponse(responseCode = "400", description = "Partida no encontrada.")
     })
     @PostMapping("/{id}/stand")
