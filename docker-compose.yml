@@ -1,0 +1,70 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: blackjack-mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: blackjack
+      MYSQL_USER: blackjack_user
+      MYSQL_PASSWORD: blackjack_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    networks:
+      - blackjack-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: blackjack-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongopass
+      MONGO_INITDB_DATABASE: blackjack
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    networks:
+      - blackjack-network
+
+  app:
+    image: blackjack:latest
+    container_name: blackjack-app
+    environment:
+      SPRING_R2DBC_URL: r2dbc:mariadb://mysql:3306/blackjack
+      SPRING_R2DBC_USERNAME: root
+      SPRING_R2DBC_PASSWORD: ""
+
+      SPRING_DATA_MONGODB_URI: mongodb://root:mongopass@mongodb:27017/blackjack?authSource=admin
+      SPRING_DATA_MONGODB_DATABASE: blackjack
+
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    networks:
+      - blackjack-network
+
+volumes:
+  mysql_data:
+  mongodb_data:
+
+networks:
+  blackjack-network:
+    driver: bridge
