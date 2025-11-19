@@ -1,4 +1,4 @@
-package blackjack.module.deck.domain.entity;
+package blackjack.module.deck.domain.valueObject;
 
 public record Card(int value) {
     public Card {

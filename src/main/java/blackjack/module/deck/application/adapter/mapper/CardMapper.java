@@ -1,7 +1,7 @@
 package blackjack.module.deck.application.adapter.mapper;
 
 import blackjack.module.deck.application.dto.response.CardResponse;
-import blackjack.module.deck.domain.entity.Card;
+import blackjack.module.deck.domain.valueObject.Card;
 import org.springframework.stereotype.Controller;
 
 @Controller

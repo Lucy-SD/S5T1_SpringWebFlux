@@ -1,4 +1,4 @@
-package blackjack.module.game.domain.port;
+package blackjack.module.game.domain;
 
 import blackjack.module.game.domain.entity.Game;
 import reactor.core.publisher.Flux;

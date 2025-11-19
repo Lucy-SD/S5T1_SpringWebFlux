@@ -1,8 +1,7 @@
 package blackjack.module.deck.domain.service;
 
-import blackjack.module.deck.domain.entity.Card;
+import blackjack.module.deck.domain.valueObject.Card;
 import blackjack.module.deck.domain.entity.Deck;
-import blackjack.shared.exception.GameException;
 
 import java.util.ArrayList;
 import java.util.Collections;

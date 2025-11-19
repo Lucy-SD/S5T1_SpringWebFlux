@@ -1,6 +1,6 @@
 package blackjack.module.game.domain.entity;
 
-import blackjack.module.deck.domain.entity.Card;
+import blackjack.module.deck.domain.valueObject.Card;
 import blackjack.module.deck.domain.entity.Deck;
 import blackjack.module.game.domain.service.ScoreCalculator;
 import blackjack.module.game.domain.service.WinnerDeterminer;

@@ -1,6 +1,6 @@
 package blackjack.module.game.domain.service;
 
-import blackjack.module.deck.domain.entity.Card;
+import blackjack.module.deck.domain.valueObject.Card;
 
 import java.util.List;
 

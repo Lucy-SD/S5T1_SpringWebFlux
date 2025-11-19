@@ -19,18 +19,18 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/ranking")
 @RequiredArgsConstructor
-@Tag(name = "Ranking", description = "API's para consultar el ranking de los jugadores del BlackJack.")
+@Tag(name = "Ranking", description = "API's to see the BlackJack's players ranking.")
 public class RankingController {
     private final GetPlayersRanking getPlayersRanking;
 
-    @Operation(summary = "Obtener ranking.", description = "Obtiene el ranking de los jugadores.")
+    @Operation(summary = "Get Ranking.", description = "Get's players ranking.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ranking obtenido exitosamente."),
-            @ApiResponse(responseCode = "400", description = "Parámetro de limite inválido (debe ser un número positivo).")
+            @ApiResponse(responseCode = "200", description = "Ranking found successfully."),
+            @ApiResponse(responseCode = "400", description = "Invalid limit parameter (must be a positive number).")
     })
     @GetMapping
     public Mono<ResponseEntity<RankingResponse>> getRanking(
-            @Parameter(description = "Límite de resultados (10 por default).", example = "3")
+            @Parameter(description = "Results limit (10 by default).", example = "3")
             @RequestParam(defaultValue = "10") int limit) {
         if (limit <= 0) {
             return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());

@@ -1,5 +1,6 @@
 package blackjack.module.deck.domain.entity;
 
+import blackjack.module.deck.domain.valueObject.Card;
 import lombok.Getter;
 
 import java.util.List;

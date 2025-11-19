@@ -2,7 +2,7 @@ package blackjack.module.player.application.service;
 
 import blackjack.module.player.application.usecase.FindOrCreatePlayer;
 import blackjack.module.player.domain.entity.Player;
-import blackjack.module.player.domain.port.PlayerRepository;
+import blackjack.module.player.domain.PlayerRepository;
 import blackjack.shared.exception.GameException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

@@ -2,7 +2,7 @@ package blackjack.module.player.application.service;
 
 import blackjack.module.player.application.usecase.UpdatePlayerName;
 import blackjack.module.player.domain.entity.Player;
-import blackjack.module.player.domain.port.PlayerRepository;
+import blackjack.module.player.domain.PlayerRepository;
 import blackjack.shared.exception.GameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,7 @@ package blackjack.module.game.application.service;
 
 import blackjack.module.game.application.usecase.FinishGame;
 import blackjack.module.game.domain.entity.Game;
-import blackjack.module.game.domain.port.GameRepository;
+import blackjack.module.game.domain.GameRepository;
 import blackjack.module.game.domain.valueObject.GameResult;
 import blackjack.module.game.domain.valueObject.GameStatus;
 import blackjack.shared.exception.GameException;

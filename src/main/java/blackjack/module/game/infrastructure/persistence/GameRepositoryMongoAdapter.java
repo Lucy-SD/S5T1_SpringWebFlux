@@ -2,7 +2,7 @@ package blackjack.module.game.infrastructure.persistence;
 
 import blackjack.module.deck.domain.entity.Deck;
 import blackjack.module.game.domain.entity.Game;
-import blackjack.module.game.domain.port.GameRepository;
+import blackjack.module.game.domain.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;

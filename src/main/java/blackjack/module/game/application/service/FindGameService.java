@@ -2,7 +2,7 @@ package blackjack.module.game.application.service;
 
 import blackjack.module.game.application.usecase.GetGameById;
 import blackjack.module.game.domain.entity.Game;
-import blackjack.module.game.domain.port.GameRepository;
+import blackjack.module.game.domain.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

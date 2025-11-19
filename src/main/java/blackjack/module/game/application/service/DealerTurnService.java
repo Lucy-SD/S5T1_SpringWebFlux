@@ -1,6 +1,6 @@
 package blackjack.module.game.application.service;
 
-import blackjack.module.deck.domain.entity.Card;
+import blackjack.module.deck.domain.valueObject.Card;
 import blackjack.module.game.application.usecase.DealersTurn;
 import blackjack.module.game.domain.entity.Game;
 import lombok.RequiredArgsConstructor;

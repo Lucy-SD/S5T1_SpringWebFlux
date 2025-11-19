@@ -1,6 +1,6 @@
 package blackjack.module.game.infrastructure.persistence;
 
-import blackjack.module.deck.domain.entity.Card;
+import blackjack.module.deck.domain.valueObject.Card;
 import blackjack.module.game.domain.valueObject.GameResult;
 import blackjack.module.game.domain.valueObject.GameStatus;
 import lombok.AllArgsConstructor;

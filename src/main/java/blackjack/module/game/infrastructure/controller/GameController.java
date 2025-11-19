@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/game")
 @RequiredArgsConstructor
-@Tag(name = "Juego", description = "API's para gestion de las partidas de BlackJack.")
+@Tag(name = "Game", description = "API's to manage BlackJack game.")
 public class GameController {
 
     private final CreateGame createGame;
@@ -33,11 +33,11 @@ public class GameController {
     private final DeleteGame deleteGame;
     private final GameResponseMapper mapper;
 
-    @Operation(summary = "Crear nueva partida.", description = "Crea una nueva partida de BlackJack para un jugador" +
-            "identificado por nombre. Si el jugador no existe en base de datos, crea uno nuevo.")
+    @Operation(summary = "New game.", description = "Creates a new Blackjack game from a players name." +
+            " If the player doesn't exist, it creates a new player and a new game.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Partida creada exitosamente."),
-            @ApiResponse(responseCode = "400", description = "Solicitud inválida.")
+            @ApiResponse(responseCode = "201", description = "New game created successfully."),
+            @ApiResponse(responseCode = "400", description = "Invalid request.")
     })
     @PostMapping("/new")
     public Mono<ResponseEntity<GameResponse>> newGame(@Valid @RequestBody CreateGameRequest request) {
@@ -49,15 +49,15 @@ public class GameController {
                 );
     }
 
-    @Operation(summary = "Buscar partida.", description = "Busca una partida de BlackJack por ID de la partida" +
-            " y devuelve el estado de la misma.")
+    @Operation(summary = "Search game.", description = "Research's a BlackJack game by it's ID and returns " +
+            " the game state.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Partida encontrada."),
-            @ApiResponse(responseCode = "404", description = "Partida no encontrada.")
+            @ApiResponse(responseCode = "200", description = "Game found."),
+            @ApiResponse(responseCode = "404", description = "Game not found.")
     })
     @GetMapping("/{id}")
     public Mono<ResponseEntity<GameResponse>> getGame(
-            @Parameter(description = "ID de la partida.", required = true, example = "691b5d0c6738ea08096c1e2a")
+            @Parameter(description = "Game ID.", required = true, example = "691b5d0c6738ea08096c1e2a")
             @PathVariable @NotBlank String id) {
         return getGameById.getGameById(id)
                 .flatMap(game -> playerFinder.findPlayerById(game.getPlayerId())
@@ -66,14 +66,14 @@ public class GameController {
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
-    @Operation(summary = "Pedir carta ('hit').", description = "El jugador pide una carta adicional.")
+    @Operation(summary = "Player hit's.", description = "Player ask's for an additional card.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Acción exitosa."),
-            @ApiResponse(responseCode = "400", description = "Acción no permitida o juego no encontrado.")
+            @ApiResponse(responseCode = "200", description = "Hit success."),
+            @ApiResponse(responseCode = "400", description = "Hit not allowed or game not found.")
     })
     @PostMapping("/{id}/hit")
     public Mono<ResponseEntity<PlayResponse>> hit(
-            @Parameter(description = "ID de la partida.", required = true, example = "691b5d0c6738ea08096c1e2a")
+            @Parameter(description = "Game ID.", required = true, example = "691b5d0c6738ea08096c1e2a")
             @PathVariable @NotBlank String id) {
         return hit.hit(id)
                 .flatMap(game -> playerFinder.findPlayerById(game.getPlayerId())
@@ -84,14 +84,14 @@ public class GameController {
                 );
     }
 
-    @Operation(summary = "Plantarse ('stand').", description = "El jugador se planta y se pasa el turno al dealer.")
+    @Operation(summary = "Player stand's.", description = "Player stand's and the turn goes to the dealer.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Partida encontrada."),
-            @ApiResponse(responseCode = "400", description = "Partida no encontrada.")
+            @ApiResponse(responseCode = "200", description = "Game found."),
+            @ApiResponse(responseCode = "400", description = "Game not found.")
     })
     @PostMapping("/{id}/stand")
     public Mono<ResponseEntity<PlayResponse>> stand(
-            @Parameter(description = "ID de la partida.", required = true, example = "691b5d0c6738ea08096c1e2a")
+            @Parameter(description = "Game ID.", required = true, example = "691b5d0c6738ea08096c1e2a")
             @PathVariable @NotBlank String id) {
         return stand.stand(id)
                 .flatMap(game -> playerFinder.findPlayerById(game.getPlayerId())
@@ -102,14 +102,14 @@ public class GameController {
                 );
     }
 
-    @Operation(summary = "Eliminar partida.", description = "Borra una partida existente de base de datos.")
+    @Operation(summary = "Delete game.", description = "Delete's an existing game from the database.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Partida eliminada."),
-            @ApiResponse(responseCode = "404", description = "Partida no encontrada.")
+            @ApiResponse(responseCode = "204", description = "Game deleted."),
+            @ApiResponse(responseCode = "404", description = "Game not found.")
     })
     @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Void>> deleteGame(
-            @Parameter(description = "ID de la partida.", required = true, example = "691b5d0c6738ea08096c1e2a")
+            @Parameter(description = "Game ID.", required = true, example = "691b5d0c6738ea08096c1e2a")
             @PathVariable @NotBlank String id) {
         return deleteGame.delete(id)
                 .thenReturn(ResponseEntity.noContent().<Void>build())

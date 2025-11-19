@@ -1,7 +1,7 @@
 package blackjack.module.ranking.application.service;
 
 import blackjack.module.player.domain.entity.Player;
-import blackjack.module.player.domain.port.PlayerRepository;
+import blackjack.module.player.domain.PlayerRepository;
 import blackjack.module.ranking.application.adapter.mapper.RankingMapper;
 import blackjack.module.ranking.application.dto.response.RankingEntry;
 import blackjack.module.ranking.application.usecase.GetPlayersRanking;

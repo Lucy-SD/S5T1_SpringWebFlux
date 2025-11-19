@@ -1,8 +1,8 @@
 package blackjack.module.game.application.service;
 
-import blackjack.module.deck.domain.entity.Card;
+import blackjack.module.deck.domain.valueObject.Card;
 import blackjack.module.game.application.usecase.DealersTurn;
-import blackjack.module.game.domain.port.GameRepository;
+import blackjack.module.game.domain.GameRepository;
 
 import blackjack.shared.exception.GameException;
 import blackjack.module.game.application.usecase.FinishGame;

@@ -4,7 +4,7 @@ import blackjack.module.deck.application.usecase.CreateDeck;
 import blackjack.module.game.application.usecase.CreateGame;
 import blackjack.module.game.application.usecase.DealInitialCards;
 import blackjack.module.game.domain.entity.Game;
-import blackjack.module.game.domain.port.GameRepository;
+import blackjack.module.game.domain.GameRepository;
 import blackjack.module.player.application.usecase.FindOrCreatePlayer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
