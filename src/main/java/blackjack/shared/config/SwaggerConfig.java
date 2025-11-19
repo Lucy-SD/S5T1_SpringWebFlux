@@ -14,7 +14,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("BlackJack API")
-                        .description("API Reactiva para jugar al BlackJack con Srping WebFlux.")
+                        .description("Reactive Spring WebFlux API to play BlackJack.")
                         .version("1.0")
                         .contact(new Contact()
                                 .name("Lucy SD")
